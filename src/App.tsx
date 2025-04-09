@@ -6,7 +6,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <div>Hello, WeUp 👋</div>
+      <div style={{ backgroundColor: theme.colors.primary }}>
+        Hello, WeUp 👋
+      </div>
     </ThemeProvider>
   );
 }
