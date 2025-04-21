@@ -1,5 +1,6 @@
 import { Global, css, useTheme } from "@emotion/react";
 import { Theme } from "@emotion/react";
+import "pretendard/dist/web/static/pretendard.css";
 
 const GlobalStyle = () => {
   const theme = useTheme() as Theme;
