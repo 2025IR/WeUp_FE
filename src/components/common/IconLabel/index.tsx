@@ -2,6 +2,7 @@ import { Wrapper } from "./style";
 import { IconLabelProps } from "./type";
 
 const IconLabel = ({
+  children,
   type = "icon",
   icon,
   size = "md",
@@ -10,7 +11,6 @@ const IconLabel = ({
   fontWeight = "medium",
   gap = "1rem",
   full = false,
-  text,
 }: IconLabelProps) => {
   return (
     <Wrapper
@@ -23,7 +23,7 @@ const IconLabel = ({
       full={full}
     >
       {type === "image" ? <img src={icon as string} /> : icon}
-      <p>{text}</p>
+      <p>{children}</p>
     </Wrapper>
   );
 };

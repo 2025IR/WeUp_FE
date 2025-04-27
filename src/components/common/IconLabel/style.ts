@@ -1,15 +1,8 @@
 import styled from "@emotion/styled";
+import { IconLabelStyledProps } from "./type";
 
-export const Wrapper = styled.div<{
-  type: "image" | "icon";
-  size: "sm" | "md" | "lg";
-  colors: "text" | "textLight";
-  fontSize: "caption" | "small" | "body";
-  fontWeight: "medium" | "semibold" | "bold";
-  gap: string;
-  full: boolean;
-}>`
-  display: flex;
+export const Wrapper = styled.div<IconLabelStyledProps>`
+  display: inline-flex;
   align-items: center;
   gap: ${({ gap }) => gap};
   color: ${({ theme, colors }) => theme.colors[colors]};
