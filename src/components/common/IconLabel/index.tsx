@@ -1,3 +1,4 @@
+import { Wrapper } from "./style";
 import { IconLabelProps } from "./type";
 
 const IconLabel = ({
@@ -10,10 +11,10 @@ const IconLabel = ({
   text,
 }: IconLabelProps) => {
   return (
-    <div type={type} gap={gap} size={size} fontSize={fontSize} full={full}>
+    <Wrapper type={type} gap={gap} size={size} fontSize={fontSize} full={full}>
       {type === "image" ? <img src={icon as string} /> : icon}
       <p>{text}</p>
-    </div>
+    </Wrapper>
   );
 };
 
