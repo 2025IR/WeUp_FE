@@ -9,7 +9,7 @@ export const Wrapper = styled.div<{
   gap: string;
   full: boolean;
 }>`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: ${({ gap }) => gap};
   color: ${({ theme, colors }) => theme.colors[colors]};
