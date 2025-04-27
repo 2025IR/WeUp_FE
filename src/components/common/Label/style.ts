@@ -1,9 +1,7 @@
 import styled from "@emotion/styled";
+import { LabelStyledProps } from "./type";
 
-export const StyledLabel = styled.span<{
-  colors: "primary" | "secondary";
-  textColors: "text" | "textLight" | "textWhite";
-}>`
+export const StyledLabel = styled.span<LabelStyledProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;

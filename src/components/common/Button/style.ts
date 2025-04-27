@@ -1,12 +1,7 @@
 import styled from "@emotion/styled";
+import { ButtonStyledPorps } from "./types";
 
-export const StyledButton = styled.button<{
-  variant: "primary" | "secondary" | "danger";
-  size: "sm" | "lg";
-  fullWidth: boolean;
-  disabled: boolean;
-  iconOnly: boolean;
-}>`
+export const StyledButton = styled.button<ButtonStyledPorps>`
   display: flex;
   align-content: center;
   justify-content: center;

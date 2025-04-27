@@ -1,10 +1,13 @@
-export interface ButtonProps {
+export interface ButtonStyledPorps {
+  variant: "primary" | "secondary" | "danger";
+  size: "sm" | "lg";
+  fullWidth: boolean;
+  disabled: boolean;
+  iconOnly: boolean;
+}
+
+export interface ButtonProps extends Partial<ButtonStyledPorps> {
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "danger";
-  size?: "sm" | "lg";
-  disabled?: boolean;
   loading?: boolean;
-  fullWidth?: boolean;
-  iconOnly?: boolean;
   onClick?: () => void;
 }
