@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import PublicHeader from "../Header";
 
 const PublicLayout = () => {
   return (
     <div>
-      <nav>네비게이션</nav>
+      <PublicHeader />
       <main>
         <Outlet />
       </main>
