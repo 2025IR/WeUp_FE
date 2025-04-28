@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
 import { Container, Main } from "./style";
+import ProjectHeader from "../Header";
 
 const ProjectLayout = () => {
   return (
     <Container>
-      {/* 프로젝트 헤더 */}
+      <ProjectHeader />
       <Main>
         <Outlet />
       </Main>
