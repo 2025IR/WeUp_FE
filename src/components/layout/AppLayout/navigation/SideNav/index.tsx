@@ -1,5 +1,4 @@
 import IconLabel from "@/components/common/IconLabel";
-import { AiFillSun } from "react-icons/ai";
 import { HiHome, HiOutlineLogout } from "react-icons/hi";
 import { IoMdSettings } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
@@ -33,10 +32,8 @@ const SideNav = () => {
       </ProjectWrapper>
       <NavWrapper>
         <ToggleItem>
-          <IconLabel icon={<AiFillSun />}>
-            {/* 테마 토클 컴포넌트 */}
-            <ThemeToggle />
-          </IconLabel>
+          {/* 테마 토클 컴포넌트 */}
+          <ThemeToggle />
         </ToggleItem>
         <NavItem>
           <IconLabel icon={<IoMdSettings />}>Setting</IconLabel>
