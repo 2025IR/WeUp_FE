@@ -1,14 +1,15 @@
 import { Outlet } from "react-router-dom";
 import PublicHeader from "../Header";
+import { Container, Main } from "./style";
 
 const PublicLayout = () => {
   return (
-    <div>
+    <Container>
       <PublicHeader />
-      <main>
+      <Main>
         <Outlet />
-      </main>
-    </div>
+      </Main>
+    </Container>
   );
 };
 
