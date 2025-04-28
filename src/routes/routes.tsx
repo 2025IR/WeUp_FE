@@ -12,6 +12,7 @@ import PostWrite from "../pages/project/Board/PostWrite";
 import Meeting from "../pages/project/Meet/Meeting";
 import AppLayout from "../components/layout/appLayout/AppLayout";
 import PublicLayout from "@/components/layout/publicLayout/PublicLayout";
+import Task from "@/pages/project/Task";
 
 const routes: RouteObject[] = [
   {
@@ -38,7 +39,8 @@ const routes: RouteObject[] = [
         path: "project/:projectId",
         element: <ProjectLayout />,
         children: [
-          { path: "", element: <Home /> },
+          { path: "home", element: <Home /> },
+          { path: "task", element: <Task /> },
           { path: "team", element: <Team /> },
           { path: "board", element: <Board /> },
           { path: "meet", element: <Meet /> },
