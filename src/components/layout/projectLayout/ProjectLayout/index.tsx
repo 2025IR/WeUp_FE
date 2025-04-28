@@ -1,15 +1,14 @@
 import { Outlet } from "react-router-dom";
-import ProjectHeader from "./Header";
+import { Container, Main } from "./style";
 
 const ProjectLayout = () => {
   return (
-    <div>
-      <ProjectHeader />
-      <nav>네비게이션</nav>
-      <main>
+    <Container>
+      {/* 프로젝트 헤더 */}
+      <Main>
         <Outlet />
-      </main>
-    </div>
+      </Main>
+    </Container>
   );
 };
 
