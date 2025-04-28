@@ -1,20 +1,14 @@
-import { useState } from "react";
 import { StyledToggle } from "./style";
 import IconLabel from "@/components/common/IconLabel";
+import { useTheme } from "@/contexts/ThemeContext";
 import { AiFillMoon, AiFillSun } from "react-icons/ai";
 
 const ThemeToggle = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const icon = isDarkMode === false ? <AiFillSun /> : <AiFillMoon />;
-
-  const toggleHandler = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    <IconLabel icon={icon}>
-      <StyledToggle checked={isDarkMode} onClick={toggleHandler}>
+    <IconLabel icon={theme === "light" ? <AiFillSun /> : <AiFillMoon />}>
+      <StyledToggle checked={theme === "dark"} onClick={toggleTheme}>
         <div />
       </StyledToggle>
     </IconLabel>

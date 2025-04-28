@@ -19,6 +19,8 @@ const GlobalStyle = () => {
           font-family: "Pretendard", sans-serif;
           background-color: ${theme.colors.background};
           color: ${theme.colors.text};
+
+          transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         #root {
