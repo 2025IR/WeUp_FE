@@ -2,6 +2,7 @@ import IconLabel from "@/components/common/IconLabel";
 import Label from "@/components/common/Label";
 import { IoMdSettings } from "react-icons/io";
 import { Container, InfoSection, LabelSection, TabSection } from "./style";
+import ProjectNav from "../Navigation";
 
 export const mockProject = {
   projectName: "Rumon",
@@ -31,7 +32,7 @@ const ProjectHeader = () => {
             </Label>
           </LabelSection>
         </InfoSection>
-        <div>{/* 네비게이션 컴포넌트 */}</div>
+        <ProjectNav />
       </TabSection>
     </Container>
   );

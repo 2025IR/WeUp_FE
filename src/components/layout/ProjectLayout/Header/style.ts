@@ -21,7 +21,7 @@ export const TabSection = styled.div`
   flex: 1;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
