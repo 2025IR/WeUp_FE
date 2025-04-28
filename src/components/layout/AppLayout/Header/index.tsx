@@ -2,14 +2,17 @@ import logo_light from "@/assets/logo/logo_light.svg";
 import Button from "@/components/common/Button";
 import { AiOutlineBell } from "react-icons/ai";
 import { Container, Content, Logo, UserInfo, UserSection } from "./style";
-// import logo_dark from "@/assets/logo/logo_light.svg";
+import logo_dark from "@/assets/logo/logo_dark.svg";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Header = () => {
+  const { theme } = useTheme();
+  const logoSrc = theme === "light" ? logo_light : logo_dark;
   return (
     <Container>
       <Content>
         <Logo>
-          <img src={logo_light} alt="logo" />
+          <img src={logoSrc} alt="logo" />
           <p>we:up</p>
         </Logo>
 

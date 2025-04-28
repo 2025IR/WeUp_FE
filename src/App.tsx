@@ -1,14 +1,16 @@
 import { ThemeProvider } from "@emotion/react";
-import { lightTheme } from "./styles/theme";
 import GlobalStyle from "./styles/GlobalStyle";
 import { useRoutes } from "react-router-dom";
 import routes from "./routes/routes";
+import { darkTheme, lightTheme } from "./styles/theme";
+import { useTheme } from "./contexts/ThemeContext";
 
 function App() {
   const element = useRoutes(routes);
-  const theme = lightTheme;
+  const { theme } = useTheme();
+  const selectedTheme = theme === "light" ? lightTheme : darkTheme;
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={selectedTheme}>
       <GlobalStyle />
       {element}
     </ThemeProvider>

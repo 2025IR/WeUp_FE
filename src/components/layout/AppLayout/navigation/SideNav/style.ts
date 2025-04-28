@@ -53,3 +53,12 @@ export const ProjectWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
 `;
+
+export const ToggleItem = styled.div`
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: ${({ theme }) => theme.radius.md};
+
+  display: flex;
+  align-items: flex-start;
+`;
