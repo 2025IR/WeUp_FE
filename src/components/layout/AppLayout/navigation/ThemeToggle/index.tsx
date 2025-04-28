@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { StyledToggle } from "./style";
 
 const ThemeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -9,9 +10,9 @@ const ThemeToggle = () => {
 
   return (
     <>
-      <div onClick={toggleHandler}>
+      <StyledToggle checked={isDarkMode} onClick={toggleHandler}>
         <div />
-      </div>
+      </StyledToggle>
     </>
   );
 };

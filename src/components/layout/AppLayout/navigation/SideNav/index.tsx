@@ -9,8 +9,10 @@ import {
   NavTitle,
   NavWrapper,
   ProjectWrapper,
+  ToggleItem,
 } from "./style";
 import ProjectsList from "../ProjectsList";
+import ThemeToggle from "../ThemeToggle";
 
 const SideNav = () => {
   return (
@@ -25,12 +27,17 @@ const SideNav = () => {
         </NavItem>
       </NavWrapper>
       <ProjectWrapper>
-        {/* 프로젝트 리스트 */}
+        {/* 프로젝트 리스트 컴포넌트 */}
         <NavTitle>Projects</NavTitle>
         <ProjectsList />
       </ProjectWrapper>
       <NavWrapper>
-        <IconLabel icon={<AiFillSun />}>toggle</IconLabel>
+        <ToggleItem>
+          <IconLabel icon={<AiFillSun />}>
+            {/* 테마 토클 컴포넌트 */}
+            <ThemeToggle />
+          </IconLabel>
+        </ToggleItem>
         <NavItem>
           <IconLabel icon={<IoMdSettings />}>Setting</IconLabel>
         </NavItem>
