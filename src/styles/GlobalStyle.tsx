@@ -15,9 +15,14 @@ const GlobalStyle = () => {
 
         html,
         body {
+          height: 100vh;
           font-family: "Pretendard", sans-serif;
           background-color: ${theme.colors.background};
           color: ${theme.colors.text};
+        }
+
+        #root {
+          height: 100%;
         }
 
         a {
