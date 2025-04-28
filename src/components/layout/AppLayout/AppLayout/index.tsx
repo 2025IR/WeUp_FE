@@ -1,16 +1,17 @@
 import { Outlet } from "react-router-dom";
 import Header from "../Header";
 import SideNav from "../navigation/SideNav";
+import { Container, Main } from "./sytle";
 
 const AppLayout = () => {
   return (
-    <div style={{ height: "100%" }}>
+    <Container>
       <Header />
-      <SideNav />
-      <main>
+      <Main>
+        <SideNav />
         <Outlet />
-      </main>
-    </div>
+      </Main>
+    </Container>
   );
 };
 
