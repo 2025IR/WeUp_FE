@@ -17,6 +17,7 @@ const GlobalStyle = () => {
         body {
           height: 100vh;
           font-family: "Pretendard", sans-serif;
+          line-height: unset;
           background-color: ${theme.colors.background};
           color: ${theme.colors.text};
 
