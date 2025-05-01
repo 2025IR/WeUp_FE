@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "../Header";
 import SideNav from "../navigation/SideNav";
-import { Container, Main } from "./sytle";
+import { Container, Main, OutletWrapper } from "./sytle";
 
 const AppLayout = () => {
   return (
@@ -9,7 +9,9 @@ const AppLayout = () => {
       <Header />
       <Main>
         <SideNav />
-        <Outlet />
+        <OutletWrapper>
+          <Outlet />
+        </OutletWrapper>
       </Main>
     </Container>
   );
