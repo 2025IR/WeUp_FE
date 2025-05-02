@@ -1,3 +1,4 @@
+import { Container, InfoWrapper } from "./style";
 import { ProjectCardProps } from "./type";
 
 const ProjectCard = ({
@@ -8,15 +9,15 @@ const ProjectCard = ({
   onClick,
 }: ProjectCardProps) => {
   return (
-    <div onClick={onClick}>
+    <Container onClick={onClick}>
       <img src={icon} alt={`${name} profile`} />
-      <div>
+      <InfoWrapper>
         <h2>{name}</h2>
         <p>
-          {people}명 · {last_access_time}일 전전
+          {people}명 · {last_access_time}일 전
         </p>
-      </div>
-    </div>
+      </InfoWrapper>
+    </Container>
   );
 };
 
