@@ -2,6 +2,9 @@ import ProjectCard from "@/components/projects/ProjectCard";
 import { Container, Header, Main } from "./style";
 import Button from "@/components/common/Button";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Modal from "@/components/common/Modal";
+import { AiFillFolderAdd } from "react-icons/ai";
 
 const mockProjects = [
   {
@@ -29,12 +32,19 @@ const mockProjects = [
 
 const Projects = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClose = () => setIsModalOpen(false);
+  const handleOpen = () => setIsModalOpen(true);
+  const handleModalClick = () => {};
 
   return (
     <Container>
       <Header>
         <h1>Project</h1>
-        <Button variant="secondary">Add</Button>
+        <Button variant="secondary" onClick={handleOpen}>
+          Add
+        </Button>
       </Header>
       <Main>
         {mockProjects.map((project) => (
@@ -45,6 +55,19 @@ const Projects = () => {
           />
         ))}
       </Main>
+
+      {isModalOpen && (
+        <Modal
+          type="form"
+          onClick={handleModalClick}
+          onClose={handleClose}
+          buttonText="Create project"
+          icon={<AiFillFolderAdd />}
+          title="New Project"
+        >
+          <div></div>
+        </Modal>
+      )}
     </Container>
   );
 };
