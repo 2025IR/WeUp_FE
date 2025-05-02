@@ -1,6 +1,7 @@
 import ProjectCard from "@/components/projects/ProjectCard";
 import { Container, Header, Main } from "./style";
 import Button from "@/components/common/Button";
+import { useNavigate } from "react-router-dom";
 
 const mockProjects = [
   {
@@ -27,6 +28,8 @@ const mockProjects = [
 ];
 
 const Projects = () => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Header>
@@ -35,7 +38,11 @@ const Projects = () => {
       </Header>
       <Main>
         {mockProjects.map((project) => (
-          <ProjectCard key={project.id} {...project} />
+          <ProjectCard
+            key={project.id}
+            {...project}
+            onClick={() => navigate(`/project/${project.id}`)}
+          />
         ))}
       </Main>
     </Container>
