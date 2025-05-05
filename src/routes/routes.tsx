@@ -1,6 +1,4 @@
 import { RouteObject } from "react-router-dom";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
 import Projects from "../pages/Projects";
 import ProjectLayout from "../components/layout/projectLayout/ProjectLayout";
 import Home from "../pages/project/Home";
@@ -13,6 +11,7 @@ import Meeting from "../pages/project/Meet/Meeting";
 import AppLayout from "../components/layout/appLayout/AppLayout";
 import PublicLayout from "@/components/layout/publicLayout/PublicLayout";
 import Task from "@/pages/project/Task";
+import Auth from "@/pages/Auth";
 
 const routes: RouteObject[] = [
   {
@@ -22,10 +21,7 @@ const routes: RouteObject[] = [
   {
     path: "/",
     element: <PublicLayout />,
-    children: [
-      { path: "login", element: <Login /> },
-      { path: "signup", element: <Signup /> },
-    ],
+    children: [{ path: "auth", element: <Auth /> }],
   },
   {
     path: "/",
