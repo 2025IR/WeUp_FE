@@ -1,5 +1,15 @@
+import AuthCard from "@/components/auth/AuthCard.tsx";
+import { useSearchParams } from "react-router-dom";
+
 const Auth = () => {
-  return <div>로그인/회원가입 페이지지</div>;
+  const [params, setParams] = useSearchParams();
+  const mode = params.get("mode") === "signup" ? "signup" : "login";
+
+  const handleChangeMode = () => {
+    setParams({ mode: mode === "login" ? "signup" : "login" });
+  };
+
+  return <AuthCard mode={mode} onChangeMode={handleChangeMode} />;
 };
 
 export default Auth;
