@@ -1,9 +1,7 @@
-import logo_light from "@/assets/logo/logo_light.svg";
-import logo_dark from "@/assets/logo/logo_dark.svg";
-import { useTheme } from "@/contexts/ThemeContext";
 import LoginForm from "../LoginForm";
 import SignUpForm from "../SignUpForm";
 import SocialForm from "../SocialForm";
+import { Container, FormSection, NavSection, SideSection } from "./style";
 
 interface AuthCardProps {
   mode: "login" | "signup";
@@ -11,46 +9,40 @@ interface AuthCardProps {
 }
 
 const AuthCard = ({ mode, onChangeMode }: AuthCardProps) => {
-  const { theme } = useTheme();
-  const logoSrc = theme === "light" ? logo_light : logo_dark;
-
   const isLogin = mode === "login";
   return (
-    <div>
-      <div>
+    <Container>
+      <FormSection>
         {isLogin ? (
           <>
             <h1>Login</h1>
             <LoginForm />
             <SocialForm />
-            <div>
+            <NavSection>
               <p>New user?</p>
               <button onClick={onChangeMode}>Sign up</button>
-            </div>
+            </NavSection>
           </>
         ) : (
           <>
             <h1>Create Account</h1>
             <SignUpForm />
-            <div>
+            <NavSection>
               <p>Already Have an account?</p>
               <button onClick={onChangeMode}>Sign in</button>
-            </div>
+            </NavSection>
           </>
         )}
-      </div>
+      </FormSection>
 
-      <div>
-        <div>
-          <img src={logoSrc} alt="logo" />
-          <p>we:up</p>
-        </div>
-        <div>
-          // 추후 이미지 추가 예정
-          <img src="#" alt="image" />
-        </div>
-      </div>
-    </div>
+      <SideSection>
+        {/* 추후 이미지 추가 예정 */}
+        <img
+          src="https://pixabay.com/get/gb02fdab7a65ffc304f2dd11ab169ebf8de1c878ef5aff546c8ef89caf218a882e9573125bcb28ae718203f0a49beb29179640439438596c3bb2c7b00836572eb93af0e9d5d8e5ae9fed85dc9a7e2d993_640.png"
+          alt="image"
+        />
+      </SideSection>
+    </Container>
   );
 };
 

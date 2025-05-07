@@ -1,17 +1,20 @@
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
+import { FormContainer } from "./style";
 
 const SignUpForm = () => {
   return (
-    <div>
-      <Input type="text" />
-      <Input type="email" isButton="인증" />
-      <Input type="number" isButton="확인" />
-      <Input type="password" />
+    <FormContainer>
+      <div>
+        <Input type="text" label="Name" />
+        <Input type="email" label="Email Address" isButton="인증" />
+        <Input type="number" label="Code" isButton="확인" />
+        <Input type="password" label="Password" />
+      </div>
       <Button fullWidth size="lg">
         Sign Up
       </Button>
-    </div>
+    </FormContainer>
   );
 };
 
