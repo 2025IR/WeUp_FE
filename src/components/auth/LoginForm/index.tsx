@@ -3,14 +3,18 @@ import Input from "@/components/common/Input";
 import { FormContainer } from "./style";
 import { useState } from "react";
 import { useLoginMutation } from "@/query/auth/useLoginMutation";
+import { useDispatch } from "react-redux";
+import { setAccessToken } from "@/store/auth";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const { mutate, isPending } = useLoginMutation({
     onSuccess: (res) => {
-      console.log("✅ 로그인 성공!", res.accessToken);
+      dispatch(setAccessToken(res.accessToken));
+      console.log("✅ 로그인 성공!");
     },
     onError: (err) => {
       console.error("❌ 로그인 실패", err.response?.data.message);
