@@ -13,7 +13,12 @@ const LoginForm = () => {
 
   const { mutate, isPending } = useLoginMutation({
     onSuccess: (res) => {
-      dispatch(setAccessToken(res.accessToken));
+      dispatch(
+        setAccessToken({
+          accessToken: res.accessToken,
+          refreshToken: res.refreshToken,
+        })
+      );
       console.log("✅ 로그인 성공!");
     },
     onError: (err) => {
