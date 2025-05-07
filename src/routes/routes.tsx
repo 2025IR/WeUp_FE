@@ -4,14 +4,16 @@ import ProjectLayout from "../components/layout/projectLayout/ProjectLayout";
 import Home from "../pages/project/Home";
 import Team from "../pages/project/Team";
 import Board from "../pages/project/Board";
-import Meet from "../pages/project/Meet";
 import Post from "../pages/project/Board/Post";
 import PostWrite from "../pages/project/Board/PostWrite";
-import Meeting from "../pages/project/Meet/Meeting";
+import Meeting from "../pages/project/Meeting";
 import AppLayout from "../components/layout/appLayout/AppLayout";
 import PublicLayout from "@/components/layout/publicLayout/PublicLayout";
 import Task from "@/pages/project/Task";
 import Auth from "@/pages/Auth";
+import MeetLayout from "@/components/layout/meetLayout/MeetLayout";
+import WaitingRoom from "@/pages/project/WaitingRoom";
+import Chat from "@/pages/project/Chat";
 
 const routes: RouteObject[] = [
   {
@@ -39,9 +41,16 @@ const routes: RouteObject[] = [
           { path: "task", element: <Task /> },
           { path: "team", element: <Team /> },
           { path: "board", element: <Board /> },
-          { path: "meet", element: <Meet /> },
           { path: "post/:postId", element: <Post /> },
           { path: "post/new", element: <PostWrite /> },
+          {
+            path: "meet",
+            element: <MeetLayout />,
+            children: [
+              { path: "chat", element: <Chat /> },
+              { path: "waiting", element: <WaitingRoom /> },
+            ],
+          },
         ],
       },
     ],
