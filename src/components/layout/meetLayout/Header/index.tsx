@@ -1,6 +1,6 @@
 import Button from "@/components/common/Button";
 import IconLabel from "@/components/common/IconLabel";
-import { Container, NavWrapper } from "./style";
+import { Container, LogoWrapper, NavWrapper } from "./style";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BiChat } from "react-icons/bi";
 import { BsHeadphones } from "react-icons/bs";
@@ -12,7 +12,7 @@ const Header = () => {
 
   return (
     <Container>
-      <div>
+      <LogoWrapper>
         <IconLabel
           icon={isChat ? <BiChat /> : <BsHeadphones />}
           gap="1rem"
@@ -22,7 +22,7 @@ const Header = () => {
         >
           {isChat ? "전체 채팅방" : "화상 회의 대기실"}
         </IconLabel>
-      </div>
+      </LogoWrapper>
       <NavWrapper>
         <Button
           onClick={() => navigate("chat")}

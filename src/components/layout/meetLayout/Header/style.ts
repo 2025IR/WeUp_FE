@@ -12,6 +12,13 @@ export const Container = styled.div`
   border-radius: ${({ theme }) => theme.radius.md};
 `;
 
+export const LogoWrapper = styled.div`
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+`;
+
 export const NavWrapper = styled.div`
   display: flex;
   gap: 0.625rem;
