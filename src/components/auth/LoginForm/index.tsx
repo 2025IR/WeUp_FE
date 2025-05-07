@@ -5,11 +5,13 @@ import { useState } from "react";
 import { useLoginMutation } from "@/query/auth/useLoginMutation";
 import { useDispatch } from "react-redux";
 import { setAccessToken } from "@/store/auth";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { mutate, isPending } = useLoginMutation({
     onSuccess: (res) => {
@@ -20,6 +22,7 @@ const LoginForm = () => {
         })
       );
       console.log("✅ 로그인 성공!");
+      navigate("/projects");
     },
     onError: (err) => {
       console.error("❌ 로그인 실패", err.response?.data.message);
