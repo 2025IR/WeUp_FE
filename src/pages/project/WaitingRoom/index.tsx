@@ -28,7 +28,13 @@ const WaitingRoom = () => {
     setIsCamOn((prev) => !prev);
   };
 
-  const handleJoinMeeting = () => {};
+  const handleJoinMeeting = () => {
+    window.open(
+      `/meeting/1`,
+      "_blank",
+      "width=1200,height=800,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,noopener,noreferrer"
+    );
+  };
 
   const { videoRef, stream } = useMediaStream(isMicOn, isCamOn);
 
