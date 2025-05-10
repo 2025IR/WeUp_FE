@@ -1,5 +1,11 @@
+import BoardHeader from "@/components/project/board/Header";
+
 const Board = () => {
-  return <div>Board</div>;
+  return (
+    <div>
+      <BoardHeader />
+    </div>
+  );
 };
 
 export default Board;

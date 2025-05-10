@@ -1,0 +1,65 @@
+import styled from "@emotion/styled";
+
+export const Container = styled.div`
+  width: 100%;
+  padding: 1rem 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: ${({ theme }) => theme.radius.md};
+  background-color: ${({ theme }) => theme.colors.secondary};
+
+  > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+`;
+
+export const FilterSection = styled.div`
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+
+  > p {
+    font-size: ${({ theme }) => theme.fontSize.caption};
+    font-weight: ${({ theme }) => theme.fontWeight.medium};
+    color: ${({ theme }) => theme.colors.textLight};
+  }
+
+  > div {
+    height: 100%;
+    display: flex;
+    gap: 1rem;
+  }
+`;
+
+export const SearchBox = styled.div`
+  width: 18.75rem;
+  height: 100%;
+  padding: 0 1rem;
+
+  display: flex;
+  align-items: center;
+
+  border-radius: 1.25rem;
+  background-color: ${({ theme }) => theme.colors.background};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+
+  > input {
+    flex: 1;
+    height: 100%;
+
+    font-size: ${({ theme }) => theme.fontSize.caption};
+    color: ${({ theme }) => theme.colors.text};
+  }
+
+  > svg {
+    width: ${({ theme }) => theme.icon.sm};
+    height: ${({ theme }) => theme.icon.sm};
+  }
+`;
