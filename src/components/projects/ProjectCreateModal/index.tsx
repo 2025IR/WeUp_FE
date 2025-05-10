@@ -4,27 +4,57 @@ import { ModalContainer, UploadButton } from "./style";
 import Input from "@/components/common/Input";
 import IconLabel from "@/components/common/IconLabel";
 import { ProjectCreateModalProps } from "./type";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCreateProject } from "@/query/project/useCteateProject";
 
-const ProjectCreateModal = ({
-  isOpen,
-  onClose,
-  onClick,
-}: ProjectCreateModalProps) => {
+const ProjectCreateModal = ({ isOpen, onClose }: ProjectCreateModalProps) => {
+  const [projectName, setProjectName] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
   const [previewUrl, setPreviewUrl] = useState<string>("");
+
+  // 프로젝트 생성 이후 데이터 다시 받아오기 위해 이용
+  const queryClient = useQueryClient();
+  const { mutate } = useCreateProject({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projectList"] });
+      onClose();
+    },
+  });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setImageFile(file);
     setPreviewUrl(URL.createObjectURL(file));
   };
+
+  const handleSubmit = () => {
+    if (!projectName) return alert("프로젝트 이름을 입력해주세요.");
+    const formData = new FormData();
+    formData.append("projectName", projectName);
+    if (imageFile) formData.append("file", imageFile);
+
+    mutate(formData);
+
+    onClose();
+  };
+
+  useEffect(() => {
+    if (!isOpen) {
+      setProjectName("");
+      setImageFile(null);
+      setPreviewUrl("");
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   return (
     <Modal
       type="form"
-      onClick={onClick}
+      onClick={handleSubmit}
       onClose={onClose}
       buttonText="Create project"
       icon={<AiFillFolderAdd />}
@@ -39,7 +69,7 @@ const ProjectCreateModal = ({
           alt="project profile priview"
         />
         <div>
-          <Input label="Project Name:" />
+          <Input label="Project Name:" onChange={setProjectName} />
           <UploadButton as="label">
             <input type="file" accept="image/*" onChange={handleImageChange} />
             <IconLabel

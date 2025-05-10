@@ -11,10 +11,10 @@ const Projects = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: projects, isLoading, isError } = useProjectList();
+  console.log(projects);
 
   const handleClose = () => setIsModalOpen(false);
   const handleOpen = () => setIsModalOpen(true);
-  const handleModalClick = () => {};
 
   return (
     <Container>
@@ -34,18 +34,14 @@ const Projects = () => {
               id={project.projectId}
               name={project.projectName}
               icon={project.projectImage}
-              people={project.people}
-              last_access_time={project.last_access_time}
+              people={project.memberCount}
+              final_time={project.finalTime}
               onClick={() => navigate(`/project/${project.projectId}`)}
             />
           ))}
       </Main>
 
-      <ProjectCreateModal
-        isOpen={isModalOpen}
-        onClose={handleClose}
-        onClick={handleModalClick}
-      />
+      <ProjectCreateModal isOpen={isModalOpen} onClose={handleClose} />
     </Container>
   );
 };
