@@ -1,5 +1,13 @@
+import MeetingHeader from "@/components/project/meeting/Header";
+import { Container, Main } from "./style";
+
 const Meeting = () => {
-  return <div>Meeting</div>;
+  return (
+    <Container>
+      <MeetingHeader />
+      <Main></Main>
+    </Container>
+  );
 };
 
 export default Meeting;
