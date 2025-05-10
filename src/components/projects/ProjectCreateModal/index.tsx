@@ -64,7 +64,7 @@ const ProjectCreateModal = ({ isOpen, onClose }: ProjectCreateModalProps) => {
         <img
           src={
             previewUrl ||
-            "https://pixabay.com/get/gd18b5061c19770af1bbd98ff5f270e14287f99abedbbb2f40f7da254c6ffffede7381e165b8c0c5a31ff8b13f62fb279b815dcaed0017039c8939cb3d680f9ee73f2c2dc54073dc1fd4657769d3a74fb_640.jpg"
+            "https://we-up-public.s3.ap-northeast-2.amazonaws.com/smiley1.png"
           }
           alt="project profile priview"
         />

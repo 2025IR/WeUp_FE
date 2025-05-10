@@ -7,7 +7,7 @@ import ProjectNav from "../Navigation";
 export const mockProject = {
   projectName: "Rumon",
   projectImage:
-    "https://pixabay.com/get/geca407ebc7c8a30811e4f7b6fca561a04a8556ee59e344a48132694985ff4d12120e36c9ac33e3734f2fd2286ad6d2f5bf528367bc8dd3206e778fe6fb2959c9f2e12ee52cd4e4a7ecd3837583aed750_640.jpg",
+    "https://we-up-public.s3.ap-northeast-2.amazonaws.com/smiley1.png",
   description: "생성형 AI를 이용한 게이미케이션 투두 앱",
 };
 
