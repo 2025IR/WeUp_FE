@@ -9,11 +9,13 @@ import {
   Container,
   InfoSection,
   MeetingCard,
+  Overlay,
   ToggleButton,
   VideoPreview,
 } from "./style";
 import Button from "@/components/common/Button";
 import { useState } from "react";
+import { useMediaStream } from "@/hooks/useMediaStream";
 
 const WaitingRoom = () => {
   const [isMicOn, setIsMicOn] = useState(true);
@@ -27,10 +29,29 @@ const WaitingRoom = () => {
   };
 
   const handleJoinMeeting = () => {};
+
+  const { videoRef, stream } = useMediaStream(isMicOn, isCamOn);
+
   return (
     <Container>
       <MeetingCard>
-        <VideoPreview>{/* 화상화면 */}</VideoPreview>
+        <VideoPreview>
+          {/* 항상 video 태그는 유지 */}
+          <video ref={videoRef} autoPlay playsInline muted />
+
+          {/* 로딩 중일 때 오버레이 */}
+          {stream === null && <Overlay>로딩중</Overlay>}
+
+          {/* 카메라 꺼졌을 때 오버레이 */}
+          {!isCamOn && (
+            <Overlay>
+              <img
+                src="https://we-up-public.s3.ap-northeast-2.amazonaws.com/smiley3.png"
+                alt="user_profile_image"
+              />
+            </Overlay>
+          )}
+        </VideoPreview>
         <InfoSection>
           <h1>Rumon 화상회의실</h1>
           <p>0/4</p>

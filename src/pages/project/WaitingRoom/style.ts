@@ -18,6 +18,36 @@ export const MeetingCard = styled.div`
 export const VideoPreview = styled.div`
   width: 32rem;
   height: 20rem;
+  position: relative;
+
+  overflow: hidden;
+  border-radius: ${({ theme }) => theme.radius.lg};
+
+  > video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+export const Overlay = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: ${({ theme }) => theme.colors.secondary};
+
+  > img {
+    width: 8.75rem;
+    height: 8.75rem;
+    border-radius: ${({ theme }) => theme.radius.full};
+  }
 `;
 
 export const InfoSection = styled.div`
