@@ -26,7 +26,7 @@ const Header = () => {
           </UserInfo>
 
           <img
-            src="https://pixabay.com/get/ga883c5369a2e4fb6ee4343c04972f15fec8b0a3357f26bb30ce697ca4ce2e6262db674fd27bbe286433358fad1c22d041d18d2fd32d0869e065edbdf4d703b8ee8809a17e0e28dac7387f9b4030c57ed_640.png"
+            src="https://we-up-public.s3.ap-northeast-2.amazonaws.com/smiley3.png"
             alt="profile-iamge"
           />
         </UserSection>

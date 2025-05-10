@@ -38,7 +38,7 @@ const AuthCard = ({ mode, onChangeMode }: AuthCardProps) => {
       <SideSection>
         {/* 추후 이미지 추가 예정 */}
         <img
-          src="https://pixabay.com/get/gb02fdab7a65ffc304f2dd11ab169ebf8de1c878ef5aff546c8ef89caf218a882e9573125bcb28ae718203f0a49beb29179640439438596c3bb2c7b00836572eb93af0e9d5d8e5ae9fed85dc9a7e2d993_640.png"
+          src="https://we-up-public.s3.ap-northeast-2.amazonaws.com/smiley3.png"
           alt="image"
         />
       </SideSection>

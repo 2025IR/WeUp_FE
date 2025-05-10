@@ -4,17 +4,17 @@ const SOCIAL_PROVIDERS = [
   {
     name: "Google",
     url: "https://your-api.com/auth/google",
-    icon: "https://pixabay.com/get/gb02fdab7a65ffc304f2dd11ab169ebf8de1c878ef5aff546c8ef89caf218a882e9573125bcb28ae718203f0a49beb29179640439438596c3bb2c7b00836572eb93af0e9d5d8e5ae9fed85dc9a7e2d993_640.png",
+    icon: "https://we-up-public.s3.ap-northeast-2.amazonaws.com/google.png",
   },
   {
     name: "Kakao",
     url: "https://your-api.com/auth/kakao",
-    icon: "https://pixabay.com/get/gb02fdab7a65ffc304f2dd11ab169ebf8de1c878ef5aff546c8ef89caf218a882e9573125bcb28ae718203f0a49beb29179640439438596c3bb2c7b00836572eb93af0e9d5d8e5ae9fed85dc9a7e2d993_640.png",
+    icon: "https://we-up-public.s3.ap-northeast-2.amazonaws.com/kakao_talk__1__gbT_icon.ico",
   },
   {
     name: "Naver",
     url: "https://your-api.com/auth/naver",
-    icon: "https://pixabay.com/get/gb02fdab7a65ffc304f2dd11ab169ebf8de1c878ef5aff546c8ef89caf218a882e9573125bcb28ae718203f0a49beb29179640439438596c3bb2c7b00836572eb93af0e9d5d8e5ae9fed85dc9a7e2d993_640.png",
+    icon: "https://we-up-public.s3.ap-northeast-2.amazonaws.com/naver.png",
   },
 ];
 
