@@ -9,6 +9,7 @@ import {
   Container,
   InfoSection,
   MeetingCard,
+  Overlay,
   ToggleButton,
   VideoPreview,
 } from "./style";
@@ -29,12 +30,27 @@ const WaitingRoom = () => {
 
   const handleJoinMeeting = () => {};
 
-  const { videoRef } = useMediaStream(isMicOn, isCamOn);
+  const { videoRef, stream } = useMediaStream(isMicOn, isCamOn);
+
   return (
     <Container>
       <MeetingCard>
         <VideoPreview>
+          {/* 항상 video 태그는 유지 */}
           <video ref={videoRef} autoPlay playsInline muted />
+
+          {/* 로딩 중일 때 오버레이 */}
+          {stream === null && <Overlay>로딩중</Overlay>}
+
+          {/* 카메라 꺼졌을 때 오버레이 */}
+          {!isCamOn && (
+            <Overlay>
+              <img
+                src="https://we-up-public.s3.ap-northeast-2.amazonaws.com/smiley3.png"
+                alt="user_profile_image"
+              />
+            </Overlay>
+          )}
         </VideoPreview>
         <InfoSection>
           <h1>Rumon 화상회의실</h1>
