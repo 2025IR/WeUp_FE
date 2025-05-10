@@ -14,6 +14,7 @@ import {
 } from "./style";
 import Button from "@/components/common/Button";
 import { useState } from "react";
+import { useMediaStream } from "@/hooks/useMediaStream";
 
 const WaitingRoom = () => {
   const [isMicOn, setIsMicOn] = useState(true);
@@ -27,10 +28,14 @@ const WaitingRoom = () => {
   };
 
   const handleJoinMeeting = () => {};
+
+  const { videoRef } = useMediaStream(isMicOn, isCamOn);
   return (
     <Container>
       <MeetingCard>
-        <VideoPreview>{/* 화상화면 */}</VideoPreview>
+        <VideoPreview>
+          <video ref={videoRef} autoPlay playsInline muted />
+        </VideoPreview>
         <InfoSection>
           <h1>Rumon 화상회의실</h1>
           <p>0/4</p>

@@ -18,6 +18,16 @@ export const MeetingCard = styled.div`
 export const VideoPreview = styled.div`
   width: 32rem;
   height: 20rem;
+
+  border-radius: ${({ theme }) => theme.radius.lg};
+
+  > video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    border-radius: ${({ theme }) => theme.radius.lg};
+  }
 `;
 
 export const InfoSection = styled.div`
