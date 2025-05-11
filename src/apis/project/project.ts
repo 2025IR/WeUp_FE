@@ -20,3 +20,13 @@ export const getProjectInfo = async (project_id: number) => {
   });
   return res.data.data;
 };
+
+// 프로젝트 설명 수정
+export const updateProjectDescription = async (
+  project_id: number,
+  description: string
+) => {
+  await instance.put(`/project/edit/description/${project_id}`, null, {
+    params: { description },
+  });
+};

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BiCheck, BiEditAlt } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import { StyledButton, StyledTextarea, Wrapper } from "./style";
+import { useUpdateDescription } from "@/query/project/useUpdateDescription";
 
 const Description = () => {
   const { projectId } = useParams();
@@ -12,9 +13,21 @@ const Description = () => {
   const [isEditable, setIsEditable] = useState(false);
   const [description, setDescription] = useState("");
 
+  const mutation = useUpdateDescription();
+
   const handleEdit = () => {
     if (isEditable) {
-      console.log("수정", description);
+      mutation.mutate(
+        { project_id, description },
+        {
+          onSuccess: () => {
+            console.log("수정 완료");
+          },
+          onError: (err) => {
+            console.error("수정 실패", err);
+          },
+        }
+      );
     }
     setIsEditable((prev) => !prev);
   };
