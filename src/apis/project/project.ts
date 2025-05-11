@@ -15,6 +15,8 @@ export const createProject = async (data: FormData): Promise<void> =>
 
 // 프로젝트 조회
 export const getProjectInfo = async (project_id: number) => {
-  const res = await instance.post("/project/info", { project_id });
+  const res = await instance.post(`/project/detail/${project_id}`, {
+    project_id,
+  });
   return res.data.data;
 };
