@@ -5,13 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useProjectList } from "@/query/project/useProjectList";
 import ProjectCreateModal from "@/components/projects/ProjectCreateModal";
+import { useDispatch } from "react-redux";
+import { setProject } from "@/store/project";
 
 const Projects = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: projects, isLoading, isError } = useProjectList();
-  console.log(projects);
 
   const handleClose = () => setIsModalOpen(false);
   const handleOpen = () => setIsModalOpen(true);
@@ -36,7 +38,16 @@ const Projects = () => {
               icon={project.projectImage}
               people={project.memberCount}
               final_time={project.finalTime}
-              onClick={() => navigate(`/project/${project.projectId}`)}
+              onClick={() => {
+                dispatch(
+                  setProject({
+                    id: project.projectId,
+                    name: project.projectName,
+                    image: project.projectImage,
+                  })
+                );
+                navigate(`/project/${project.projectId}/home`);
+              }}
             />
           ))}
       </Main>

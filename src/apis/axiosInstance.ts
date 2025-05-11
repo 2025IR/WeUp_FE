@@ -7,7 +7,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-  const token = store.getState().auth.accessToken;
+  const token = store.getState().auth;
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -19,7 +19,7 @@ instance.interceptors.response.use(
   (err) => {
     if (err.response?.status === 401) {
       // 추후 자동 토큰 재발급 로직 추가 예정.
-      // window.location.href = "/login";
+      window.location.href = "/auth";
     }
     return Promise.reject(err);
   }
