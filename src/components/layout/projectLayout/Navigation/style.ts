@@ -11,6 +11,7 @@ export const NavItem = styled.div<{ active: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   font-weight: ${({ theme }) => theme.fontWeight.semibold};
   color: ${({ theme, active }) =>

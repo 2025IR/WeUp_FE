@@ -5,6 +5,7 @@ export const StyledButton = styled.button<ButtonStyledPorps>`
   display: flex;
   align-content: center;
   justify-content: center;
+  cursor: pointer;
 
   // 크기, 아이콘 버튼 스타일
   ${({ iconOnly, size, theme }) => {

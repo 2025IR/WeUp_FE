@@ -40,7 +40,7 @@ const WaitingRoom = () => {
   const handleJoinMeeting = () => {
     // navigate(`/meeting/${projectId}`);
     window.open(
-      `/meeting/${projectId}`,
+      `/meeting/${projectId}?isMicOn=${isMicOn}&isCamOn=${isCamOn}`,
       "_blank",
       "width=932,height=808,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,noopener,noreferrer"
     );
