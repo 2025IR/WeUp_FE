@@ -4,8 +4,8 @@ import { FormContainer } from "./style";
 import { useState } from "react";
 import { useLoginMutation } from "@/query/auth/useLoginMutation";
 import { useDispatch } from "react-redux";
-import { setAccessToken } from "@/store/auth";
 import { useNavigate } from "react-router-dom";
+import { setAccessToken } from "@/store/auth";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -15,12 +15,7 @@ const LoginForm = () => {
 
   const { mutate, isPending } = useLoginMutation({
     onSuccess: (res) => {
-      dispatch(
-        setAccessToken({
-          accessToken: res.accessToken,
-          refreshToken: res.refreshToken,
-        })
-      );
+      dispatch(setAccessToken(res.accessToken));
       console.log("✅ 로그인 성공!");
       navigate("/projects");
     },
