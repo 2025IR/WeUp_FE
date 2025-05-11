@@ -7,7 +7,7 @@ const tabs = [
   { label: "Task", path: "task" },
   { label: "Team", path: "team" },
   { label: "Board", path: "board" },
-  { label: "Meet", path: "meet" },
+  { label: "Meet", path: "meet/chat" },
 ];
 
 const ProjectNav = () => {

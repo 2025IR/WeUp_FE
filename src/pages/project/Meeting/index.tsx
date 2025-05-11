@@ -1,6 +1,6 @@
 import MeetingHeader from "@/components/project/meeting/Header";
 import { Container, Main } from "./style";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { LiveKitRoom, VideoConference } from "@livekit/components-react";
 import "@livekit/components-styles/index.css";
 // import { useEnterMeeting } from "@/query/meeting/useEnterMeeting";
@@ -14,6 +14,9 @@ const apiSecret = import.meta.env.VITE_API_SECRET;
 
 const Meeting = () => {
   const { projectId } = useParams();
+  const [searchParams] = useSearchParams();
+  const isMicOn = searchParams.get("isMicOn") === "true";
+  const isCamOn = searchParams.get("isCamOn") === "true";
   // const project_id = Number(projectId);
   // 임시 토큰
   const [token, setToken] = useState<string | null>(null);
@@ -45,7 +48,13 @@ const Meeting = () => {
     <Container>
       <MeetingHeader />
       <Main>
-        <LiveKitRoom token={token} serverUrl={serverUrl} connect>
+        <LiveKitRoom
+          token={token}
+          serverUrl={serverUrl}
+          connect
+          video={isCamOn}
+          audio={isMicOn}
+        >
           <VideoConference />
         </LiveKitRoom>
       </Main>
