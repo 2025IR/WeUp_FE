@@ -5,7 +5,7 @@ const ProjectCard = ({
   name,
   icon,
   people,
-  last_access_time,
+  final_time,
   onClick,
 }: ProjectCardProps) => {
   return (
@@ -14,7 +14,7 @@ const ProjectCard = ({
       <InfoWrapper>
         <h2>{name}</h2>
         <p>
-          {people}명 · {last_access_time}일 전
+          {people}명 · {final_time}일 전
         </p>
       </InfoWrapper>
     </Container>

@@ -12,8 +12,16 @@ import {
 } from "./style";
 import ProjectsList from "../ProjectsList";
 import ThemeToggle from "../ThemeToggle";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SideNav = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const path = location.pathname;
+
+  const isActive = (keyword: string) => path.includes(keyword);
+
   return (
     <Container>
       <NavWrapper>
@@ -21,7 +29,10 @@ const SideNav = () => {
         <NavItem>
           <IconLabel icon={<HiHome />}>Home</IconLabel>
         </NavItem>
-        <NavItem>
+        <NavItem
+          active={isActive("/projects")}
+          onClick={() => navigate("/projects")}
+        >
           <IconLabel icon={<MdDashboard />}>Projects</IconLabel>
         </NavItem>
       </NavWrapper>
