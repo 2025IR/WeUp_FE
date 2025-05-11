@@ -1,6 +1,6 @@
 import { useProjectInfo } from "@/query/project/useProjectInfo";
-import { useState } from "react";
-import { BiEditAlt } from "react-icons/bi";
+import { useEffect, useState } from "react";
+import { BiCheck, BiEditAlt } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import { StyledButton, StyledTextarea, Wrapper } from "./style";
 
@@ -10,6 +10,20 @@ const Description = () => {
 
   const { data, isLoading, error } = useProjectInfo(project_id);
   const [isEditable, setIsEditable] = useState(false);
+  const [description, setDescription] = useState("");
+
+  const handleEdit = () => {
+    if (isEditable) {
+      console.log("수정", description);
+    }
+    setIsEditable((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (data?.description) {
+      setDescription(data.description);
+    }
+  }, [data]);
 
   if (isLoading) return <p>로딩 중...</p>;
   if (error) return <p>에러 발생</p>;
@@ -17,12 +31,13 @@ const Description = () => {
   return (
     <Wrapper>
       <StyledTextarea
-        value={data.description}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
         readOnly={!isEditable}
         rows={3}
       />
-      <StyledButton>
-        <BiEditAlt />
+      <StyledButton onClick={handleEdit}>
+        {isEditable ? <BiCheck /> : <BiEditAlt />}
       </StyledButton>
     </Wrapper>
   );
