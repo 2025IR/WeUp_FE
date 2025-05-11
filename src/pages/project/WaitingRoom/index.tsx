@@ -16,11 +16,11 @@ import {
 import Button from "@/components/common/Button";
 import { useState } from "react";
 import { useMediaStream } from "@/hooks/useMediaStream";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useMeetingCount } from "@/query/meeting/useMeetingCount";
 
 const WaitingRoom = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { projectId } = useParams();
   const project_id = Number(projectId);
 
@@ -38,12 +38,12 @@ const WaitingRoom = () => {
   };
 
   const handleJoinMeeting = () => {
-    navigate(`/meeting/${projectId}`);
-    // window.open(
-    //   `/meeting/${projectId}`,
-    //   "_blank",
-    //   "width=1200,height=800,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,noopener,noreferrer"
-    // );
+    // navigate(`/meeting/${projectId}`);
+    window.open(
+      `/meeting/${projectId}`,
+      "_blank",
+      "width=932,height=808,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,noopener,noreferrer"
+    );
   };
 
   const { videoRef, stream } = useMediaStream(isMicOn, isCamOn);
