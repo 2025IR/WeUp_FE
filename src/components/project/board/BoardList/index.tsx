@@ -1,5 +1,6 @@
 import {
   BoardLabel,
+  BoardMain,
   CardInfo,
   CardWrapper,
   ListContainer,
@@ -7,6 +8,16 @@ import {
 } from "./style";
 import IconLabel from "@/components/common/IconLabel";
 import { BoardListProps } from "./type";
+import { AiOutlinePaperClip } from "react-icons/ai";
+
+const formatDate = (datetime: string | null) => {
+  if (!datetime) return "날짜 없음";
+  const date = new Date(datetime);
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
+  return `${year}.${month}.${day}`;
+};
 
 const BoardList = ({ posts, isLoading }: BoardListProps) => {
   if (isLoading) return <p>로딩 중...</p>;
@@ -17,14 +28,19 @@ const BoardList = ({ posts, isLoading }: BoardListProps) => {
       {posts.map((post) => (
         <CardWrapper key={post.boardId}>
           <CardInfo>
-            <BoardLabel>{post.tag}</BoardLabel>
-            <p>{post.title}</p>
+            <BoardLabel tag={post.tag}>
+              <p>{post.tag}</p>
+            </BoardLabel>
+            <BoardMain>
+              <p>{post.title}</p>
+              {post.hasFile && <AiOutlinePaperClip />}
+            </BoardMain>
           </CardInfo>
           <UserInfo>
-            <IconLabel size="md" full icon={post.profileImage}>
+            <IconLabel type="image" size="lg" full icon={post.profileImage}>
               {post.nickname}
             </IconLabel>
-            <p>{post.boardCreatedTime || "작성일 없음"}</p>
+            <p>{formatDate(post.boardCreatedTime)}</p>
           </UserInfo>
         </CardWrapper>
       ))}

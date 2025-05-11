@@ -1,7 +1,7 @@
 import Button from "@/components/common/Button";
 import { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { Container, FilterSection, SearchBox } from "./style";
+import { Container, FilterSection, SearchBox, StyledSelect } from "./style";
 import { BoardHeaderProps } from "./type";
 
 const BoardHeader = ({ tag, search, onFilterChange }: BoardHeaderProps) => {
@@ -21,7 +21,7 @@ const BoardHeader = ({ tag, search, onFilterChange }: BoardHeaderProps) => {
         <FilterSection>
           <p>총 6건</p>
           <div>
-            <select
+            <StyledSelect
               value={tag ?? "전체"}
               onChange={(e) => {
                 const value = e.target.value;
@@ -32,7 +32,8 @@ const BoardHeader = ({ tag, search, onFilterChange }: BoardHeaderProps) => {
               <option value="공지">공지</option>
               <option value="회의록">회의록</option>
               <option value="파일">파일</option>
-            </select>
+              <option value="기타">기타</option>
+            </StyledSelect>
             <SearchBox>
               <input
                 type="text"

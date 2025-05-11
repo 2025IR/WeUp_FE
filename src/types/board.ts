@@ -12,4 +12,5 @@ export interface BoardCardProps {
   profileImage: string;
   boardCreatedTime: string | null;
   tag: string;
+  hasFile: boolean;
 }

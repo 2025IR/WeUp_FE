@@ -38,6 +38,23 @@ export const FilterSection = styled.div`
   }
 `;
 
+// 추후 react-select 사용하여 리펙토링 예정
+export const StyledSelect = styled.select`
+  width: 7rem;
+  padding: 0 1rem;
+
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 1.25rem;
+  font-size: ${({ theme }) => theme.fontSize.caption};
+  color: ${({ theme }) => theme.colors.textLight};
+  background-color: ${({ theme }) => theme.colors.background};
+
+  &:focus {
+    outline: none;
+    border: 1px solid ${({ theme }) => theme.colors.border};
+  }
+`;
+
 export const SearchBox = styled.div`
   width: 18.75rem;
   height: 100%;
@@ -59,7 +76,7 @@ export const SearchBox = styled.div`
   }
 
   > svg {
-    width: ${({ theme }) => theme.icon.sm};
-    height: ${({ theme }) => theme.icon.sm};
+    width: ${({ theme }) => theme.icon.md};
+    height: ${({ theme }) => theme.icon.md};
   }
 `;

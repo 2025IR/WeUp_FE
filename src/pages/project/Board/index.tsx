@@ -4,6 +4,7 @@ import BoardHeader from "@/components/project/board/Header";
 import { useBoardList } from "@/query/board/useBoardList";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { BoardContainer, ContentWrapper } from "./style";
 
 const Board = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -21,10 +22,8 @@ const Board = () => {
     page: filters.page,
   });
 
-  console.log(data.totalPages);
-
   return (
-    <div>
+    <BoardContainer>
       <BoardHeader
         tag={filters.tag}
         search={filters.search}
@@ -32,15 +31,17 @@ const Board = () => {
           setFilters({ ...filters, tag, search, page: 0 })
         }
       />
-      <BoardList posts={data?.content || []} isLoading={isLoading} />
-      <BoardPagination
-        currentPage={filters.page}
-        totalPages={data?.totalPages || 1}
-        onPageChange={(newPage) =>
-          setFilters((prev) => ({ ...prev, page: newPage }))
-        }
-      />
-    </div>
+      <ContentWrapper>
+        <BoardList posts={data?.content || []} isLoading={isLoading} />
+        <BoardPagination
+          currentPage={filters.page}
+          totalPages={data?.totalPages || 1}
+          onPageChange={(newPage) =>
+            setFilters((prev) => ({ ...prev, page: newPage }))
+          }
+        />
+      </ContentWrapper>
+    </BoardContainer>
   );
 };
 
