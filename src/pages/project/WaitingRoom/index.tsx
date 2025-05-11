@@ -16,10 +16,19 @@ import {
 import Button from "@/components/common/Button";
 import { useState } from "react";
 import { useMediaStream } from "@/hooks/useMediaStream";
+import { useParams } from "react-router-dom";
+import { useMeetingCount } from "@/query/meeting/useMeetingCount";
 
 const WaitingRoom = () => {
+  // const navigate = useNavigate();
+  const { projectId } = useParams();
+  const project_id = Number(projectId);
+
+  const { data: count } = useMeetingCount(project_id);
   const [isMicOn, setIsMicOn] = useState(true);
   const [isCamOn, setIsCamOn] = useState(true);
+
+  console.log(`인원 수 ${count}`);
 
   const toggleMic = () => {
     setIsMicOn((prev) => !prev);
@@ -28,7 +37,14 @@ const WaitingRoom = () => {
     setIsCamOn((prev) => !prev);
   };
 
-  const handleJoinMeeting = () => {};
+  const handleJoinMeeting = () => {
+    // navigate(`/meeting/${projectId}`);
+    window.open(
+      `/meeting/${projectId}`,
+      "_blank",
+      "width=932,height=808,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,noopener,noreferrer"
+    );
+  };
 
   const { videoRef, stream } = useMediaStream(isMicOn, isCamOn);
 
