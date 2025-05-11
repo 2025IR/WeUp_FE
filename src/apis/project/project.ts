@@ -12,3 +12,9 @@ export const createProject = async (data: FormData): Promise<void> =>
   await instance.post("/project/create", data, {
     headers: { "Content-Type": "multipart/form-data" },
   });
+
+// 프로젝트 조회
+export const getProjectInfo = async (project_id: number) => {
+  const res = await instance.post("/project/info", { project_id });
+  return res.data.data;
+};
