@@ -73,10 +73,6 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
       formData.append("projectImage", image);
     }
 
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
-
     mutate({
       projectId: Number(projectId),
       data: formData,
