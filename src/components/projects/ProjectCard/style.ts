@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const Container = styled.div`
+export const Container = styled.div<{ status: boolean }>`
   width: 100%;
 
   display: flex;
@@ -14,6 +14,12 @@ export const Container = styled.div`
 
     border-radius: ${({ theme }) => theme.radius.lg};
     object-fit: cover;
+
+    ${({ status }) =>
+      !status &&
+      `
+      filter: brightness(0.3); // 어둡게
+    `}
   }
 
   &:hover {

@@ -5,4 +5,5 @@ export interface ProjectType {
   memberCount: number;
   finalTime: string;
   projectCreatedTime: string;
+  status: boolean;
 }

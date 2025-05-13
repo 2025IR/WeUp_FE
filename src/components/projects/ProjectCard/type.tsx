@@ -3,6 +3,7 @@ export type ProjectCardProps = {
   name: string;
   icon: string;
   people: number;
-  final_time: string;
+  project_created_time: string;
+  status: boolean;
   onClick?: () => void;
 };
