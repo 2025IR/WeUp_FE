@@ -21,5 +21,5 @@ export interface ProjectInfo {
 
 // 프로젝트 저장
 export interface ProjectStoreInfo extends ProjectInfo {
-  id: number;
+  id: number | null;
 }
