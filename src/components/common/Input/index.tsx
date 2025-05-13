@@ -8,6 +8,7 @@ import Button from "../Button";
 
 const Input = ({
   type = "text",
+  value = "",
   status = "normal",
   message,
   label,
@@ -15,7 +16,7 @@ const Input = ({
   onButtonClick,
   onChange,
 }: InputProps) => {
-  const [value, setValue] = useState("");
+  const [internalValue, setInternalValue] = useState(value);
   const [inputStatus, setInputStatus] = useState<
     "normal" | "success" | "error"
   >(status);
@@ -27,7 +28,7 @@ const Input = ({
   }, [status, message]);
 
   useEffect(() => {
-    if (value === "") {
+    if (internalValue === "") {
       setInputStatus("normal");
       setInnerMessage("");
       return;
@@ -35,7 +36,7 @@ const Input = ({
 
     switch (type) {
       case "email":
-        if (validateEmail(value)) {
+        if (validateEmail(internalValue)) {
           setInputStatus("success");
           setInnerMessage("");
         } else {
@@ -45,7 +46,7 @@ const Input = ({
         break;
 
       case "password":
-        if (validatePassword(value)) {
+        if (validatePassword(internalValue)) {
           setInputStatus("success");
           setInnerMessage("");
         } else {
@@ -55,7 +56,7 @@ const Input = ({
         break;
 
       case "text":
-        if (validateName(value)) {
+        if (validateName(internalValue)) {
           setInputStatus("success");
           setInnerMessage("");
         } else {
@@ -67,11 +68,11 @@ const Input = ({
       default:
         break;
     }
-  }, [value]);
+  }, [internalValue]);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const newValue = e.target.value;
-    setValue(newValue);
+    setInternalValue(newValue);
     onChange?.(newValue);
   };
 
@@ -82,7 +83,7 @@ const Input = ({
         <StyledInput status={inputStatus}>
           <input
             type={type}
-            value={value}
+            value={internalValue}
             maxLength={30}
             onChange={handleChange}
           />

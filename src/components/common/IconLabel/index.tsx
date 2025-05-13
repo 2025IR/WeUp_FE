@@ -11,6 +11,7 @@ const IconLabel = ({
   fontWeight = "medium",
   gap = "1rem",
   full = false,
+  onClick,
 }: IconLabelProps) => {
   return (
     <Wrapper
@@ -21,6 +22,7 @@ const IconLabel = ({
       fontSize={fontSize}
       fontWeight={fontWeight}
       full={full}
+      onClick={onClick}
     >
       {type === "image" ? <img src={icon as string} /> : icon}
       <p>{children}</p>

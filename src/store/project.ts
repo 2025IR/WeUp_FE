@@ -4,12 +4,16 @@ interface ProjectState {
   id: number | null;
   name: string;
   image: string;
+  isContactVisible: boolean;
+  status: "active" | "completed";
 }
 
 const initialState: ProjectState = {
   id: null,
   name: "",
   image: "",
+  isContactVisible: false,
+  status: "active",
 };
 
 const projectSlice = createSlice({
