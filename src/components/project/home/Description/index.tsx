@@ -4,12 +4,19 @@ import { BiCheck, BiEditAlt } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import { StyledButton, StyledTextarea, Wrapper } from "./style";
 import { useUpdateDescription } from "@/query/project/useUpdateDescription";
+import { useDispatch, useSelector } from "react-redux";
+import { setProject } from "@/store/project";
+import { RootState } from "@/store/store";
 
 const Description = () => {
   const { projectId } = useParams();
   const project_id = Number(projectId);
 
-  const { data, isLoading, error } = useProjectInfo(project_id);
+  const { data } = useProjectInfo(project_id);
+
+  const dispatch = useDispatch();
+  const project = useSelector((state: RootState) => state.project);
+
   const [isEditable, setIsEditable] = useState(false);
   const [description, setDescription] = useState("");
 
@@ -21,7 +28,7 @@ const Description = () => {
         { project_id, description },
         {
           onSuccess: () => {
-            console.log("수정 완료");
+            dispatch(setProject({ ...project, description }));
           },
           onError: (err) => {
             console.error("수정 실패", err);
@@ -37,9 +44,6 @@ const Description = () => {
       setDescription(data.description);
     }
   }, [data]);
-
-  if (isLoading) return <p>로딩 중...</p>;
-  if (error) return <p>에러 발생</p>;
 
   return (
     <Wrapper>

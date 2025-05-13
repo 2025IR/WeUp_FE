@@ -5,11 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useProjectList } from "@/query/project/useProjectList";
 import ProjectCreateModal from "@/components/projects/ProjectCreateModal";
-import { useDispatch } from "react-redux";
-import { setProject } from "@/store/project";
 
 const Projects = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -40,13 +37,6 @@ const Projects = () => {
               project_created_time={project.projectCreatedTime}
               status={project.status}
               onClick={() => {
-                dispatch(
-                  setProject({
-                    id: project.projectId,
-                    name: project.projectName,
-                    image: project.projectImage,
-                  })
-                );
                 navigate(`/project/${project.projectId}/home`);
               }}
             />
