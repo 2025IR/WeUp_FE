@@ -1,4 +1,4 @@
-import { ProjectType } from "@/types/project";
+import { ProjectInfo, ProjectType } from "@/types/project";
 import instance from "../axiosInstance";
 
 // 리스트 불러오기
@@ -14,7 +14,9 @@ export const createProject = async (data: FormData): Promise<void> =>
   });
 
 // 프로젝트 조회
-export const getProjectInfo = async (project_id: number) => {
+export const getProjectInfo = async (
+  project_id: number
+): Promise<ProjectInfo> => {
   const res = await instance.post(`/project/detail/${project_id}`);
   return res.data.data;
 };
