@@ -21,7 +21,9 @@ export const getProjectInfo = async (project_id: number) => {
 
 // 프로젝트 수정
 export const updateProject = async (project_id: number, data: FormData) => {
-  await instance.put(`/project/edit/${project_id}`, data);
+  await instance.put(`/project/edit/${project_id}`, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 };
 
 // 프로젝트 삭제

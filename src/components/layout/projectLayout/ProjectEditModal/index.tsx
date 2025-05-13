@@ -18,6 +18,7 @@ import Label from "@/components/common/Label";
 import { BiCheckbox, BiSolidCheckboxChecked } from "react-icons/bi";
 import { useUpdateProject } from "@/query/project/useUpdateProject";
 import { useParams } from "react-router-dom";
+import { useDeleteProject } from "@/query/project/useDeleteProject";
 
 const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
   const { projectId } = useParams();
@@ -39,8 +40,13 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
     },
   });
 
+  const { mutate: deleteProjectMutate } = useDeleteProject({
+    onSuccess: () => {},
+    onError: () => {},
+  });
+
   useEffect(() => {
-    if (!isOpen && projectState.id !== null) {
+    if (isOpen && projectState.id !== null) {
       setTitle(projectState.name);
       setImage(null);
       setPreviewUrl(projectState.image);
@@ -62,15 +68,23 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
     const formData = new FormData();
     formData.append("projectName", title);
     formData.append("status", String(status === "active"));
-    formData.append("isContactVisible", String(isContactVisible));
+    formData.append("isRevealedNumber", String(isContactVisible));
     if (image) {
-      formData.append("image", image);
+      formData.append("projectImage", image);
     }
+
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
 
     mutate({
       projectId: Number(projectId),
       data: formData,
     });
+  };
+
+  const handleDelete = () => {
+    deleteProjectMutate(Number(projectId));
   };
 
   return (
@@ -142,7 +156,7 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
         </Section>
 
         <DeleteSection>
-          <p>프로젝트 삭제하기</p>
+          <p onClick={handleDelete}>프로젝트 삭제하기</p>
         </DeleteSection>
       </ModalContainer>
     </Modal>
