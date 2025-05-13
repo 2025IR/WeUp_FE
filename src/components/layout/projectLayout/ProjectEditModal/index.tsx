@@ -16,15 +16,28 @@ import IconLabel from "@/components/common/IconLabel";
 import Input from "@/components/common/Input";
 import Label from "@/components/common/Label";
 import { BiCheckbox, BiSolidCheckboxChecked } from "react-icons/bi";
+import { useUpdateProject } from "@/query/project/useUpdateProject";
+import { useParams } from "react-router-dom";
 
 const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
+  const { projectId } = useParams();
+
   const [title, setTitle] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");
-  const [isContactVisible, setIsContactVisible] = useState(true);
+  const [isContactVisible, setIsContactVisible] = useState(false);
   const [status, setStatus] = useState<"active" | "completed">("active");
 
   const projectState = useSelector((state: RootState) => state.project);
+
+  const { mutate } = useUpdateProject({
+    onSuccess: () => {
+      onClose();
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
 
   useEffect(() => {
     if (!isOpen && projectState.id !== null) {
@@ -45,9 +58,25 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
     setPreviewUrl(URL.createObjectURL(file));
   };
 
+  const handleUpdate = () => {
+    const formData = new FormData();
+    formData.append("projectName", title);
+    formData.append("status", String(status === "active"));
+    formData.append("isContactVisible", String(isContactVisible));
+    if (image) {
+      formData.append("image", image);
+    }
+
+    mutate({
+      projectId: Number(projectId),
+      data: formData,
+    });
+  };
+
   return (
     <Modal
       type="form"
+      onClick={handleUpdate}
       onClose={onClose}
       buttonText="Edit project"
       icon={<AiFillFolder />}
@@ -105,10 +134,10 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
           <p>팀원 연락처 모두 공개</p>
           {isContactVisible ? (
             <BiSolidCheckboxChecked
-              onClick={() => setIsContactVisible((prev) => !prev)}
+              onClick={() => setIsContactVisible(false)}
             />
           ) : (
-            <BiCheckbox onClick={() => setIsContactVisible((prev) => !prev)} />
+            <BiCheckbox onClick={() => setIsContactVisible(true)} />
           )}
         </Section>
 
