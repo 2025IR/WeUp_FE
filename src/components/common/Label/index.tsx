@@ -5,9 +5,10 @@ const Label = ({
   children,
   colors = "primary",
   textColors = "textWhite",
+  onClick,
 }: LabelProps) => {
   return (
-    <StyledLabel colors={colors} textColors={textColors}>
+    <StyledLabel colors={colors} textColors={textColors} onClick={onClick}>
       {children}
     </StyledLabel>
   );

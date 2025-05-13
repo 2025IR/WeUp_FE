@@ -66,7 +66,7 @@ const ProjectCreateModal = ({ isOpen, onClose }: ProjectCreateModalProps) => {
             previewUrl ||
             "https://we-up-public.s3.ap-northeast-2.amazonaws.com/smiley1.png"
           }
-          alt="project profile priview"
+          alt="project profile preview"
         />
         <div>
           <Input label="Project Name:" onChange={setProjectName} />
