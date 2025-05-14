@@ -11,10 +11,10 @@ export interface ProjectType {
 
 // 프로젝트 상세 조회 (응답)
 export interface ProjectInfo {
-  name: string;
-  image: string;
+  projectName: string;
+  projectImage: string;
   description: string;
-  isContactVisible: boolean;
+  revealedNumber: boolean;
   isLeader: boolean;
   status: boolean;
 }

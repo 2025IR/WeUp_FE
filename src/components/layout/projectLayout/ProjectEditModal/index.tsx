@@ -47,11 +47,11 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
 
   useEffect(() => {
     if (isOpen && projectState.id !== null) {
-      setTitle(projectState.name);
+      setTitle(projectState.projectName);
       setImage(null);
-      setPreviewUrl(projectState.image);
-      setIsContactVisible(projectState.isContactVisible);
-      setStatus(projectState.status);
+      setPreviewUrl(projectState.projectImage);
+      setIsContactVisible(projectState.revealedNumber);
+      setStatus(projectState.status ? "active" : "completed");
     }
   }, [isOpen, projectState]);
 
@@ -68,7 +68,7 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
     const formData = new FormData();
     formData.append("projectName", title);
     formData.append("status", String(status === "active"));
-    formData.append("isRevealedNumber", String(isContactVisible));
+    formData.append("revealedNumber", String(isContactVisible));
     if (image) {
       formData.append("projectImage", image);
     }

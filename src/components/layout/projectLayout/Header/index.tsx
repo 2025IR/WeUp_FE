@@ -10,17 +10,19 @@ import ProjectEditModal from "../ProjectEditModal";
 
 const ProjectHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { name, image } = useSelector((state: RootState) => state.project);
+  const { projectName, projectImage } = useSelector(
+    (state: RootState) => state.project
+  );
 
   const handleClose = () => setIsModalOpen(false);
   const handleOpen = () => setIsModalOpen(true);
 
   return (
     <Container>
-      <img src={image} alt="project image" />
+      <img src={projectImage} alt="project image" />
       <TabSection>
         <InfoSection>
-          <h1>{name}</h1>
+          <h1>{projectName}</h1>
           <LabelSection>
             <Label>진행중</Label>
             <Label colors="secondary">

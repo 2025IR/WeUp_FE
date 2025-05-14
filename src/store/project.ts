@@ -3,10 +3,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: ProjectStoreInfo = {
   id: null,
-  name: "",
-  image: "",
+  projectName: "",
+  projectImage: "",
   description: "",
-  isContactVisible: false,
+  revealedNumber: false,
   isLeader: false,
   status: false,
 };
