@@ -2,7 +2,7 @@ import Modal from "@/components/common/Modal";
 import { AiFillFolder, AiOutlineUpload } from "react-icons/ai";
 import { ProjectEditModalProps } from "./type";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import {
   DeleteSection,
@@ -19,6 +19,7 @@ import { BiCheckbox, BiSolidCheckboxChecked } from "react-icons/bi";
 import { useUpdateProject } from "@/query/project/useUpdateProject";
 import { useParams } from "react-router-dom";
 import { useDeleteProject } from "@/query/project/useDeleteProject";
+import { setProject } from "@/store/project";
 
 const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
   const { projectId } = useParams();
@@ -29,10 +30,20 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
   const [isContactVisible, setIsContactVisible] = useState(false);
   const [status, setStatus] = useState<"active" | "completed">("active");
 
+  const dispatch = useDispatch();
   const projectState = useSelector((state: RootState) => state.project);
 
   const { mutate } = useUpdateProject({
     onSuccess: () => {
+      dispatch(
+        setProject({
+          ...projectState,
+          projectName: title,
+          projectImage: previewUrl,
+          status: status === "active",
+          revealedNumber: isContactVisible,
+        })
+      );
       onClose();
     },
     onError: (err) => {
