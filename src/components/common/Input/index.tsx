@@ -16,16 +16,17 @@ const Input = ({
   onButtonClick,
   onChange,
 }: InputProps) => {
-  const [internalValue, setInternalValue] = useState(value);
+  const [internalValue, setInternalValue] = useState("");
   const [inputStatus, setInputStatus] = useState<
     "normal" | "success" | "error"
   >(status);
   const [innerMessage, setInnerMessage] = useState("");
 
   useEffect(() => {
+    setInternalValue(value);
     setInputStatus(status);
     if (message) setInnerMessage(message);
-  }, [status, message]);
+  }, [status, message, value]);
 
   useEffect(() => {
     if (internalValue === "") {
