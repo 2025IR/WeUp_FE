@@ -15,8 +15,8 @@ const projectSlice = createSlice({
   name: "selectedProject",
   initialState,
   reducers: {
-    setProject(state, action: PayloadAction<ProjectStoreInfo>) {
-      return action.payload;
+    setProject(state, action: PayloadAction<Partial<ProjectStoreInfo>>) {
+      return { ...state, ...action.payload };
     },
     resetProject() {
       return initialState;
