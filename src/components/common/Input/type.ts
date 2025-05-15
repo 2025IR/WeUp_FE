@@ -1,4 +1,5 @@
 export interface InputProps {
+  value?: string;
   type?: "text" | "email" | "password" | "number";
   rightType?: "icon" | "button";
   status?: "normal" | "success" | "error";

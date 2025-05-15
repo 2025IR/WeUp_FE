@@ -9,8 +9,8 @@ import { useDispatch } from "react-redux";
 import { setProject } from "@/store/project";
 
 const Projects = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: projects, isLoading, isError } = useProjectList();
@@ -37,13 +37,14 @@ const Projects = () => {
               name={project.projectName}
               icon={project.projectImage}
               people={project.memberCount}
-              final_time={project.finalTime}
+              project_created_time={project.projectCreatedTime}
+              status={project.status}
               onClick={() => {
                 dispatch(
                   setProject({
                     id: project.projectId,
-                    name: project.projectName,
-                    image: project.projectImage,
+                    projectName: project.projectName,
+                    projectImage: project.projectImage,
                   })
                 );
                 navigate(`/project/${project.projectId}/home`);

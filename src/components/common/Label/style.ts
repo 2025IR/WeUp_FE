@@ -13,6 +13,8 @@ export const StyledLabel = styled.span<LabelStyledProps>`
   min-width: 3.25rem;
   border-radius: ${({ theme }) => theme.radius.sm};
 
+  ${({ onClick }) => onClick && `cursor: pointer;`}
+
   font-size: ${({ theme }) => theme.fontSize.caption};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
 `;

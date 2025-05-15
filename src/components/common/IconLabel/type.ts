@@ -7,6 +7,7 @@ export interface IconLabelStyledProps {
   fontWeight: "medium" | "semibold" | "bold";
   gap: string;
   full: boolean;
+  onClick?: () => void;
 }
 
 // component.tsx

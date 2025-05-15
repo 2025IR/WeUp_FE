@@ -1,23 +1,22 @@
+import { ProjectStoreInfo } from "@/types/project";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface ProjectState {
-  id: number | null;
-  name: string;
-  image: string;
-}
-
-const initialState: ProjectState = {
+const initialState: ProjectStoreInfo = {
   id: null,
-  name: "",
-  image: "",
+  projectName: "",
+  projectImage: "",
+  description: "",
+  revealedNumber: false,
+  isLeader: false,
+  status: false,
 };
 
 const projectSlice = createSlice({
   name: "selectedProject",
   initialState,
   reducers: {
-    setProject(state, action: PayloadAction<ProjectState>) {
-      return action.payload;
+    setProject(state, action: PayloadAction<Partial<ProjectStoreInfo>>) {
+      return { ...state, ...action.payload };
     },
     resetProject() {
       return initialState;
