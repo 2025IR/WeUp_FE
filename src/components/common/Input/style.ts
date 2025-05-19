@@ -22,6 +22,10 @@ export const Content = styled.div`
 
   > button {
     min-width: 3.125rem;
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.textWhite};
+    }
   }
 `;
 
