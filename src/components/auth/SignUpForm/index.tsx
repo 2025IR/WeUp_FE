@@ -5,6 +5,7 @@ import { FormContainer } from "./style";
 import { useSignUp } from "@/query/auth/useSignUp";
 import { useRequestEmailCode } from "@/query/auth/useRequestEmail";
 import { useCheckEmailCode } from "@/query/auth/useCheckEmail";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
   const [name, setName] = useState("");
@@ -14,6 +15,8 @@ const SignUpForm = () => {
 
   const [isEmailRequested, setEmailRequested] = useState(false);
   const [isCodeVerified, setCodeVerified] = useState(false);
+
+  const navigate = useNavigate();
 
   const requestEmailMutation = useRequestEmailCode();
   const checkCodeMutation = useCheckEmailCode();
@@ -28,17 +31,25 @@ const SignUpForm = () => {
   };
 
   const handleCheckCode = () => {
-    checkCodeMutation.mutate(code, {
-      onSuccess: (res) => {
-        if (res.data.responseCode === 200) {
+    checkCodeMutation.mutate(
+      { email, checkCode: code },
+      {
+        onSuccess: () => {
           setCodeVerified(true);
-        }
-      },
-    });
+        },
+      }
+    );
   };
 
   const handleSignUp = () => {
-    signUpMutation.mutate({ email, password, name });
+    signUpMutation.mutate(
+      { email, password, name },
+      {
+        onSuccess: () => {
+          navigate("/auth");
+        },
+      }
+    );
   };
 
   const isAllValid =
