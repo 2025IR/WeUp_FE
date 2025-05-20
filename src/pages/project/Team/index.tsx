@@ -1,7 +1,9 @@
 import Button from "@/components/common/Button";
 import {
   Container,
+  EmailSection,
   GridHeader,
+  NameSection,
   RoleModalContainer,
   RoleSection,
   TeamWrapper,
@@ -53,21 +55,21 @@ const Team = () => {
     <Container>
       <TeamWrapper>
         <GridHeader>
-          <div>
+          <NameSection>
             <p>이름</p>
-          </div>
-          <div>
+          </NameSection>
+          <EmailSection>
             <p>이메일</p>
-          </div>
+          </EmailSection>
           <div>
             <p>연락처</p>
           </div>
           <RoleSection>
             <p>역할</p>
           </RoleSection>
-          <div>
+          {/* <div>
             <Button onClick={() => setOpenModal(true)}>초대</Button>
-          </div>
+          </div> */}
         </GridHeader>
 
         {/* map 이용 mockdata 출력 */}

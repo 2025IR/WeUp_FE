@@ -1,5 +1,11 @@
 import IconLabel from "@/components/common/IconLabel";
-import { GridItem, RoleSection, StartItem } from "./style";
+import {
+  EmailSection,
+  GridItem,
+  NameSection,
+  RoleSection,
+  StartItem,
+} from "./style";
 import Label from "@/components/common/Label";
 import { MemberCardProps } from "./type";
 import { usePopoverPosition } from "@/hooks/useModalPosition";
@@ -15,7 +21,7 @@ const MemberCard = ({ member, onOpenRoleModal }: MemberCardProps) => {
   };
   return (
     <GridItem key={member.memberId}>
-      <StartItem>
+      <NameSection>
         <IconLabel
           icon={member.profileImage}
           type="image"
@@ -25,8 +31,10 @@ const MemberCard = ({ member, onOpenRoleModal }: MemberCardProps) => {
         >
           {member.name}
         </IconLabel>
-      </StartItem>
-      <div>{member.email}</div>
+      </NameSection>
+      <EmailSection>
+        <p>{member.email}</p>
+      </EmailSection>
       <div>{member.phoneNumber}</div>
       <RoleSection ref={targetRef} onClick={handleClick}>
         <Label>{member.roles}</Label>

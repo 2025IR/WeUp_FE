@@ -5,7 +5,8 @@ export const GridItem = styled.div`
   padding: 1rem 2rem;
 
   display: grid;
-  grid-template-columns: 6rem 18rem 10rem 1fr;
+  grid-template-columns: 2fr 3fr 2fr 6fr;
+  column-gap: 5rem;
   align-items: center;
   justify-items: center;
 
@@ -14,15 +15,24 @@ export const GridItem = styled.div`
 `;
 
 export const RoleSection = styled.div`
-  padding-left: 4rem;
+  min-width: 7.5rem;
   justify-self: start;
-  cursor: pointer;
 
-  > p {
-    padding: 5px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-export const StartItem = styled.div`
-  justify-self: start;
+export const NameSection = styled.div`
+  min-width: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const EmailSection = styled.div`
+  min-width: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
