@@ -22,6 +22,7 @@ export const RoleWrapper = styled.div<{ selected: boolean }>`
 `;
 
 export const RoleInfo = styled.div`
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 0.5rem;

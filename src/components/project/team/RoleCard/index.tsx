@@ -22,8 +22,8 @@ const RoleCard = ({
     onOpenEditRoleModal(role.roleId, pos);
   };
   return (
-    <RoleWrapper key={role.roleId} onClick={onClick} selected={selected}>
-      <RoleInfo>
+    <RoleWrapper key={role.roleId} selected={selected}>
+      <RoleInfo onClick={onClick}>
         {selected ? <BiCheck /> : <BsDot />}
         <Label>{role.roleName}</Label>
       </RoleInfo>
