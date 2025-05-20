@@ -39,7 +39,7 @@ const Team = () => {
       email: "skyblue98@gmail.com",
       phone_number: "010-8765-4321",
       is_leader: false,
-      role_name: ["AI"],
+      role_name: ["AI", "디자인"],
     },
   ];
 

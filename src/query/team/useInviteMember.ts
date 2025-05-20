@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
 import { inviteMember } from "@/apis/team/team";
+import { useMutation } from "@tanstack/react-query";
 
 export const useInviteMember = () => {
   return useMutation({
