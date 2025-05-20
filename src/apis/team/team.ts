@@ -30,7 +30,7 @@ export const assignMemberRole = (
 
 // 역할 리스트 불러오기
 export const fetchRoleList = async (projectId: number): Promise<RoleType[]> => {
-  const res = await instance.post("/role/list", { projectId });
+  const res = await instance.post("member/role/list", { projectId });
   return res.data.data;
 };
 
@@ -40,7 +40,11 @@ export const createRole = (
   roleName: string,
   roleColor: string
 ) => {
-  return instance.post("/role/create", { projectId, roleName, roleColor });
+  return instance.post("member/role/create", {
+    projectId,
+    roleName,
+    roleColor,
+  });
 };
 
 // 역할 리스트 수정
@@ -50,12 +54,17 @@ export const editRole = (
   roleName: string,
   roleColor: string
 ) => {
-  return instance.put("/role/edit", { projectId, roleId, roleName, roleColor });
+  return instance.put("member/role/edit", {
+    projectId,
+    roleId,
+    roleName,
+    roleColor,
+  });
 };
 
 // 역할 리스트 삭제
 export const removeRole = (projectId: number, roleId: number) => {
-  return instance.delete("/role/remove", { data: { projectId, roleId } });
+  return instance.delete("member/role/remove", { data: { projectId, roleId } });
 };
 
 // 팀장 위임

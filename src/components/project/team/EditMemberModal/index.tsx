@@ -5,6 +5,9 @@ import EditRoleModal from "../EditRoleModal";
 import RoleCard from "../RoleCard";
 import { useParams } from "react-router-dom";
 import { useGetRole } from "@/query/team/useGetRole";
+import { useCreateRole } from "@/query/team/useCreateRole";
+import { getRandomColor } from "@/hooks/useRandomColor";
+import queryClient from "@/query/reactQueryClient";
 
 type EditMemberModalProps = {
   memberId: number;
@@ -18,8 +21,9 @@ const EditMemberModal = ({
   onChangeRoles,
 }: EditMemberModalProps) => {
   const { projectId } = useParams();
-  const parsedProjectId = Number(projectId);
-  const { data: roleList } = useGetRole(parsedProjectId);
+  const { data: roleList } = useGetRole(Number(projectId));
+  const { mutate: createRoleMutate } = useCreateRole();
+  const [newRoleName, setNewRoleName] = useState("");
 
   const [openRoleEditId, setOpenRoleEditId] = useState<number | null>(null);
   const [editRoleModalPosition, setEditRoleModalPosition] = useState({
@@ -28,12 +32,36 @@ const EditMemberModal = ({
   });
   const roleEditRef = useRef<HTMLDivElement | null>(null);
 
+  // 역할 목록 클릭 시 선택되어있는지 체크.
   const toggleRole = (roleName: string) => {
     const updatedRoles = currentRoles.includes(roleName)
       ? currentRoles.filter((r) => r !== roleName)
       : [...currentRoles, roleName];
 
     onChangeRoles(memberId, updatedRoles);
+  };
+
+  // 역할 추가
+  const handleCreateRole = () => {
+    if (!newRoleName.trim()) return;
+
+    const color = getRandomColor();
+
+    createRoleMutate(
+      {
+        projectId: Number(projectId),
+        roleName: newRoleName,
+        roleColor: color,
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ["roleList", Number(projectId)],
+          });
+          setNewRoleName("");
+        },
+      }
+    );
   };
 
   const handleOpenEditRoleModal = (
@@ -77,8 +105,15 @@ const EditMemberModal = ({
       <Section>
         <p>Add option</p>
         <AddSection>
-          <input type="text" />
-          <CgAddR />
+          <input
+            type="text"
+            value={newRoleName}
+            onChange={(e) => setNewRoleName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleCreateRole();
+            }}
+          />
+          <CgAddR onClick={handleCreateRole} />
         </AddSection>
       </Section>
 
