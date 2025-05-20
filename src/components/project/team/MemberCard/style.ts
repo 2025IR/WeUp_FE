@@ -17,12 +17,16 @@ export const GridItem = styled.div`
 export const RoleSection = styled.div`
   min-width: 7.5rem;
   justify-self: start;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding-left: 2rem;
 
   cursor: pointer;
+
+  > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.25rem;
+  }
 `;
 
 export const NameSection = styled.div`

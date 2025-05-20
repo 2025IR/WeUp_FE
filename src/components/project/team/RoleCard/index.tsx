@@ -3,6 +3,7 @@ import { RoleEditMenu, RoleInfo, RoleWrapper } from "./style";
 import Label from "@/components/common/Label";
 import { usePopoverPosition } from "@/hooks/useModalPosition";
 import { RoleProps } from "./type";
+import { BsDot } from "react-icons/bs";
 
 const RoleCard = ({
   role,
@@ -23,7 +24,7 @@ const RoleCard = ({
   return (
     <RoleWrapper key={role.roleId} onClick={onClick} selected={selected}>
       <RoleInfo>
-        <BiCheck />
+        {selected ? <BiCheck /> : <BsDot />}
         <Label>{role.roleName}</Label>
       </RoleInfo>
       <RoleEditMenu ref={targetRef} onClick={handleClick}>

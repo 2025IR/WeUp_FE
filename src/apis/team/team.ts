@@ -25,7 +25,8 @@ export const assignMemberRole = (
   memberId: number,
   roleName: string[]
 ) => {
-  return instance.post("/role/assign", { projectId, memberId, roleName });
+  console.log(projectId, memberId, roleName);
+  return instance.put("member/role/assign", { projectId, memberId, roleName });
 };
 
 // 역할 리스트 불러오기

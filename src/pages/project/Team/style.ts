@@ -35,10 +35,7 @@ export const GridHeader = styled.div`
 export const RoleSection = styled.div`
   min-width: 7.5rem;
   justify-self: start;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding-left: 3rem;
 `;
 
 export const RoleModalContainer = styled.div<{ top: number; left: number }>`

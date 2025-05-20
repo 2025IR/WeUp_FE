@@ -8,14 +8,15 @@ export const RoleWrapper = styled.div<{ selected: boolean }>`
   align-items: center;
   justify-content: space-between;
 
+  cursor: pointer;
+  border-radius: ${({ theme }) => theme.radius.sm};
   background-color: ${({ theme, selected }) =>
     selected ? theme.colors.secondary : theme.colors.background};
 
   > svg {
     width: ${({ theme }) => theme.icon.sm};
     height: ${({ theme }) => theme.icon.sm};
-    color: ${({ theme, selected }) =>
-      selected ? theme.colors.textLight : theme.colors.background};
+    color: ${({ theme }) => theme.colors.textLight};
     cursor: pointer;
   }
 `;

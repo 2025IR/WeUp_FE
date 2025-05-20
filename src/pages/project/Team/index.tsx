@@ -15,6 +15,7 @@ import AddMemberModal from "@/components/project/team/AddMemberModal";
 import EditMemberModal from "@/components/project/team/EditMemberModal";
 import { useParams } from "react-router-dom";
 import { useGetMembers } from "@/query/team/useGetMember";
+import { useEditMember } from "@/query/team/useEditMember";
 
 const Team = () => {
   const { projectId } = useParams();
@@ -22,6 +23,7 @@ const Team = () => {
   const { data: teamMembers } = useGetMembers(parsedProjectId);
 
   const [openModal, setOpenModal] = useState(false);
+
   const [openRoleModalId, setOpenRoleModalId] = useState<number | null>(null);
   const roleModalRef = useRef<HTMLDivElement | null>(null);
   const [roleModalPosition, setRoleModalPosition] = useState({
@@ -29,9 +31,8 @@ const Team = () => {
     left: 0,
   });
 
-  const [memberRoles, setMemberRoles] = useState<{
-    [memberId: number]: string[];
-  }>({});
+  // 멤버 역할 수정 훅 (모달 창 닫힐 때 실행)
+  const { mutate: editMemberMutate } = useEditMember();
 
   const handleOpenRoleModal = (
     id: number,
@@ -41,23 +42,37 @@ const Team = () => {
     setRoleModalPosition(pos);
   };
 
+  const [memberRoles, setMemberRoles] = useState<{
+    [memberId: number]: string[];
+  }>({});
+
   const updateRoles = (memberId: number, roles: string[]) => {
     setMemberRoles((prev) => ({ ...prev, [memberId]: roles }));
   };
 
+  // 전체적으로 클릭 이벤트 부여
+  // 해당 ref(모달창)을 제외한 부분 클릭 시 요청 발생 (모달 off)
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      console.log("그니까 지금 이게 생기고");
       if (
         roleModalRef.current &&
         !roleModalRef.current.contains(event.target as Node)
       ) {
-        setOpenRoleModalId(null);
+        if (openRoleModalId !== null) {
+          editMemberMutate({
+            projectId: Number(projectId),
+            memberId: openRoleModalId,
+            roleName: memberRoles[openRoleModalId],
+          });
+          setOpenRoleModalId(null);
+        }
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [openRoleModalId, memberRoles, editMemberMutate, projectId]);
 
   useEffect(() => {
     if (teamMembers) {

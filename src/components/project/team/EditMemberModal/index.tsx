@@ -21,8 +21,11 @@ const EditMemberModal = ({
   onChangeRoles,
 }: EditMemberModalProps) => {
   const { projectId } = useParams();
+  // 역할 리스트 조회 훅
   const { data: roleList } = useGetRole(Number(projectId));
+  // 역할 리스트 추가 훅
   const { mutate: createRoleMutate } = useCreateRole();
+
   const [newRoleName, setNewRoleName] = useState("");
 
   const [openRoleEditId, setOpenRoleEditId] = useState<number | null>(null);
