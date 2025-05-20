@@ -3,6 +3,7 @@ import {
   Container,
   EmailSection,
   GridHeader,
+  InviteButton,
   NameSection,
   RoleModalContainer,
   RoleSection,
@@ -100,9 +101,9 @@ const Team = () => {
           <RoleSection>
             <p>역할</p>
           </RoleSection>
-          {/* <div>
+          <InviteButton>
             <Button onClick={() => setOpenModal(true)}>초대</Button>
-          </div> */}
+          </InviteButton>
         </GridHeader>
 
         {/* map 이용 mockdata 출력 */}

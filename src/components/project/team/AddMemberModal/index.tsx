@@ -1,5 +1,6 @@
 import Input from "@/components/common/Input";
 import Modal from "@/components/common/Modal";
+import queryClient from "@/query/reactQueryClient";
 import { useInviteMember } from "@/query/team/useInviteMember";
 import { useState } from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
@@ -12,12 +13,23 @@ type AddMemberModalProps = {
 const AddMemberModal = ({ onClose }: AddMemberModalProps) => {
   const { projectId } = useParams();
   const [email, setEmail] = useState("");
-  const inviteMutaion = useInviteMember();
+  const inviteMutation = useInviteMember();
 
   const handleInvite = () => {
-    if (projectId) {
-      inviteMutaion.mutate({ projectId: Number(projectId), email });
-    }
+    if (!projectId) return;
+
+    inviteMutation.mutate(
+      { projectId: Number(projectId), email },
+      {
+        onSuccess: () => {
+          onClose();
+
+          queryClient.invalidateQueries({
+            queryKey: ["memberList", Number(projectId)],
+          });
+        },
+      }
+    );
   };
   return (
     <Modal

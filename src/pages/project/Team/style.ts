@@ -30,6 +30,8 @@ export const GridHeader = styled.div`
 
   font-size: 14px;
   background-color: ${({ theme }) => theme.colors.secondary};
+
+  position: relative;
 `;
 
 export const RoleSection = styled.div`
@@ -66,4 +68,9 @@ export const EmailSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const InviteButton = styled.div`
+  position: absolute;
+  right: 1rem;
 `;
