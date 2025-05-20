@@ -1,14 +1,6 @@
-export interface TeamMemberType {
-  member_id: number;
-  nickname: string;
-  profile_image: string;
-  email: string;
-  phone_number: string;
-  is_leader: boolean;
-  role_name: string[];
-}
+import { MemberType } from "@/types/team";
 
 export interface MemberCardProps {
-  member: TeamMemberType;
+  member: MemberType;
   onOpenRoleModal: (id: number, pos: { top: number; left: number }) => void;
 }

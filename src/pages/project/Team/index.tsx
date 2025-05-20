@@ -11,40 +11,15 @@ import MemberCard from "@/components/project/team/MemberCard";
 import { useEffect, useRef, useState } from "react";
 import AddMemberModal from "@/components/project/team/AddMemberModal";
 import EditMemberModal from "@/components/project/team/EditMemberModal";
+import { useParams } from "react-router-dom";
+import { useGetMembers } from "@/query/team/useGetMember";
 
 const Team = () => {
-  const mockTeamMembers = [
-    {
-      member_id: 1,
-      nickname: "정윤석",
-      profile_image: "/images/profile1.png",
-      email: "mar0722@naver.com",
-      phone_number: "010-6225-9611",
-      is_leader: true,
-      role_name: ["FE"],
-    },
-    {
-      member_id: 2,
-      nickname: "김지우",
-      profile_image: "/images/profile2.png",
-      email: "jiwoo123@gmail.com",
-      phone_number: "010-1234-5678",
-      is_leader: false,
-      role_name: ["BE", "DevOps"],
-    },
-    {
-      member_id: 3,
-      nickname: "박하늘",
-      profile_image: "/images/profile3.png",
-      email: "skyblue98@gmail.com",
-      phone_number: "010-8765-4321",
-      is_leader: false,
-      role_name: ["AI", "디자인"],
-    },
-  ];
+  const { projectId } = useParams();
+  const parsedProjectId = Number(projectId);
+  const { data: teamMembers } = useGetMembers(parsedProjectId);
 
   const [openModal, setOpenModal] = useState(false);
-
   const [openRoleModalId, setOpenRoleModalId] = useState<number | null>(null);
   const roleModalRef = useRef<HTMLDivElement | null>(null);
   const [roleModalPosition, setRoleModalPosition] = useState({
@@ -96,9 +71,9 @@ const Team = () => {
         </GridHeader>
 
         {/* map 이용 mockdata 출력 */}
-        {mockTeamMembers.map((member) => (
+        {teamMembers?.map((member) => (
           <MemberCard
-            key={member.member_id}
+            key={member.memberId}
             member={member}
             onOpenRoleModal={handleOpenRoleModal}
           />

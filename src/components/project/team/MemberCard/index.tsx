@@ -10,26 +10,26 @@ const MemberCard = ({ member, onOpenRoleModal }: MemberCardProps) => {
   const handleClick = () => {
     const pos = calculatePosition();
     if (pos) {
-      onOpenRoleModal(member.member_id, pos);
+      onOpenRoleModal(member.memberId, pos);
     }
   };
   return (
-    <GridItem key={member.member_id}>
+    <GridItem key={member.memberId}>
       <StartItem>
         <IconLabel
-          icon={member.profile_image}
+          icon={member.profileImage}
           type="image"
           gap="1rem"
           colors="text"
           size="lg"
         >
-          {member.nickname}
+          {member.name}
         </IconLabel>
       </StartItem>
       <div>{member.email}</div>
-      <div>{member.phone_number}</div>
+      <div>{member.phoneNumber}</div>
       <RoleSection ref={targetRef} onClick={handleClick}>
-        <Label>{member.role_name}</Label>
+        <Label>{member.roles}</Label>
       </RoleSection>
     </GridItem>
   );
