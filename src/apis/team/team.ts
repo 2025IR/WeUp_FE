@@ -1,5 +1,11 @@
 import instance from "../axiosInstance";
 
+// 팀원 초대
+export const inviteMember = (projectId: number, email: string) => {
+  console.log({ projectId, email });
+  return instance.post("/member/invite", { data: { projectId, email } });
+};
+
 // 팀원 조회
 export const fetchTeamMembers = (project_id: number) => {
   return instance.post("/member/list", { project_id });

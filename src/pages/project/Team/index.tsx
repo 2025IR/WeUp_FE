@@ -107,14 +107,7 @@ const Team = () => {
       <Button size="lg">Schedule</Button>
 
       {/* 인원 추가 모달 */}
-      {openModal && (
-        <AddMemberModal
-          onClick={() => {
-            console.log("초대 버튼 클릭");
-          }}
-          onClose={() => setOpenModal(false)}
-        />
-      )}
+      {openModal && <AddMemberModal onClose={() => setOpenModal(false)} />}
 
       {/* 역할 변경 모달 */}
       {openRoleModalId && (
