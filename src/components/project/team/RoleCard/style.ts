@@ -27,3 +27,11 @@ export const RoleInfo = styled.div`
     color: ${({ theme }) => theme.colors.textLight};
   }
 `;
+
+export const RoleEditMenu = styled.div`
+  > svg {
+    width: ${({ theme }) => theme.icon.sm};
+    height: ${({ theme }) => theme.icon.sm};
+    color: ${({ theme }) => theme.colors.textLight};
+  }
+`;

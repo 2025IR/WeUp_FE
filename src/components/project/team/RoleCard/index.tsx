@@ -1,5 +1,5 @@
 import { BiCheck, BiDotsHorizontalRounded } from "react-icons/bi";
-import { RoleInfo, RoleWrapper } from "./style";
+import { RoleEditMenu, RoleInfo, RoleWrapper } from "./style";
 import Label from "@/components/common/Label";
 import { usePopoverPosition } from "@/hooks/useModalPosition";
 import { RoleProps } from "./type";
@@ -21,9 +21,9 @@ const RoleCard = ({ role, onOpenEditRoleModal }: RoleProps) => {
         <BiCheck />
         <Label>{role.roleName}</Label>
       </RoleInfo>
-      <div ref={targetRef} onClick={handleClick}>
+      <RoleEditMenu ref={targetRef} onClick={handleClick}>
         <BiDotsHorizontalRounded />
-      </div>
+      </RoleEditMenu>
     </RoleWrapper>
   );
 };
