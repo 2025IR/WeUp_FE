@@ -1,4 +1,4 @@
-import { MemberType } from "@/types/team";
+import { MemberType, RoleType } from "@/types/team";
 import instance from "../axiosInstance";
 
 // 팀원 초대
@@ -10,7 +10,6 @@ export const inviteMember = (projectId: number, email: string) => {
 export const fetchTeamMembers = async (
   project_id: number
 ): Promise<MemberType[]> => {
-  console.log(project_id);
   const res = await instance.post("/member/list", { projectId: project_id });
   return res.data.data;
 };
@@ -30,8 +29,9 @@ export const assignMemberRole = (
 };
 
 // 역할 리스트 불러오기
-export const fetchRoleList = (projectId: number) => {
-  return instance.post("/role/list", { projectId });
+export const fetchRoleList = async (projectId: number): Promise<RoleType[]> => {
+  const res = await instance.post("/role/list", { projectId });
+  return res.data.data;
 };
 
 // 역할 리스트 추가

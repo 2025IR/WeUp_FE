@@ -4,7 +4,12 @@ import Label from "@/components/common/Label";
 import { usePopoverPosition } from "@/hooks/useModalPosition";
 import { RoleProps } from "./type";
 
-const RoleCard = ({ role, onOpenEditRoleModal }: RoleProps) => {
+const RoleCard = ({
+  role,
+  selected = false,
+  onClick,
+  onOpenEditRoleModal,
+}: RoleProps) => {
   const { targetRef } = usePopoverPosition();
 
   const handleClick = (e: React.MouseEvent) => {
@@ -16,7 +21,7 @@ const RoleCard = ({ role, onOpenEditRoleModal }: RoleProps) => {
     onOpenEditRoleModal(role.roleId, pos);
   };
   return (
-    <RoleWrapper key={role.roleId}>
+    <RoleWrapper key={role.roleId} onClick={onClick} selected={selected}>
       <RoleInfo>
         <BiCheck />
         <Label>{role.roleName}</Label>

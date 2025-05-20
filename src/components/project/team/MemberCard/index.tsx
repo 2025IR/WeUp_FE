@@ -1,16 +1,10 @@
 import IconLabel from "@/components/common/IconLabel";
-import {
-  EmailSection,
-  GridItem,
-  NameSection,
-  RoleSection,
-  StartItem,
-} from "./style";
+import { EmailSection, GridItem, NameSection, RoleSection } from "./style";
 import Label from "@/components/common/Label";
 import { MemberCardProps } from "./type";
 import { usePopoverPosition } from "@/hooks/useModalPosition";
 
-const MemberCard = ({ member, onOpenRoleModal }: MemberCardProps) => {
+const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
   const { targetRef, calculatePosition } = usePopoverPosition();
 
   const handleClick = () => {
@@ -37,7 +31,13 @@ const MemberCard = ({ member, onOpenRoleModal }: MemberCardProps) => {
       </EmailSection>
       <div>{member.phoneNumber}</div>
       <RoleSection ref={targetRef} onClick={handleClick}>
-        <Label>{member.roles}</Label>
+        {roles.length > 0 ? (
+          roles.map((role, idx) => <Label key={idx}>{role}</Label>)
+        ) : (
+          <Label colors="secondary" textColors="text">
+            -
+          </Label>
+        )}
       </RoleSection>
     </GridItem>
   );

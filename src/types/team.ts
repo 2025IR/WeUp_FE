@@ -7,3 +7,9 @@ export type MemberType = {
   isLeader: boolean;
   roles: string[];
 };
+
+export interface RoleType {
+  roleId: number;
+  roleName: string;
+  roleColor: string;
+}

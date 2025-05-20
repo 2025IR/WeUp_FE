@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const RoleWrapper = styled.div`
+export const RoleWrapper = styled.div<{ selected: boolean }>`
   width: 100%;
   padding: 0.25rem 0.5rem;
 
@@ -8,10 +8,14 @@ export const RoleWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  background-color: ${({ theme, selected }) =>
+    selected ? theme.colors.secondary : theme.colors.background};
+
   > svg {
     width: ${({ theme }) => theme.icon.sm};
     height: ${({ theme }) => theme.icon.sm};
-    color: ${({ theme }) => theme.colors.textLight};
+    color: ${({ theme, selected }) =>
+      selected ? theme.colors.textLight : theme.colors.background};
     cursor: pointer;
   }
 `;

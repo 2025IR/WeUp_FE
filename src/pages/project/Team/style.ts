@@ -44,7 +44,7 @@ export const RoleSection = styled.div`
 export const RoleModalContainer = styled.div<{ top: number; left: number }>`
   position: absolute;
   top: ${({ top }) => `${top + 8}px`};
-  left: ${({ left }) => `${left + 64}px`};
+  left: ${({ left }) => `${left + 32}px`};
   padding: 10px 4px;
 
   display: flex;

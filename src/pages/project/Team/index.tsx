@@ -29,12 +29,20 @@ const Team = () => {
     left: 0,
   });
 
+  const [memberRoles, setMemberRoles] = useState<{
+    [memberId: number]: string[];
+  }>({});
+
   const handleOpenRoleModal = (
     id: number,
     pos: { top: number; left: number }
   ) => {
     setOpenRoleModalId(id);
     setRoleModalPosition(pos);
+  };
+
+  const updateRoles = (memberId: number, roles: string[]) => {
+    setMemberRoles((prev) => ({ ...prev, [memberId]: roles }));
   };
 
   useEffect(() => {
@@ -50,6 +58,16 @@ const Team = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (teamMembers) {
+      const initialRoles = teamMembers.reduce((acc, m) => {
+        acc[m.memberId] = m.roles;
+        return acc;
+      }, {} as { [id: number]: string[] });
+      setMemberRoles(initialRoles);
+    }
+  }, [teamMembers]);
 
   return (
     <Container>
@@ -77,6 +95,7 @@ const Team = () => {
           <MemberCard
             key={member.memberId}
             member={member}
+            roles={memberRoles[member.memberId] ?? member.roles}
             onOpenRoleModal={handleOpenRoleModal}
           />
         ))}
@@ -93,7 +112,11 @@ const Team = () => {
           top={roleModalPosition.top}
           left={roleModalPosition.left}
         >
-          <EditMemberModal />
+          <EditMemberModal
+            memberId={openRoleModalId}
+            currentRoles={memberRoles[openRoleModalId] ?? []}
+            onChangeRoles={updateRoles}
+          />
         </RoleModalContainer>
       )}
     </Container>
