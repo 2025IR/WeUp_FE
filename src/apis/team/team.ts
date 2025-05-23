@@ -10,7 +10,7 @@ export const inviteMember = (projectId: number, email: string) => {
 export const fetchTeamMembers = async (
   project_id: number
 ): Promise<MemberType[]> => {
-  const res = await instance.post("/member/list", { projectId: project_id });
+  const res = await instance.post(`/member/list/${project_id}`);
   return res.data.data;
 };
 
@@ -23,15 +23,17 @@ export const deleteMember = (project_id: number, member_id: number) => {
 export const assignMemberRole = (
   projectId: number,
   memberId: number,
-  roleName: string[]
+  roleIds: number[]
 ) => {
-  console.log(projectId, memberId, roleName);
-  return instance.put("member/role/assign", { projectId, memberId, roleName });
+  console.log(projectId, memberId, roleIds);
+  return instance.put("member/role/assign", { projectId, memberId, roleIds });
 };
 
 // 역할 리스트 불러오기
-export const fetchRoleList = async (projectId: number): Promise<RoleType[]> => {
-  const res = await instance.post("member/role/list", { projectId });
+export const fetchRoleList = async (
+  project_id: number
+): Promise<RoleType[]> => {
+  const res = await instance.post(`member/role/list/${project_id}`);
   return res.data.data;
 };
 

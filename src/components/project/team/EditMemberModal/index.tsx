@@ -8,11 +8,13 @@ import { useGetRole } from "@/query/team/useGetRole";
 import { useCreateRole } from "@/query/team/useCreateRole";
 import { getRandomColor } from "@/hooks/useRandomColor";
 import queryClient from "@/query/reactQueryClient";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 type EditMemberModalProps = {
   memberId: number;
-  currentRoles: string[];
-  onChangeRoles: (id: number, newRoles: string[]) => void;
+  currentRoles: number[];
+  onChangeRoles: (id: number, newRoles: number[]) => void;
 };
 
 const EditMemberModal = ({
@@ -21,8 +23,10 @@ const EditMemberModal = ({
   onChangeRoles,
 }: EditMemberModalProps) => {
   const { projectId } = useParams();
-  // 역할 리스트 조회 훅
-  const { data: roleList } = useGetRole(Number(projectId));
+
+  // 역할 리스트 조회 (store)
+  const roleList = useSelector((state: RootState) => state.role.roles);
+
   // 역할 리스트 추가 훅
   const { mutate: createRoleMutate } = useCreateRole();
 
@@ -36,10 +40,10 @@ const EditMemberModal = ({
   const roleEditRef = useRef<HTMLDivElement | null>(null);
 
   // 역할 목록 클릭 시 선택되어있는지 체크.
-  const toggleRole = (roleName: string) => {
-    const updatedRoles = currentRoles.includes(roleName)
-      ? currentRoles.filter((r) => r !== roleName)
-      : [...currentRoles, roleName];
+  const toggleRole = (roleId: number) => {
+    const updatedRoles = currentRoles.includes(roleId)
+      ? currentRoles.filter((r) => r !== roleId)
+      : [...currentRoles, roleId];
 
     onChangeRoles(memberId, updatedRoles);
   };
@@ -98,8 +102,8 @@ const EditMemberModal = ({
             <RoleCard
               key={role.roleId}
               role={role}
-              selected={currentRoles.includes(role.roleName)}
-              onClick={() => toggleRole(role.roleName)}
+              selected={currentRoles.includes(role.roleId)}
+              onClick={() => toggleRole(role.roleId)}
               onOpenEditRoleModal={handleOpenEditRoleModal}
             />
           ))}

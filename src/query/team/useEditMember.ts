@@ -6,12 +6,12 @@ export const useEditMember = () => {
     mutationFn: ({
       projectId,
       memberId,
-      roleName,
+      roleIds,
     }: {
       projectId: number;
       memberId: number;
-      roleName: string[];
-    }) => assignMemberRole(projectId, memberId, roleName),
+      roleIds: number[];
+    }) => assignMemberRole(projectId, memberId, roleIds),
     onSuccess: (res) => {
       console.log("팀원 역할 수정 성공:", res);
     },

@@ -5,7 +5,7 @@ export type MemberType = {
   profileImage: string;
   phoneNumber: string;
   isLeader: boolean;
-  roles: string[];
+  roleIds: number[];
 };
 
 export interface RoleType {

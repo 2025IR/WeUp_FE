@@ -3,9 +3,12 @@ import { EmailSection, GridItem, NameSection, RoleSection } from "./style";
 import Label from "@/components/common/Label";
 import { MemberCardProps } from "./type";
 import { usePopoverPosition } from "@/hooks/useModalPosition";
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
 
 const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
   const { targetRef, calculatePosition } = usePopoverPosition();
+  const roleList = useSelector((state: RootState) => state.role.roles);
 
   const handleClick = () => {
     const pos = calculatePosition();
@@ -33,7 +36,13 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
       <RoleSection ref={targetRef}>
         <div onClick={handleClick}>
           {roles.length > 0 ? (
-            roles.map((role, idx) => <Label key={idx}>{role}</Label>)
+            roles.map((roleId, idx) => {
+              const role = roleList.find((r) => r.roleId === roleId);
+              return role ? (
+                // <Label key={idx} colors={role.roleColor}>
+                <Label key={idx}>{role.roleName}</Label>
+              ) : null;
+            })
           ) : (
             <Label colors="secondary" textColors="text">
               -

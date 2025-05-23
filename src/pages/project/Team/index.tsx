@@ -49,10 +49,10 @@ const Team = () => {
   };
 
   const [memberRoles, setMemberRoles] = useState<{
-    [memberId: number]: string[];
+    [memberId: number]: number[];
   }>({});
 
-  const updateRoles = (memberId: number, roles: string[]) => {
+  const updateRoles = (memberId: number, roles: number[]) => {
     setMemberRoles((prev) => ({ ...prev, [memberId]: roles }));
   };
 
@@ -68,7 +68,7 @@ const Team = () => {
           editMemberMutate({
             projectId: Number(projectId),
             memberId: openRoleModalId,
-            roleName: memberRoles[openRoleModalId],
+            roleIds: memberRoles[openRoleModalId],
           });
           setOpenRoleModalId(null);
         }
@@ -82,9 +82,9 @@ const Team = () => {
   useEffect(() => {
     if (teamMembers) {
       const initialRoles = teamMembers.reduce((acc, m) => {
-        acc[m.memberId] = m.roles;
+        acc[m.memberId] = m.roleIds;
         return acc;
-      }, {} as { [id: number]: string[] });
+      }, {} as { [id: number]: number[] });
       setMemberRoles(initialRoles);
     }
   }, [teamMembers]);
@@ -122,7 +122,7 @@ const Team = () => {
           <MemberCard
             key={member.memberId}
             member={member}
-            roles={memberRoles[member.memberId] ?? member.roles}
+            roles={memberRoles[member.memberId] ?? member.roleIds}
             onOpenRoleModal={handleOpenRoleModal}
           />
         ))}
