@@ -19,8 +19,16 @@ const roleSlice = createSlice({
     resetRoles(state) {
       state.roles = [];
     },
+    updateRole(state, action: PayloadAction<RoleType>) {
+      const { roleId, roleName, roleColor } = action.payload;
+      const target = state.roles.find((r) => r.roleId === roleId);
+      if (target) {
+        target.roleName = roleName;
+        target.roleColor = roleColor;
+      }
+    },
   },
 });
 
-export const { setRoles, resetRoles } = roleSlice.actions;
+export const { setRoles, resetRoles, updateRole } = roleSlice.actions;
 export default roleSlice.reducer;

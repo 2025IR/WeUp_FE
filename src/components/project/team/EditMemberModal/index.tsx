@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import EditRoleModal from "../EditRoleModal";
 import RoleCard from "../RoleCard";
 import { useParams } from "react-router-dom";
-import { useGetRole } from "@/query/team/useGetRole";
 import { useCreateRole } from "@/query/team/useCreateRole";
 import { getRandomColor } from "@/hooks/useRandomColor";
 import queryClient from "@/query/reactQueryClient";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { updateRole } from "@/store/role";
+import { useEditRole } from "@/query/team/useEditRole";
 
 type EditMemberModalProps = {
   memberId: number;
@@ -38,6 +39,15 @@ const EditMemberModal = ({
     left: 0,
   });
   const roleEditRef = useRef<HTMLDivElement | null>(null);
+  const targetRole = roleList.find((r) => r.roleId === openRoleEditId);
+
+  const dispatch = useDispatch();
+  const { mutate: editRoleMutate } = useEditRole();
+  const [pendingEdit, setPendingEdit] = useState<{
+    roleId: number;
+    roleName: string;
+    roleColor: string;
+  } | null>(null);
 
   // 역할 목록 클릭 시 선택되어있는지 체크.
   const toggleRole = (roleId: number) => {
@@ -93,6 +103,18 @@ const EditMemberModal = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (openRoleEditId === null && pendingEdit) {
+      console.log("받은 변경값", pendingEdit);
+      dispatch(updateRole(pendingEdit));
+      editRoleMutate({
+        projectId: Number(projectId),
+        ...pendingEdit,
+      });
+      setPendingEdit(null);
+    }
+  }, [openRoleEditId]);
+
   return (
     <>
       <Section>
@@ -124,13 +146,18 @@ const EditMemberModal = ({
         </AddSection>
       </Section>
 
-      {openRoleEditId && (
+      {openRoleEditId && targetRole && (
         <RoleEditContainer
           ref={roleEditRef}
           top={editRoleModalPosition.top}
           left={editRoleModalPosition.left}
         >
-          <EditRoleModal />
+          <EditRoleModal
+            roleId={targetRole.roleId}
+            roleName={targetRole.roleName}
+            roleColor={targetRole.roleColor}
+            onEdit={(updated) => setPendingEdit(updated)}
+          />
         </RoleEditContainer>
       )}
     </>

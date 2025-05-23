@@ -45,12 +45,6 @@ export const EditInput = styled.div`
     font-size: ${({ theme }) => theme.fontSize.caption};
     color: ${({ theme }) => theme.colors.text};
   }
-
-  > svg {
-    width: ${({ theme }) => theme.icon.sm};
-    height: ${({ theme }) => theme.icon.sm};
-    color: ${({ theme }) => theme.colors.textLight};
-  }
 `;
 
 export const ColorSection = styled.div`
@@ -73,13 +67,16 @@ export const ColorSection = styled.div`
   }
 `;
 
-export const ColorCard = styled.div<{ color: string }>`
+export const ColorCard = styled.div<{ color: string; selected: boolean }>`
   width: 100%;
   padding: 0.25rem 0.5rem;
 
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
+  background-color: ${({ theme, selected }) =>
+    selected ? theme.colors.secondary : theme.colors.background};
 
   > div {
     width: 21px;
