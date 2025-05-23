@@ -17,11 +17,16 @@ import EditMemberModal from "@/components/project/team/EditMemberModal";
 import { useParams } from "react-router-dom";
 import { useGetMembers } from "@/query/team/useGetMember";
 import { useEditMember } from "@/query/team/useEditMember";
+import { useGetRole } from "@/query/team/useGetRole";
+import { useDispatch } from "react-redux";
+import { setRoles } from "@/store/role";
 
 const Team = () => {
+  const dispatch = useDispatch();
   const { projectId } = useParams();
   const parsedProjectId = Number(projectId);
   const { data: teamMembers } = useGetMembers(parsedProjectId);
+  const { data: teamRoles } = useGetRole(parsedProjectId);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -55,7 +60,6 @@ const Team = () => {
   // 해당 ref(모달창)을 제외한 부분 클릭 시 요청 발생 (모달 off)
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      console.log("그니까 지금 이게 생기고");
       if (
         roleModalRef.current &&
         !roleModalRef.current.contains(event.target as Node)
@@ -84,6 +88,13 @@ const Team = () => {
       setMemberRoles(initialRoles);
     }
   }, [teamMembers]);
+
+  // 프로젝트 역할 전역 상태로 저장.
+  useEffect(() => {
+    if (teamRoles) {
+      dispatch(setRoles(teamRoles));
+    }
+  }, [teamRoles, dispatch]);
 
   return (
     <Container>
