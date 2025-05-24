@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useGetMembers = (project_id: number) => {
   return useQuery({
-    queryKey: ["teamMembers", project_id],
+    queryKey: ["memberList", project_id],
     queryFn: () => fetchTeamMembers(project_id),
   });
 };

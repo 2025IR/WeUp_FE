@@ -1,9 +1,15 @@
-export type Member = {
-  member_id: number;
-  nickname: string;
-  profile_image: string;
+export type MemberType = {
+  memberId: number;
+  name: string;
   email: string;
-  phone_number: string;
-  is_leader: boolean;
-  role_name: string[];
+  profileImage: string;
+  phoneNumber: string;
+  isLeader: boolean;
+  roleIds: number[];
 };
+
+export interface RoleType {
+  roleId: number;
+  roleName: string;
+  roleColor: string;
+}

@@ -26,6 +26,7 @@ export const EditTitle = styled.div`
     width: ${({ theme }) => theme.icon.md};
     height: ${({ theme }) => theme.icon.md};
     color: ${({ theme }) => theme.colors.textLight};
+    cursor: pointer;
   }
 `;
 
@@ -44,12 +45,6 @@ export const EditInput = styled.div`
     width: 100%;
     font-size: ${({ theme }) => theme.fontSize.caption};
     color: ${({ theme }) => theme.colors.text};
-  }
-
-  > svg {
-    width: ${({ theme }) => theme.icon.sm};
-    height: ${({ theme }) => theme.icon.sm};
-    color: ${({ theme }) => theme.colors.textLight};
   }
 `;
 
@@ -73,7 +68,7 @@ export const ColorSection = styled.div`
   }
 `;
 
-export const ColorCard = styled.div<{ color: string }>`
+export const ColorCard = styled.div<{ color: string; selected: boolean }>`
   width: 100%;
   padding: 0.25rem 0.5rem;
 
@@ -81,11 +76,16 @@ export const ColorCard = styled.div<{ color: string }>`
   align-items: center;
   gap: 0.5rem;
 
+  cursor: pointer;
+  background-color: ${({ theme, selected }) =>
+    selected ? theme.colors.secondary : theme.colors.background};
+
   > div {
     width: 21px;
     height: 21px;
     border-radius: 5px;
-    background-color: ${(prop) => prop.color};
+    background-color: ${({ theme, color }) =>
+      theme.colors[color as keyof typeof theme.colors]};
   }
 
   > p {

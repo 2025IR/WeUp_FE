@@ -6,7 +6,8 @@ export const StyledLabel = styled.span<LabelStyledProps>`
   align-items: center;
   justify-content: center;
 
-  background-color: ${({ theme, colors }) => theme.colors[colors]};
+  background-color: ${({ theme, colors }) =>
+    theme.colors[colors as keyof typeof theme.colors]};
   color: ${({ theme, textColors }) => theme.colors[textColors]};
   padding: 0.25rem 0.5rem;
   box-sizing: border-box;

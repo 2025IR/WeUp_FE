@@ -1,7 +1,10 @@
 import Button from "@/components/common/Button";
 import {
   Container,
+  EmailSection,
   GridHeader,
+  InviteButton,
+  NameSection,
   RoleModalContainer,
   RoleSection,
   TeamWrapper,
@@ -11,37 +14,19 @@ import MemberCard from "@/components/project/team/MemberCard";
 import { useEffect, useRef, useState } from "react";
 import AddMemberModal from "@/components/project/team/AddMemberModal";
 import EditMemberModal from "@/components/project/team/EditMemberModal";
+import { useParams } from "react-router-dom";
+import { useGetMembers } from "@/query/team/useGetMember";
+import { useEditMember } from "@/query/team/useEditMember";
+import { useGetRole } from "@/query/team/useGetRole";
+import { useDispatch } from "react-redux";
+import { setRoles } from "@/store/role";
 
 const Team = () => {
-  const mockTeamMembers = [
-    {
-      member_id: 1,
-      nickname: "정윤석",
-      profile_image: "/images/profile1.png",
-      email: "mar0722@naver.com",
-      phone_number: "010-6225-9611",
-      is_leader: true,
-      role_name: ["FE"],
-    },
-    {
-      member_id: 2,
-      nickname: "김지우",
-      profile_image: "/images/profile2.png",
-      email: "jiwoo123@gmail.com",
-      phone_number: "010-1234-5678",
-      is_leader: false,
-      role_name: ["BE", "DevOps"],
-    },
-    {
-      member_id: 3,
-      nickname: "박하늘",
-      profile_image: "/images/profile3.png",
-      email: "skyblue98@gmail.com",
-      phone_number: "010-8765-4321",
-      is_leader: false,
-      role_name: ["AI"],
-    },
-  ];
+  const dispatch = useDispatch();
+  const { projectId } = useParams();
+  const parsedProjectId = Number(projectId);
+  const { data: teamMembers } = useGetMembers(parsedProjectId);
+  const { data: teamRoles } = useGetRole(parsedProjectId);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -52,6 +37,9 @@ const Team = () => {
     left: 0,
   });
 
+  // 멤버 역할 수정 훅 (모달 창 닫힐 때 실행)
+  const { mutate: editMemberMutate } = useEditMember();
+
   const handleOpenRoleModal = (
     id: number,
     pos: { top: number; left: number }
@@ -60,46 +48,81 @@ const Team = () => {
     setRoleModalPosition(pos);
   };
 
+  const [memberRoles, setMemberRoles] = useState<{
+    [memberId: number]: number[];
+  }>({});
+
+  const updateRoles = (memberId: number, roles: number[]) => {
+    setMemberRoles((prev) => ({ ...prev, [memberId]: roles }));
+  };
+
+  // 전체적으로 클릭 이벤트 부여
+  // 해당 ref(모달창)을 제외한 부분 클릭 시 요청 발생 (모달 off)
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         roleModalRef.current &&
         !roleModalRef.current.contains(event.target as Node)
       ) {
-        setOpenRoleModalId(null);
+        if (openRoleModalId !== null) {
+          editMemberMutate({
+            projectId: Number(projectId),
+            memberId: openRoleModalId,
+            roleIds: memberRoles[openRoleModalId],
+          });
+          setOpenRoleModalId(null);
+        }
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [openRoleModalId, memberRoles, editMemberMutate, projectId]);
+
+  useEffect(() => {
+    if (teamMembers) {
+      const initialRoles = teamMembers.reduce((acc, m) => {
+        acc[m.memberId] = m.roleIds;
+        return acc;
+      }, {} as { [id: number]: number[] });
+      setMemberRoles(initialRoles);
+    }
+  }, [teamMembers]);
+
+  // 프로젝트 역할 전역 상태로 저장.
+  useEffect(() => {
+    if (teamRoles) {
+      dispatch(setRoles(teamRoles));
+    }
+  }, [teamRoles, dispatch]);
 
   return (
     <Container>
       <TeamWrapper>
         <GridHeader>
-          <div>
+          <NameSection>
             <p>이름</p>
-          </div>
-          <div>
+          </NameSection>
+          <EmailSection>
             <p>이메일</p>
-          </div>
+          </EmailSection>
           <div>
             <p>연락처</p>
           </div>
           <RoleSection>
             <p>역할</p>
           </RoleSection>
-          <div>
+          <InviteButton>
             <Button onClick={() => setOpenModal(true)}>초대</Button>
-          </div>
+          </InviteButton>
         </GridHeader>
 
         {/* map 이용 mockdata 출력 */}
-        {mockTeamMembers.map((member) => (
+        {teamMembers?.map((member) => (
           <MemberCard
-            key={member.member_id}
+            key={member.memberId}
             member={member}
+            roles={memberRoles[member.memberId] ?? member.roleIds}
             onOpenRoleModal={handleOpenRoleModal}
           />
         ))}
@@ -107,14 +130,7 @@ const Team = () => {
       <Button size="lg">Schedule</Button>
 
       {/* 인원 추가 모달 */}
-      {openModal && (
-        <AddMemberModal
-          onClick={() => {
-            console.log("초대 버튼 클릭");
-          }}
-          onClose={() => setOpenModal(false)}
-        />
-      )}
+      {openModal && <AddMemberModal onClose={() => setOpenModal(false)} />}
 
       {/* 역할 변경 모달 */}
       {openRoleModalId && (
@@ -123,7 +139,11 @@ const Team = () => {
           top={roleModalPosition.top}
           left={roleModalPosition.left}
         >
-          <EditMemberModal />
+          <EditMemberModal
+            memberId={openRoleModalId}
+            currentRoles={memberRoles[openRoleModalId] ?? []}
+            onChangeRoles={updateRoles}
+          />
         </RoleModalContainer>
       )}
     </Container>

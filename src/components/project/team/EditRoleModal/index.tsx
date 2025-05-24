@@ -1,6 +1,5 @@
 import { AiFillDelete } from "react-icons/ai";
 import { BiCheck } from "react-icons/bi";
-import { CgAddR } from "react-icons/cg";
 import {
   ColorCard,
   ColorSection,
@@ -8,39 +7,80 @@ import {
   EditSection,
   EditTitle,
 } from "./style";
+import { useEffect, useState } from "react";
 
 const Colors = [
-  { name: "default", code: "#111111" },
-  { name: "gray", code: "#BFBFBF" },
-  { name: "red", code: "#FF4D4F" },
-  { name: "green", code: "#52C41A" },
-  { name: "blue", code: "#1890FF" },
-  { name: "purple", code: "#722ED1" },
-  { name: "orange", code: "#FA8C16" },
+  { name: "red" },
+  { name: "orange" },
+  { name: "yellow" },
+  { name: "green" },
+  { name: "blue" },
+  { name: "purple" },
+  { name: "pink" },
+  { name: "brown" },
+  { name: "gray" },
 ];
 
-const EditRoleModal = () => {
+type EditRoleModalProps = {
+  roleId: number;
+  roleName: string;
+  roleColor: string;
+  onEdit: (updated: {
+    roleId: number;
+    roleName: string;
+    roleColor: string;
+  }) => void;
+  onDelete: (roleId: number) => void;
+};
+
+const EditRoleModal = ({
+  roleId,
+  roleName,
+  roleColor,
+  onEdit,
+  onDelete,
+}: EditRoleModalProps) => {
+  const [name, setName] = useState(roleName);
+  const [color, setColor] = useState(roleColor);
+
+  useEffect(() => {
+    console.log(name, color);
+    onEdit({
+      roleId,
+      roleName: name,
+      roleColor: color,
+    });
+  }, [name, color]);
+
   return (
     <>
       <EditSection>
         <EditTitle>
           <p>Edit Option</p>
-          <AiFillDelete />
+          <AiFillDelete onClick={() => onDelete(roleId)} />
         </EditTitle>
         <EditInput>
-          <input type="text" />
-          <CgAddR />
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </EditInput>
       </EditSection>
 
       <ColorSection>
         <p>Colors</p>
         <div>
-          {Colors.map((color) => (
-            <ColorCard key={color.name} color={color.code}>
+          {Colors.map((c) => (
+            <ColorCard
+              key={c.name}
+              color={c.name}
+              onClick={() => setColor(c.name)}
+              selected={c.name === color}
+            >
               <div />
-              <p>{color.name}</p>
-              <BiCheck />
+              <p>{c.name}</p>
+              {c.code === color && <BiCheck />}
             </ColorCard>
           ))}
         </div>

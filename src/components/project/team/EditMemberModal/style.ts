@@ -18,10 +18,22 @@ export const AddSection = styled.div`
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.25rem;
+
+  border-radius: ${({ theme }) => theme.radius.md};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  background-color: ${({ theme }) => theme.colors.secondary};
 
   > input {
-    width: 142px;
+    width: 140px;
+    font-size: ${({ theme }) => theme.fontSize.caption};
+    color: ${({ theme }) => theme.colors.text};
+  }
+
+  > svg {
+    width: ${({ theme }) => theme.icon.sm};
+    height: ${({ theme }) => theme.icon.sm};
+    color: ${({ theme }) => theme.colors.textLight};
   }
 `;
 

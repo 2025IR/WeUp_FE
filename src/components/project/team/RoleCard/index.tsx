@@ -1,10 +1,16 @@
 import { BiCheck, BiDotsHorizontalRounded } from "react-icons/bi";
-import { RoleInfo, RoleWrapper } from "./style";
+import { RoleEditMenu, RoleInfo, RoleWrapper } from "./style";
 import Label from "@/components/common/Label";
 import { usePopoverPosition } from "@/hooks/useModalPosition";
 import { RoleProps } from "./type";
+import { BsDot } from "react-icons/bs";
 
-const RoleCard = ({ role, onOpenEditRoleModal }: RoleProps) => {
+const RoleCard = ({
+  role,
+  selected = false,
+  onClick,
+  onOpenEditRoleModal,
+}: RoleProps) => {
   const { targetRef } = usePopoverPosition();
 
   const handleClick = (e: React.MouseEvent) => {
@@ -16,14 +22,14 @@ const RoleCard = ({ role, onOpenEditRoleModal }: RoleProps) => {
     onOpenEditRoleModal(role.roleId, pos);
   };
   return (
-    <RoleWrapper key={role.roleId}>
-      <RoleInfo>
-        <BiCheck />
-        <Label>{role.roleName}</Label>
+    <RoleWrapper key={role.roleId} selected={selected}>
+      <RoleInfo onClick={onClick}>
+        {selected ? <BiCheck /> : <BsDot />}
+        <Label colors={role.roleColor}>{role.roleName}</Label>
       </RoleInfo>
-      <div ref={targetRef} onClick={handleClick}>
+      <RoleEditMenu ref={targetRef} onClick={handleClick}>
         <BiDotsHorizontalRounded />
-      </div>
+      </RoleEditMenu>
     </RoleWrapper>
   );
 };
