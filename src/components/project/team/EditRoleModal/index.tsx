@@ -40,15 +40,13 @@ const EditRoleModal = ({
   const [color, setColor] = useState(roleColor);
 
   useEffect(() => {
-    return () => {
-      console.log(name, color);
-      onEdit({
-        roleId,
-        roleName: name,
-        roleColor: color,
-      });
-    };
-  }, [roleId, name, color]);
+    console.log(name, color);
+    onEdit({
+      roleId,
+      roleName: name,
+      roleColor: color,
+    });
+  }, [name, color]);
 
   return (
     <>
