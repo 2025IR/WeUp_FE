@@ -10,13 +10,15 @@ import {
 import { useEffect, useState } from "react";
 
 const Colors = [
-  { name: "default", code: "#111111" },
-  { name: "BEIGE", code: "#BFBFBF" },
-  { name: "RED", code: "#FF4D4F" },
-  { name: "GREEN", code: "#52C41A" },
-  { name: "BLUE", code: "#1890FF" },
-  { name: "PURPLE", code: "#722ED1" },
-  { name: "ORANGE", code: "#FA8C16" },
+  { name: "red" },
+  { name: "orange" },
+  { name: "yellow" },
+  { name: "green" },
+  { name: "blue" },
+  { name: "purple" },
+  { name: "pink" },
+  { name: "brown" },
+  { name: "gray" },
 ];
 
 type EditRoleModalProps = {
@@ -72,7 +74,7 @@ const EditRoleModal = ({
           {Colors.map((c) => (
             <ColorCard
               key={c.name}
-              color={c.code}
+              color={c.name}
               onClick={() => setColor(c.name)}
               selected={c.name === color}
             >

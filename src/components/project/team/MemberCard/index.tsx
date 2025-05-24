@@ -40,7 +40,9 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
               const role = roleList.find((r) => r.roleId === roleId);
               return role ? (
                 // <Label key={idx} colors={role.roleColor}>
-                <Label key={idx}>{role.roleName}</Label>
+                <Label key={idx} colors={role.roleColor}>
+                  {role.roleName}
+                </Label>
               ) : null;
             })
           ) : (

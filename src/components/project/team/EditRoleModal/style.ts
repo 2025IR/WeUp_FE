@@ -76,6 +76,7 @@ export const ColorCard = styled.div<{ color: string; selected: boolean }>`
   align-items: center;
   gap: 0.5rem;
 
+  cursor: pointer;
   background-color: ${({ theme, selected }) =>
     selected ? theme.colors.secondary : theme.colors.background};
 
@@ -83,7 +84,8 @@ export const ColorCard = styled.div<{ color: string; selected: boolean }>`
     width: 21px;
     height: 21px;
     border-radius: 5px;
-    background-color: ${(prop) => prop.color};
+    background-color: ${({ theme, color }) =>
+      theme.colors[color as keyof typeof theme.colors]};
   }
 
   > p {

@@ -1,5 +1,5 @@
 export interface LabelStyledProps {
-  colors: "primary" | "secondary";
+  colors?: string;
   textColors: "text" | "textLight" | "textWhite";
   onClick?: () => void;
 }

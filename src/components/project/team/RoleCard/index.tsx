@@ -25,7 +25,7 @@ const RoleCard = ({
     <RoleWrapper key={role.roleId} selected={selected}>
       <RoleInfo onClick={onClick}>
         {selected ? <BiCheck /> : <BsDot />}
-        <Label>{role.roleName}</Label>
+        <Label colors={role.roleColor}>{role.roleName}</Label>
       </RoleInfo>
       <RoleEditMenu ref={targetRef} onClick={handleClick}>
         <BiDotsHorizontalRounded />
