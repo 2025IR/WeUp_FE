@@ -9,8 +9,9 @@ import { getRandomColor } from "@/hooks/useRandomColor";
 import queryClient from "@/query/reactQueryClient";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { updateRole } from "@/store/role";
+import { deleteRole, updateRole } from "@/store/role";
 import { useEditRole } from "@/query/team/useEditRole";
+import { useRemoveRole } from "@/query/team/useRemoveRole";
 
 type EditMemberModalProps = {
   memberId: number;
@@ -43,6 +44,7 @@ const EditMemberModal = ({
 
   const dispatch = useDispatch();
   const { mutate: editRoleMutate } = useEditRole();
+  const { mutate: deleteRoleMutate } = useRemoveRole();
   const [pendingEdit, setPendingEdit] = useState<{
     roleId: number;
     roleName: string;
@@ -87,6 +89,19 @@ const EditMemberModal = ({
   ) => {
     setOpenRoleEditId(id);
     setEditRoleModalPosition(pos);
+  };
+
+  const handleDeleteRole = (roleId: number) => {
+    dispatch(deleteRole(roleId));
+    deleteRoleMutate({
+      projectId: Number(projectId),
+      roleId,
+    });
+    if (currentRoles.includes(roleId)) {
+      const updatedRoles = currentRoles.filter((id) => id !== roleId);
+      onChangeRoles(memberId, updatedRoles);
+    }
+    setOpenRoleEditId(null);
   };
 
   useEffect(() => {
@@ -157,6 +172,7 @@ const EditMemberModal = ({
             roleName={targetRole.roleName}
             roleColor={targetRole.roleColor}
             onEdit={(updated) => setPendingEdit(updated)}
+            onDelete={handleDeleteRole}
           />
         </RoleEditContainer>
       )}

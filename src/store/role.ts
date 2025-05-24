@@ -27,8 +27,12 @@ const roleSlice = createSlice({
         target.roleColor = roleColor;
       }
     },
+    deleteRole(state, action: PayloadAction<number>) {
+      state.roles = state.roles.filter((r) => r.roleId !== action.payload);
+    },
   },
 });
 
-export const { setRoles, resetRoles, updateRole } = roleSlice.actions;
+export const { setRoles, resetRoles, updateRole, deleteRole } =
+  roleSlice.actions;
 export default roleSlice.reducer;

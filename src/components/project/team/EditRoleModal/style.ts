@@ -26,6 +26,7 @@ export const EditTitle = styled.div`
     width: ${({ theme }) => theme.icon.md};
     height: ${({ theme }) => theme.icon.md};
     color: ${({ theme }) => theme.colors.textLight};
+    cursor: pointer;
   }
 `;
 

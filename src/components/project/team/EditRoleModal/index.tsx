@@ -28,6 +28,7 @@ type EditRoleModalProps = {
     roleName: string;
     roleColor: string;
   }) => void;
+  onDelete: (roleId: number) => void;
 };
 
 const EditRoleModal = ({
@@ -35,6 +36,7 @@ const EditRoleModal = ({
   roleName,
   roleColor,
   onEdit,
+  onDelete,
 }: EditRoleModalProps) => {
   const [name, setName] = useState(roleName);
   const [color, setColor] = useState(roleColor);
@@ -53,7 +55,7 @@ const EditRoleModal = ({
       <EditSection>
         <EditTitle>
           <p>Edit Option</p>
-          <AiFillDelete />
+          <AiFillDelete onClick={() => onDelete(roleId)} />
         </EditTitle>
         <EditInput>
           <input
