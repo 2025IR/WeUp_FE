@@ -60,7 +60,7 @@ export const lightTheme = {
 export const darkTheme = {
   ...shared,
   colors: {
-    primary: "#019963",
+    primary: "#2F654A",
     secondary: "#2E2E2E",
     background: "#1A1A1A",
     textPrimary: "#EAEAEA",
