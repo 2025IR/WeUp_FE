@@ -3,9 +3,12 @@ import { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Container, FilterSection, SearchBox, StyledSelect } from "./style";
 import { BoardHeaderProps } from "./type";
+import { useNavigate, useParams } from "react-router-dom";
 
 const BoardHeader = ({ tag, search, onFilterChange }: BoardHeaderProps) => {
   const [inputValue, setInputValue] = useState(search ?? "");
+  const navigate = useNavigate();
+  const { projectId } = useParams();
 
   const handleSearch = () => {
     onFilterChange(tag, inputValue);
@@ -48,7 +51,9 @@ const BoardHeader = ({ tag, search, onFilterChange }: BoardHeaderProps) => {
             </SearchBox>
           </div>
         </FilterSection>
-        <Button>글쓰기</Button>
+        <Button onClick={() => navigate(`/project/${projectId}/post/new`)}>
+          글쓰기
+        </Button>
       </div>
     </Container>
   );
