@@ -71,4 +71,5 @@ export const TextCard = styled.div`
 
 export const ImageCard = styled.img`
   width: 12rem;
+  border-radius: ${({ theme }) => theme.radius.lg};
 `;

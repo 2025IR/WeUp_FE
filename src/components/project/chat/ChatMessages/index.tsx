@@ -2,14 +2,16 @@ import { useGetChat } from "@/query/chat/useGetChat";
 import ChatMessageCard from "../ChatMessageCard";
 import { MessagesContainer } from "./style";
 import { ChatMessagesProps } from "./type";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ChatMessageProps } from "@/types/chat";
 
-const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
+type Props = ChatMessagesProps & {
+  newMessages: ChatMessageProps[];
+};
+
+const ChatMessages = ({ roomId, newMessages }: Props) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetChat(roomId);
-
-  const [newMessages, setNewMessages] = useState<ChatMessageProps[]>([]);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -25,7 +27,6 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
     if (!containerRef.current) return;
 
     const container = containerRef.current;
-
     const bottomThreshold = 20;
     isAtBottom.current =
       container.scrollHeight - container.scrollTop - container.clientHeight <=
@@ -48,20 +49,6 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
       container.scrollTop = newHeight - prevHeight;
     });
   }, [data]);
-
-  useEffect(() => {
-    if (!client || !roomId) return;
-
-    const subscription = client.subscribe(
-      `/topic/chat/${roomId}`,
-      (message) => {
-        const newMessage = JSON.parse(message.body);
-        setNewMessages((prev) => [...prev, newMessage]);
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, [client, roomId]);
 
   useEffect(() => {
     if (isAtBottom.current) {

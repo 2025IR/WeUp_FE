@@ -4,6 +4,7 @@ export type ChatMessageProps = {
   senderProfileImage: string;
   message: string;
   sentAt: string;
+  isImage: boolean;
 };
 
 export type ChatSendProps = {

@@ -1,7 +1,7 @@
 import { ChatMessageProps } from "@/types/chat";
 import {
   ContainerCard,
-  // ImageCard,
+  ImageCard,
   MessageTime,
   MyCardContainer,
   MyTextCard,
@@ -15,6 +15,7 @@ const ChatMessageCard = ({
   senderProfileImage,
   message,
   sentAt,
+  isImage,
 }: ChatMessageProps) => {
   const isRight = senderId === 1;
 
@@ -22,16 +23,13 @@ const ChatMessageCard = ({
     return (
       <MyCardContainer>
         <MessageTime>{sentAt}</MessageTime>
-        {/* {isImage ? (
-          <ImageCard src={text} alt="" />
+        {isImage ? (
+          <ImageCard src={message} alt="" />
         ) : (
           <MyTextCard>
-            <p>{text}</p>
+            <p>{message}</p>
           </MyTextCard>
-        )} */}
-        <MyTextCard>
-          <p>{message}</p>
-        </MyTextCard>
+        )}
       </MyCardContainer>
     );
   }
@@ -41,18 +39,14 @@ const ChatMessageCard = ({
       <img src={senderProfileImage} alt="user-profile" />
       <TextCardWrapper>
         <p>{senderName}</p>
-        {/* {isImage ? (
-          <ImageCard src={text} alt="" />
+        {isImage ? (
+          <ImageCard src={message} alt="" />
         ) : (
           <TextCard>
-            <p>{text}</p>
+            <p>{message}</p>
           </TextCard>
-        )} */}
-        <TextCard>
-          <p>{message}</p>
-        </TextCard>
+        )}
       </TextCardWrapper>
-
       <MessageTime>{sentAt}</MessageTime>
     </ContainerCard>
   );

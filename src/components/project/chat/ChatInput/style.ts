@@ -11,6 +11,19 @@ export const InputContainer = styled.div`
   border-radius: ${({ theme }) => theme.radius.lg};
   background-color: ${({ theme }) => theme.colors.secondary};
   border: 1px solid ${({ theme }) => theme.colors.border};
+
+  > label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    > svg {
+      width: ${({ theme }) => theme.icon.lg};
+      height: ${({ theme }) => theme.icon.lg};
+      color: ${({ theme }) => theme.colors.textLight};
+    }
+  }
 `;
 
 export const StyledInput = styled.input`
