@@ -8,6 +8,7 @@ import {
   TextCard,
   TextCardWrapper,
 } from "./style";
+import { formatChatTime } from "@/utils/formatTime";
 
 const ChatMessageCard = ({
   senderId,
@@ -17,12 +18,12 @@ const ChatMessageCard = ({
   sentAt,
   isImage,
 }: ChatMessageProps) => {
-  const isRight = senderId === 1;
+  const isRight = senderId === 6;
 
   if (isRight) {
     return (
       <MyCardContainer>
-        <MessageTime>{sentAt}</MessageTime>
+        <MessageTime>{formatChatTime(sentAt)}</MessageTime>
         {isImage ? (
           <ImageCard src={message} alt="" />
         ) : (
@@ -40,14 +41,14 @@ const ChatMessageCard = ({
       <TextCardWrapper>
         <p>{senderName}</p>
         {isImage ? (
-          <ImageCard src={message} alt="" />
+          <ImageCard src={message} />
         ) : (
           <TextCard>
             <p>{message}</p>
           </TextCard>
         )}
       </TextCardWrapper>
-      <MessageTime>{sentAt}</MessageTime>
+      <MessageTime>{formatChatTime(sentAt)}</MessageTime>
     </ContainerCard>
   );
 };

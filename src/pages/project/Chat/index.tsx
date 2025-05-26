@@ -5,8 +5,8 @@ import ChatInput from "@/components/project/chat/ChatInput";
 import { ChatSection, MeetContainer } from "./style";
 
 const Chat = () => {
-  const projectId = 15;
-  const memberId = 1;
+  const projectId = 16;
+  const memberId = 6;
 
   const [stompClient, setStompClient] = useState<Client | null>(null);
 

@@ -81,7 +81,9 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
   // 스크롤 맨 아래 위치 시 부드럽게 최 하단으로 이동
   useEffect(() => {
     if (isAtBottom.current) {
-      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
     }
   }, [newMessages]);
 
