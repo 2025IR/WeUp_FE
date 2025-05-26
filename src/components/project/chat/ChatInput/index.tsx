@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { BsSendFill } from "react-icons/bs";
 import { BiImageAdd } from "react-icons/bi";
 import Button from "@/components/common/Button";
-import { InputContainer, StyledInput } from "./style";
+import { InputContainer, PreviewImage, StyledInput } from "./style";
 import { ChatInputProps } from "./type";
 import { ChatSendProps } from "@/types/chat";
 import { useSendImage } from "@/query/chat/usePostImage";
@@ -25,7 +25,11 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
   });
 
   const handleSend = () => {
-    if (!input.trim() || !client || !client.connected) return;
+    console.log("여기는 들어와?");
+    if (!input.trim() || !client || !client.connected) {
+      console.log(client);
+      return;
+    }
 
     const payload: ChatSendProps = {
       senderId,
@@ -97,22 +101,28 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
       <InputContainer>
         <label htmlFor="imageUpload">
           <BiImageAdd style={{ cursor: "pointer" }} />
+          <input
+            id="imageUpload"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            style={{ display: "none" }}
+          />
         </label>
-        <input
-          id="imageUpload"
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          style={{ display: "none" }}
-        />
+        {previewUrl ? (
+          <PreviewImage>
+            <img src={previewUrl} alt="" />
+          </PreviewImage>
+        ) : (
+          <StyledInput
+            type="text"
+            placeholder="메시지 입력"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+        )}
 
-        <StyledInput
-          type="text"
-          placeholder="메시지 입력"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
         <Button iconOnly variant="primary" size="lg" onClick={handleSend}>
           <BsSendFill />
         </Button>

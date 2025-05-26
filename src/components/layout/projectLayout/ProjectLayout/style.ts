@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
   width: 100%;
   height: 100%;
+  overflow: hidden;
   padding: 1rem 2rem;
 
   display: flex;
@@ -14,4 +15,5 @@ export const Main = styled.div`
   flex: 1;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 `;

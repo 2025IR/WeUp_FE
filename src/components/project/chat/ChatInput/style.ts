@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 export const InputContainer = styled.div`
   width: 100%;
+  height: auto;
   padding: 0.5rem 1rem;
 
   display: flex;
@@ -33,4 +34,14 @@ export const StyledInput = styled.input`
   font-size: ${({ theme }) => theme.fontSize.body};
   font-weight: ${({ theme }) => theme.fontWeight.medium};
   color: ${({ theme }) => theme.colors.textLight};
+`;
+
+export const PreviewImage = styled.div`
+  flex: 1;
+  padding: 0.375rem 0;
+
+  > img {
+    width: 10rem;
+    height: 10rem;
+  }
 `;

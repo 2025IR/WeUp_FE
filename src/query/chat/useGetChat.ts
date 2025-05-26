@@ -9,6 +9,6 @@ export const useGetChat = (roomId: number, size: number = 20) => {
     queryFn: ({ pageParam = 0 }) =>
       getChatHistory(roomId, pageParam as number, size),
     getNextPageParam: (lastPage) =>
-      lastPage.last ? undefined : lastPage.number,
+      lastPage.isLastPage ? undefined : lastPage.page + 1,
   });
 };

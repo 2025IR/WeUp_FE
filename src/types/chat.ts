@@ -13,7 +13,7 @@ export type ChatSendProps = {
 };
 
 export type ChatApiResponse = {
-  content: ChatMessageProps[];
-  last: boolean;
-  number: number;
+  messageList: ChatMessageProps[];
+  isLastPage: boolean;
+  page: number;
 };

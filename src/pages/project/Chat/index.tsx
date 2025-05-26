@@ -1,16 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import ChatMessages from "@/components/project/chat/ChatMessages";
 import ChatInput from "@/components/project/chat/ChatInput";
 import { ChatSection, MeetContainer } from "./style";
-import { ChatMessageProps } from "@/types/chat";
 
 const Chat = () => {
-  const projectId = 18;
+  const projectId = 15;
   const memberId = 1;
 
-  const clientRef = useRef<Client | null>(null);
-  const [newMessages, setNewMessages] = useState<ChatMessageProps[]>([]);
+  const [stompClient, setStompClient] = useState<Client | null>(null);
 
   useEffect(() => {
     const client = new Client({
@@ -19,20 +17,11 @@ const Chat = () => {
       debug: (msg) => console.log("[STOMP]", msg),
       onConnect: () => {
         console.log("✅ 웹소켓 연결 (Chat 컴포넌트)");
-
-        client.subscribe(`/topic/chat/${projectId}`, (message) => {
-          const newMessage = JSON.parse(message.body);
-          console.log("📥 새 메시지 도착:", newMessage);
-          setNewMessages((prev) => [...prev, newMessage]);
-        });
-
-        console.log(`📡 구독 완료: /topic/chat/${projectId}`);
+        setStompClient(client);
       },
     });
 
     client.activate();
-    clientRef.current = client;
-
     return () => {
       client.deactivate();
       console.log("❌ 웹소켓 종료 (Chat 컴포넌트)");
@@ -42,15 +31,12 @@ const Chat = () => {
   return (
     <MeetContainer>
       <ChatSection>
-        <ChatMessages
-          roomId={projectId}
-          client={clientRef.current}
-          newMessages={newMessages}
-        />
+        <ChatMessages roomId={projectId} client={stompClient} />
+
         <ChatInput
           roomId={projectId}
           senderId={memberId}
-          client={clientRef.current}
+          client={stompClient}
         />
       </ChatSection>
     </MeetContainer>

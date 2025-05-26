@@ -7,8 +7,10 @@ export const getChatHistory = async (
   page: number,
   size: number
 ): Promise<ChatApiResponse> => {
-  const res = await fetch(`/chat/messages/${roomId}?page=${page}&size=${size}`);
-  return res.json();
+  const res = await instance.post(`/chat/messages/${roomId}`, { page, size });
+  console.log(page, size);
+  console.log(res.data.data);
+  return res.data.data;
 };
 
 // 채팅 이미지 전송

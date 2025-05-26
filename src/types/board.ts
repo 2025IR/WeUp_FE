@@ -1,5 +1,4 @@
 export interface FetchBoardListParams {
-  projectId: number;
   tag: string | null;
   search: string | null;
   page: number | null;

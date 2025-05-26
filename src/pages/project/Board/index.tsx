@@ -15,8 +15,7 @@ const Board = () => {
     page: 0,
   });
 
-  const { data, isLoading } = useBoardList({
-    projectId: Number(projectId),
+  const { data, isLoading } = useBoardList(Number(projectId), {
     tag: filters.tag,
     search: filters.search,
     page: filters.page,
