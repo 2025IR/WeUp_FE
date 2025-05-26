@@ -1,7 +1,14 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { ModalProps } from "./type";
 import Button from "../Button";
-import { Background, Container, Header, IconWrapper, StyledHr } from "./style";
+import {
+  Background,
+  ButtonWrapper,
+  Container,
+  Header,
+  IconWrapper,
+  StyledHr,
+} from "./style";
 
 const Modal = ({
   icon,
@@ -35,14 +42,14 @@ const Modal = ({
             </Button>
           </>
         ) : (
-          <div>
+          <ButtonWrapper>
             <Button onClick={onClose} variant="secondary" size="lg" fullWidth>
               취소
             </Button>
             <Button onClick={onClick} size="lg" fullWidth>
               {buttonText}
             </Button>
-          </div>
+          </ButtonWrapper>
         )}
       </Container>
     </Background>

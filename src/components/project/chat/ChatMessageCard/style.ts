@@ -70,6 +70,8 @@ export const TextCard = styled.div`
 `;
 
 export const ImageCard = styled.img`
-  width: 12rem;
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
   border-radius: ${({ theme }) => theme.radius.lg};
 `;

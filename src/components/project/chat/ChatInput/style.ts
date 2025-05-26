@@ -49,4 +49,15 @@ export const PreviewImage = styled.div`
   }
 `;
 
-export const ImageWrapper = styled.div``;
+export const ImageWrapper = styled.div`
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+  }
+`;
