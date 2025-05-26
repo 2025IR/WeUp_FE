@@ -24,6 +24,10 @@ export const InputContainer = styled.div`
       height: ${({ theme }) => theme.icon.lg};
       color: ${({ theme }) => theme.colors.textLight};
     }
+
+    > input {
+      display: none;
+    }
   }
 `;
 
@@ -41,7 +45,8 @@ export const PreviewImage = styled.div`
   padding: 0.375rem 0;
 
   > img {
-    width: 10rem;
     height: 10rem;
   }
 `;
+
+export const ImageWrapper = styled.div``;
