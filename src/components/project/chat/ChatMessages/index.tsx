@@ -6,16 +6,19 @@ import { useEffect, useRef, useState } from "react";
 import { ChatMessageProps } from "@/types/chat";
 
 const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
+  // 데이터 내역 받아오는 함수
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetChat(roomId);
 
-  const [newMessages, setNewMessages] = useState<ChatMessageProps[]>([]);
-
   const containerRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const prevScrollHeight = useRef<number>(0);
   const isAtBottom = useRef(true);
+  const prevScrollHeightRef = useRef(0);
 
+  // 웹소켓으로 새로 넘어오는 데이터 상태관리
+  const [newMessages, setNewMessages] = useState<ChatMessageProps[]>([]);
+
+  // 웹소켓 + 페이지네이션으로 넘어오는 채팅 데이터 하나의 리스트로 관리
   const allMessages = [
     ...(data?.pages
       .slice()
@@ -24,6 +27,7 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
     ...newMessages,
   ];
 
+  // 구독, 메세지 창 변경되면 웹소켓 유지한 채로 구독 정보 변경
   useEffect(() => {
     if (!client || !client.connected) return;
 
@@ -41,33 +45,40 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
     };
   }, [client, roomId]);
 
+  // 데이터 받아온 이후
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const container = containerRef.current;
+    // 데이터 처음 불러왔을 때, 스크롤 최하단 위치.
+    if (data?.pages.length === 1) {
+      container.scrollTop = container?.scrollHeight;
+    }
+
+    requestAnimationFrame(() => {
+      const newHeight = container.scrollHeight;
+      const prevHeight = prevScrollHeightRef.current;
+      const scrollDelta = newHeight - prevHeight;
+      container.scrollTop = scrollDelta;
+    });
+  }, [data]);
+
+  // 스크롤 이동 시 맨 아래 있는지 확인 & 스크롤 맨 위로 올리면 다음 데이터 호출
   const handleScroll = () => {
     if (!containerRef.current) return;
-
     const container = containerRef.current;
-    const bottomThreshold = 20;
+
     isAtBottom.current =
       container.scrollHeight - container.scrollTop - container.clientHeight <=
-      bottomThreshold;
+      20;
 
     if (container.scrollTop === 0 && hasNextPage && !isFetchingNextPage) {
-      prevScrollHeight.current = container.scrollHeight;
+      // 데이터 부르기 전 이전 높이 기억
+      prevScrollHeightRef.current = container.scrollHeight;
       fetchNextPage();
     }
   };
 
-  useEffect(() => {
-    if (!containerRef.current || !isFetchingNextPage) return;
-
-    const container = containerRef.current;
-    const prevHeight = prevScrollHeight.current;
-
-    requestAnimationFrame(() => {
-      const newHeight = container.scrollHeight;
-      container.scrollTop = newHeight - prevHeight;
-    });
-  }, [data]);
-
+  // 스크롤 맨 아래 위치 시 부드럽게 최 하단으로 이동
   useEffect(() => {
     if (isAtBottom.current) {
       scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -75,7 +86,7 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
   }, [newMessages]);
 
   return (
-    <MessagesContainer onScroll={handleScroll} ref={containerRef}>
+    <MessagesContainer ref={containerRef} onScroll={handleScroll}>
       {allMessages.map((msg, index) => (
         <ChatMessageCard key={index} {...msg} />
       ))}

@@ -8,7 +8,6 @@ export const getChatHistory = async (
   size: number
 ): Promise<ChatApiResponse> => {
   const res = await instance.post(`/chat/messages/${roomId}`, { page, size });
-  console.log(page, size);
   console.log(res.data.data);
   return res.data.data;
 };
