@@ -11,6 +11,25 @@ import {
   TimeTable,
 } from "./style";
 import TimeGrid from "../TimeGrid";
+import { getAverageTimeArray } from "@/utils/getAverageTimeArray";
+
+const dummyAvailabilityList = [
+  {
+    memberId: 1,
+    name: "김철수",
+    availableTime: "1".repeat(10) + "0".repeat(242),
+  },
+  {
+    memberId: 2,
+    name: "이영희",
+    availableTime: "0".repeat(36) + "1".repeat(10) + "0".repeat(206),
+  },
+  {
+    memberId: 3,
+    name: "박민준",
+    availableTime: "1".repeat(252),
+  },
+];
 
 type Type = {
   onClose: () => void;
@@ -36,6 +55,9 @@ const ScheduleModal = ({ onClose }: Type) => {
     "00:00",
     "01:00",
   ];
+
+  const timeStrings = dummyAvailabilityList.map((m) => m.availableTime);
+  const averageTimeArray = getAverageTimeArray(timeStrings);
 
   return (
     <Background>
@@ -75,7 +97,7 @@ const ScheduleModal = ({ onClose }: Type) => {
             ))}
           </TimeTable>
           <div>
-            <TimeGrid />
+            <TimeGrid averageTimeArray={averageTimeArray} />
           </div>
           <div>s</div>
         </Main>
