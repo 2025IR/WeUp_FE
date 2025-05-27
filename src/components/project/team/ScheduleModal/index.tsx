@@ -1,7 +1,8 @@
+import { useState } from "react";
 import Button from "@/components/common/Button";
 import IconLabel from "@/components/common/IconLabel";
 import { AiOutlineClose } from "react-icons/ai";
-import { BiEditAlt } from "react-icons/bi";
+import { BiCheckSquare, BiEditAlt, BiSquare } from "react-icons/bi";
 import {
   Background,
   Container,
@@ -9,9 +10,12 @@ import {
   HeaderMenu,
   Main,
   TimeTable,
+  UserTable,
+  UserWrapper,
 } from "./style";
 import TimeGrid from "../TimeGrid";
 import { getAverageTimeArray } from "@/utils/getAverageTimeArray";
+import Label from "@/components/common/Label";
 
 const dummyAvailabilityList = [
   {
@@ -36,6 +40,32 @@ type Type = {
 };
 
 const ScheduleModal = ({ onClose }: Type) => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(
+    new Set(dummyAvailabilityList.map((m) => m.memberId))
+  );
+
+  const toggleSelect = (id: number) => {
+    setSelectedIds((prev) => {
+      const copy = new Set(prev);
+      if (copy.has(id)) {
+        copy.delete(id);
+      } else {
+        copy.add(id);
+      }
+      return new Set(copy);
+    });
+  };
+
+  const selectedStrings = dummyAvailabilityList
+    .filter((m) => selectedIds.has(m.memberId))
+    .map((m) => m.availableTime);
+
+  const averageTimeArray =
+    selectedStrings.length === 0
+      ? Array(252).fill(0)
+      : getAverageTimeArray(selectedStrings);
+
   const timeData = [
     "09:00",
     "10:00",
@@ -55,9 +85,6 @@ const ScheduleModal = ({ onClose }: Type) => {
     "00:00",
     "01:00",
   ];
-
-  const timeStrings = dummyAvailabilityList.map((m) => m.availableTime);
-  const averageTimeArray = getAverageTimeArray(timeStrings);
 
   return (
     <Background>
@@ -97,9 +124,37 @@ const ScheduleModal = ({ onClose }: Type) => {
             ))}
           </TimeTable>
           <div>
-            <TimeGrid averageTimeArray={averageTimeArray} />
+            <TimeGrid
+              averageTimeArray={averageTimeArray}
+              onHoverIndexChange={(index) => {
+                setHoveredIndex(index); // 상태 만들면 됨
+              }}
+            />
           </div>
-          <div>s</div>
+          <UserTable>
+            {dummyAvailabilityList.map((member) => {
+              const isSelected = selectedIds.has(member.memberId);
+              const isHovered =
+                isSelected &&
+                hoveredIndex !== null &&
+                member.availableTime[hoveredIndex] === "1";
+
+              return (
+                <UserWrapper
+                  key={member.memberId}
+                  onClick={() => toggleSelect(member.memberId)}
+                >
+                  {isSelected ? <BiCheckSquare /> : <BiSquare />}
+                  <Label
+                    textColors={isHovered ? "textWhite" : "textLight"}
+                    colors={isHovered ? "primary" : "background"}
+                  >
+                    {member.name}
+                  </Label>
+                </UserWrapper>
+              );
+            })}
+          </UserTable>
         </Main>
       </Container>
     </Background>

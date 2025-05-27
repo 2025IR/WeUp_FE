@@ -4,10 +4,12 @@ import { getAverageTimeArray } from "@/utils/getAverageTimeArray";
 
 type Props = {
   averageTimeArray: number[];
+  onHoverIndexChange: (index: number | null) => void;
 };
 
-const TimeGrid = ({ averageTimeArray }: Props) => {
+const TimeGrid = ({ onHoverIndexChange, averageTimeArray }: Props) => {
   const [timeSlots, setTimeSlots] = useState<boolean[]>(Array(252).fill(false));
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
   return (
     <GridContainer>
@@ -22,7 +24,17 @@ const TimeGrid = ({ averageTimeArray }: Props) => {
             key={i}
             opacity={opacity}
             isBottomHighlight={isBottomHighlight}
-          />
+            onMouseEnter={() => {
+              setHoverIndex(i);
+              onHoverIndexChange(i);
+            }}
+            onMouseLeave={() => {
+              setHoverIndex(null);
+              onHoverIndexChange(null);
+            }}
+          >
+            <div />
+          </TimeDiv>
         );
       })}
     </GridContainer>

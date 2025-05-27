@@ -11,10 +11,15 @@ export const TimeDiv = styled.div<{
   isBottomHighlight?: boolean;
 }>`
   height: 0.75rem;
-  box-shadow: inset -1px 0 0 ${({ theme }) => theme.colors.border};
-  background-color: ${({ theme }) => theme.colors.primary};
-  opacity: ${({ opacity }) => opacity};
+  border-left: 1px solid ${({ theme }) => theme.colors.border};
   border-bottom: 1.5px solid
     ${({ theme, isBottomHighlight }) =>
       isBottomHighlight ? theme.colors.textLight : theme.colors.border};
+
+  > div {
+    width: 100%;
+    height: 100%;
+    background-color: ${({ theme }) => theme.colors.primary};
+    opacity: ${({ opacity }) => opacity};
+  }
 `;

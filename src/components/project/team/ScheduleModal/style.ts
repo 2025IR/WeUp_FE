@@ -33,7 +33,7 @@ export const Header = styled.div`
   padding: 0.75rem 0;
 
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 3fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2.5fr;
   place-items: center;
   font-size: 14px;
 
@@ -54,7 +54,7 @@ export const Main = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
 
   display: grid;
-  grid-template-columns: 1fr 7fr 3fr;
+  grid-template-columns: 1fr 7fr 2.5fr;
 `;
 
 export const TimeTable = styled.div`
@@ -74,5 +74,29 @@ export const TimeTable = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+`;
+
+export const UserTable = styled.div`
+  padding: 2rem 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+
+  border-left: 1px solid ${({ theme }) => theme.colors.border};
+`;
+
+export const UserWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  color: ${({ theme }) => theme.colors.textLight};
+
+  > svg {
+    cursor: pointer;
   }
 `;
