@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/components/common/Button";
-import IconLabel from "@/components/common/IconLabel";
 import { AiOutlineClose } from "react-icons/ai";
-import { BiCheckSquare, BiEditAlt, BiSquare } from "react-icons/bi";
+import { BiCheck, BiCheckSquare, BiEditAlt, BiSquare } from "react-icons/bi";
 import {
   Background,
   Container,
+  EmptyTable,
   Header,
   HeaderMenu,
   Main,
@@ -13,9 +13,10 @@ import {
   UserTable,
   UserWrapper,
 } from "./style";
-import TimeGrid from "../TimeGrid";
 import { getAverageTimeArray } from "@/utils/getAverageTimeArray";
 import Label from "@/components/common/Label";
+import ViewTimeGrid from "../ViewTimeGrid";
+import EditTimeGrid from "../EditTimeGrid";
 
 const dummyAvailabilityList = [
   {
@@ -86,6 +87,19 @@ const ScheduleModal = ({ onClose }: Type) => {
     "01:00",
   ];
 
+  const [isEditMode, setIsEditMode] = useState(false);
+  const memberId = 1;
+  const [editedSchedule, setEditedSchedule] = useState<string | null>(null);
+
+  useEffect(() => {
+    const mySchedule = dummyAvailabilityList.find(
+      (m) => m.memberId === memberId
+    )?.availableTime;
+    if (mySchedule) {
+      setEditedSchedule(mySchedule);
+    }
+  }, []);
+
   return (
     <Background>
       <Container>
@@ -99,20 +113,25 @@ const ScheduleModal = ({ onClose }: Type) => {
           <div>금</div>
           <div>토</div>
           <HeaderMenu>
-            <Button iconOnly>
-              <BiEditAlt />
-            </Button>
-            <Button variant="secondary" onClick={onClose}>
-              <IconLabel
-                fontSize="caption"
-                fontWeight="bold"
-                size="sm"
-                gap="0.25rem"
-                icon={<AiOutlineClose />}
-              >
-                Close
-              </IconLabel>
-            </Button>
+            {isEditMode ? (
+              <>
+                <Button iconOnly onClick={() => setIsEditMode(false)}>
+                  <BiCheck />
+                </Button>
+                <Button iconOnly onClick={() => setIsEditMode(false)}>
+                  <AiOutlineClose />
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button iconOnly onClick={() => setIsEditMode(true)}>
+                  <BiEditAlt />
+                </Button>
+                <Button iconOnly onClick={onClose}>
+                  <AiOutlineClose />
+                </Button>
+              </>
+            )}
           </HeaderMenu>
         </Header>
         <Main>
@@ -124,37 +143,43 @@ const ScheduleModal = ({ onClose }: Type) => {
             ))}
           </TimeTable>
           <div>
-            <TimeGrid
-              averageTimeArray={averageTimeArray}
-              onHoverIndexChange={(index) => {
-                setHoveredIndex(index); // 상태 만들면 됨
-              }}
-            />
+            {isEditMode ? (
+              <EditTimeGrid initialEditString={editedSchedule ?? ""} />
+            ) : (
+              <ViewTimeGrid
+                averageTimeArray={averageTimeArray}
+                onHoverIndexChange={setHoveredIndex}
+              />
+            )}
           </div>
-          <UserTable>
-            {dummyAvailabilityList.map((member) => {
-              const isSelected = selectedIds.has(member.memberId);
-              const isHovered =
-                isSelected &&
-                hoveredIndex !== null &&
-                member.availableTime[hoveredIndex] === "1";
+          {isEditMode ? (
+            <EmptyTable />
+          ) : (
+            <UserTable>
+              {dummyAvailabilityList.map((member) => {
+                const isSelected = selectedIds.has(member.memberId);
+                const isHovered =
+                  isSelected &&
+                  hoveredIndex !== null &&
+                  member.availableTime[hoveredIndex] === "1";
 
-              return (
-                <UserWrapper
-                  key={member.memberId}
-                  onClick={() => toggleSelect(member.memberId)}
-                >
-                  {isSelected ? <BiCheckSquare /> : <BiSquare />}
-                  <Label
-                    textColors={isHovered ? "textWhite" : "textLight"}
-                    colors={isHovered ? "primary" : "background"}
+                return (
+                  <UserWrapper
+                    key={member.memberId}
+                    onClick={() => toggleSelect(member.memberId)}
                   >
-                    {member.name}
-                  </Label>
-                </UserWrapper>
-              );
-            })}
-          </UserTable>
+                    {isSelected ? <BiCheckSquare /> : <BiSquare />}
+                    <Label
+                      textColors={isHovered ? "textWhite" : "textLight"}
+                      colors={isHovered ? "primary" : "background"}
+                    >
+                      {member.name}
+                    </Label>
+                  </UserWrapper>
+                );
+              })}
+            </UserTable>
+          )}
         </Main>
       </Container>
     </Background>

@@ -43,8 +43,9 @@ export const Header = styled.div`
 
 export const HeaderMenu = styled.div`
   width: 100%;
+  padding: 0 1rem;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   gap: 10px;
 `;
@@ -99,4 +100,10 @@ export const UserWrapper = styled.div`
   > svg {
     cursor: pointer;
   }
+`;
+
+export const EmptyTable = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.secondary};
 `;
