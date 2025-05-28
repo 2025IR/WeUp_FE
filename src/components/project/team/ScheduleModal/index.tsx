@@ -17,6 +17,8 @@ import { getAverageTimeArray } from "@/utils/getAverageTimeArray";
 import Label from "@/components/common/Label";
 import ViewTimeGrid from "../ViewTimeGrid";
 import EditTimeGrid from "../EditTimeGrid";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const dummyAvailabilityList = [
   {
@@ -88,7 +90,7 @@ const ScheduleModal = ({ onClose }: Type) => {
   ];
 
   const [isEditMode, setIsEditMode] = useState(false);
-  const memberId = 1;
+  const memberId = useSelector((state: RootState) => state.auth.userId);
   const [editedSchedule, setEditedSchedule] = useState<string | null>(null);
 
   useEffect(() => {
