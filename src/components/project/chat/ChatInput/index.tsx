@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { BsSendFill } from "react-icons/bs";
 import { BiImageAdd } from "react-icons/bi";
 import Button from "@/components/common/Button";
@@ -11,7 +10,6 @@ import Modal from "@/components/common/Modal";
 import { AiFillFileImage } from "react-icons/ai";
 
 const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
-  const { projectId } = useParams();
   const [input, setInput] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -54,10 +52,10 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
   };
 
   const handleSendImage = () => {
-    if (!imageFile || !projectId) return;
+    if (!imageFile || !roomId) return;
 
     const formData = new FormData();
-    formData.append("projectId", String(projectId));
+    formData.append("projectId", String(roomId));
     formData.append("roomId", String(roomId));
     formData.append("userId", String(senderId));
     formData.append("file", imageFile);
