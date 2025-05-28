@@ -3,10 +3,14 @@ import { Client } from "@stomp/stompjs";
 import ChatMessages from "@/components/project/chat/ChatMessages";
 import ChatInput from "@/components/project/chat/ChatInput";
 import { ChatSection, MeetContainer } from "./style";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Chat = () => {
-  const projectId = 16;
-  const memberId = 6;
+  const { projectId } = useParams();
+  const parsedProjectId = Number(projectId);
+  const memberId = useSelector((state: RootState) => state.auth.userId);
 
   const [stompClient, setStompClient] = useState<Client | null>(null);
 
@@ -31,11 +35,11 @@ const Chat = () => {
   return (
     <MeetContainer>
       <ChatSection>
-        <ChatMessages roomId={projectId} client={stompClient} />
+        <ChatMessages roomId={parsedProjectId} client={stompClient} />
 
         <ChatInput
-          roomId={projectId}
-          senderId={memberId}
+          roomId={parsedProjectId}
+          senderId={memberId!}
           client={stompClient}
         />
       </ChatSection>
