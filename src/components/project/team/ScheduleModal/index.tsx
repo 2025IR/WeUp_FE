@@ -19,34 +19,50 @@ import ViewTimeGrid from "../ViewTimeGrid";
 import EditTimeGrid from "../EditTimeGrid";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { useParams } from "react-router-dom";
+import { useGetSchedule } from "@/query/schedule/useGetSchedule";
+import { useEditSchedule } from "@/query/schedule/useEditSchedule";
 
-const dummyAvailabilityList = [
-  {
-    memberId: 1,
-    name: "김철수",
-    availableTime: "1".repeat(10) + "0".repeat(242),
-  },
-  {
-    memberId: 2,
-    name: "이영희",
-    availableTime: "0".repeat(36) + "1".repeat(10) + "0".repeat(206),
-  },
-  {
-    memberId: 3,
-    name: "박민준",
-    availableTime: "1".repeat(252),
-  },
-];
+// const dummyAvailabilityList = [
+//   {
+//     memberId: 1,
+//     name: "김철수",
+//     availableTime: "1".repeat(10) + "0".repeat(242),
+//   },
+//   {
+//     memberId: 2,
+//     name: "이영희",
+//     availableTime: "0".repeat(36) + "1".repeat(10) + "0".repeat(206),
+//   },
+//   {
+//     memberId: 3,
+//     name: "박민준",
+//     availableTime: "1".repeat(252),
+//   },
+// ];
 
 type Type = {
   onClose: () => void;
 };
 
 const ScheduleModal = ({ onClose }: Type) => {
+  const { projectId } = useParams();
+  const parsedProjectId = Number(projectId);
+
+  const { data } = useGetSchedule(parsedProjectId);
+  const availabilityList = Object.entries(data!).map(
+    ([name, availableTime], idx) => ({
+      memberId: idx + 1,
+      name,
+      availableTime,
+    })
+  );
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(
-    new Set(dummyAvailabilityList.map((m) => m.memberId))
+    new Set(availabilityList.map((m) => m.memberId))
   );
+  console.log(data);
 
   const toggleSelect = (id: number) => {
     setSelectedIds((prev) => {
@@ -60,7 +76,7 @@ const ScheduleModal = ({ onClose }: Type) => {
     });
   };
 
-  const selectedStrings = dummyAvailabilityList
+  const selectedStrings = availabilityList
     .filter((m) => selectedIds.has(m.memberId))
     .map((m) => m.availableTime);
 
@@ -92,9 +108,10 @@ const ScheduleModal = ({ onClose }: Type) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const memberId = useSelector((state: RootState) => state.auth.userId);
   const [editedSchedule, setEditedSchedule] = useState<string | null>(null);
+  const { mutate: editScheduleMutate } = useEditSchedule();
 
   useEffect(() => {
-    const mySchedule = dummyAvailabilityList.find(
+    const mySchedule = availabilityList.find(
       (m) => m.memberId === memberId
     )?.availableTime;
     if (mySchedule) {
@@ -117,7 +134,18 @@ const ScheduleModal = ({ onClose }: Type) => {
           <HeaderMenu>
             {isEditMode ? (
               <>
-                <Button iconOnly onClick={() => setIsEditMode(false)}>
+                <Button
+                  iconOnly
+                  onClick={() => {
+                    if (memberId && editedSchedule) {
+                      editScheduleMutate({
+                        memberId,
+                        availableTime: editedSchedule,
+                      });
+                      setIsEditMode(false);
+                    }
+                  }}
+                >
                   <BiCheck />
                 </Button>
                 <Button iconOnly onClick={() => setIsEditMode(false)}>
@@ -158,7 +186,7 @@ const ScheduleModal = ({ onClose }: Type) => {
             <EmptyTable />
           ) : (
             <UserTable>
-              {dummyAvailabilityList.map((member) => {
+              {availabilityList.map((member) => {
                 const isSelected = selectedIds.has(member.memberId);
                 const isHovered =
                   isSelected &&
