@@ -23,24 +23,6 @@ import { useParams } from "react-router-dom";
 import { useGetSchedule } from "@/query/schedule/useGetSchedule";
 import { useEditSchedule } from "@/query/schedule/useEditSchedule";
 
-// const dummyAvailabilityList = [
-//   {
-//     memberId: 1,
-//     name: "김철수",
-//     availableTime: "1".repeat(10) + "0".repeat(242),
-//   },
-//   {
-//     memberId: 2,
-//     name: "이영희",
-//     availableTime: "0".repeat(36) + "1".repeat(10) + "0".repeat(206),
-//   },
-//   {
-//     memberId: 3,
-//     name: "박민준",
-//     availableTime: "1".repeat(252),
-//   },
-// ];
-
 type Type = {
   onClose: () => void;
 };
@@ -108,7 +90,7 @@ const ScheduleModal = ({ onClose }: Type) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const memberId = useSelector((state: RootState) => state.auth.userId);
   const [editedSchedule, setEditedSchedule] = useState<string | null>(null);
-  const { mutate: editScheduleMutate } = useEditSchedule();
+  const { mutate: editScheduleMutate } = useEditSchedule(parsedProjectId);
 
   useEffect(() => {
     const mySchedule = availabilityList.find(

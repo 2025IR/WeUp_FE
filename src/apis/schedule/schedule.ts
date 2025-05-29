@@ -6,7 +6,6 @@ export const getSchedules = async (
   projectId: number
 ): Promise<ScheduleType> => {
   const response = await instance.post(`/schedule/${projectId}`);
-  console.log(response.data.data);
   return response.data.data;
 };
 

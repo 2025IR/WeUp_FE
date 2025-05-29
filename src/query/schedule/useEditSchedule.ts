@@ -1,7 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { editSchedule } from "@/apis/schedule/schedule";
 
-export const useEditSchedule = () => {
+export const useEditSchedule = (projectId: number) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: ({
       memberId,
@@ -10,5 +12,8 @@ export const useEditSchedule = () => {
       memberId: number;
       availableTime: string;
     }) => editSchedule(memberId, availableTime),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["teamSchedule", projectId] });
+    },
   });
 };
