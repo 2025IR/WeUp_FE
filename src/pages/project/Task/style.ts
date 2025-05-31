@@ -30,3 +30,19 @@ export const TaskItem = styled.div`
   grid-template-columns: 62px 1fr 130px 200px 200px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
+
+export const AddItem = styled.div`
+  width: 100%;
+  padding: 0.5rem 1.5rem;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.secondary};
+  }
+`;

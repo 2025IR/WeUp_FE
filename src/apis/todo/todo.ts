@@ -1,6 +1,11 @@
 import { TodoType } from "@/types/todo";
 import instance from "../axiosInstance";
 
+// 투두 생성
+export const CreateTodo = (projectId: number) => {
+  return instance.post("/todo/create", { projectId });
+};
+
 // 투두 리스트 데이터
 export const getTodoList = async (project_id: number): Promise<TodoType[]> => {
   const res = await instance.post(`/todo/list/${project_id}`);

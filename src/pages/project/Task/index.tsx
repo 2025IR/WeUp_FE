@@ -1,20 +1,34 @@
 import ToDoCard from "@/components/project/task/ToDoCard";
-import { AiOutlineCalendar } from "react-icons/ai";
+import { AiOutlineCalendar, AiOutlinePlus } from "react-icons/ai";
 import { BiRightArrowCircle } from "react-icons/bi";
 import { HiHashtag } from "react-icons/hi";
 import { LuListMinus } from "react-icons/lu";
-import { HeaderTitle, TaskContainer, TaskHeader, TaskItem } from "./style";
+import {
+  AddItem,
+  HeaderTitle,
+  TaskContainer,
+  TaskHeader,
+  TaskItem,
+} from "./style";
 import { TodoType } from "@/types/todo";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetTodoList } from "@/query/todo/useGetTodoList";
 import { updateTodo, updateTodoStatus } from "@/apis/todo/todo";
+import IconLabel from "@/components/common/IconLabel";
+import { useCreateTodo } from "@/query/todo/useCreateTodo";
 
 const Task = () => {
   const { projectId } = useParams();
   const parsedProjectId = Number(projectId);
   const { data } = useGetTodoList(parsedProjectId);
   const [tasks, setTasks] = useState<TodoType[]>([]);
+
+  const { mutate: createTodo } = useCreateTodo();
+
+  const handleAddTodo = () => {
+    createTodo(parsedProjectId);
+  };
 
   useEffect(() => {
     setTasks(data ?? []);
@@ -62,6 +76,12 @@ const Task = () => {
           <ToDoCard task={todo} onUpdate={updateTodoHandler} />
         </TaskItem>
       ))}
+
+      <AddItem onClick={handleAddTodo}>
+        <IconLabel fontSize="caption" size="sm" icon={<AiOutlinePlus />}>
+          New To Do
+        </IconLabel>
+      </AddItem>
     </TaskContainer>
   );
 };

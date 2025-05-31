@@ -22,6 +22,7 @@ export const SummaryWrapper = styled.div`
 
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSize.body};
