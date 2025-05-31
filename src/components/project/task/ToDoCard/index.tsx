@@ -13,7 +13,7 @@ import {
   SummaryWrapper,
 } from "./style";
 import { TodoType } from "@/types/todo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-day-picker/dist/style.css";
 
 type Props = {
@@ -26,6 +26,11 @@ const ToDoCard = ({ task, onUpdate }: Props) => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(task.todoName);
+
+  useEffect(() => {
+    setStatus(task.status);
+    setInputValue(task.todoName);
+  }, [task.status, task.todoName]);
 
   const handleStatusChange = (newStatus: number) => {
     setStatus(newStatus);
