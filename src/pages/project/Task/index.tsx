@@ -11,7 +11,7 @@ import {
   TaskHeader,
   TaskItem,
 } from "./style";
-import { TodoType } from "@/types/todo";
+import { TodoType, TodoUpdateType } from "@/types/todo";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetTodoList } from "@/query/todo/useGetTodoList";
@@ -21,6 +21,7 @@ import { useCreateTodo } from "@/query/todo/useCreateTodo";
 import { useContextMenuModal } from "@/hooks/useContextMenuModal";
 import AssigneeModal from "@/components/project/task/AssigneeModal";
 import DateModal from "@/components/project/task/DateModal";
+import queryClient from "@/query/reactQueryClient";
 
 const Task = () => {
   const { projectId } = useParams();
@@ -29,21 +30,26 @@ const Task = () => {
   const [tasks, setTasks] = useState<TodoType[]>([]);
 
   const { mutate: createTodo } = useCreateTodo();
-  const { isOpen, modalRef, modalType, modalPosition, openModal, closeModal } =
+  const { isOpen, modalRef, modalType, payload, modalPosition, openModal } =
     useContextMenuModal();
 
   const handleAddTodo = () => {
     createTodo(parsedProjectId);
   };
 
-  const handleOpenModal = (e: React.MouseEvent, type: "assignee" | "date") => {
+  const handleOpenModal = (
+    e: React.MouseEvent,
+    type: "assignee" | "date",
+    task: TodoType
+  ) => {
     const rect = e.currentTarget.getBoundingClientRect();
     openModal(
       {
         top: rect.bottom + window.scrollY,
         left: rect.left + window.scrollX,
       },
-      type
+      type,
+      task
     );
   };
 
@@ -52,7 +58,7 @@ const Task = () => {
   }, [data]);
 
   const updateTodoHandler = useCallback(
-    async (todoId: number, updated: Partial<TodoType>) => {
+    async (todoId: number, updated: Partial<TodoUpdateType>) => {
       setTasks((prev) =>
         prev.map((t) => (t.todoId === todoId ? { ...t, ...updated } : t))
       );
@@ -62,6 +68,10 @@ const Task = () => {
       } else {
         await updateTodo({ todoId, ...updated });
       }
+
+      queryClient.invalidateQueries({
+        queryKey: ["todoList", parsedProjectId],
+      });
     },
     []
   );
@@ -104,13 +114,19 @@ const Task = () => {
         </IconLabel>
       </AddItem>
 
-      {isOpen && (
+      {isOpen && payload && (
         <ModalContainer
           ref={modalRef}
           top={modalPosition.top}
           left={modalPosition.left}
         >
-          {modalType === "assignee" && <AssigneeModal />}
+          {modalType === "assignee" && (
+            <AssigneeModal
+              projectId={parsedProjectId}
+              task={payload}
+              onUpdate={updateTodoHandler}
+            />
+          )}
           {modalType === "date" && <DateModal />}
         </ModalContainer>
       )}

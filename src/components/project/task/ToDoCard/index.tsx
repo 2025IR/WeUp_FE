@@ -19,7 +19,11 @@ import "react-day-picker/dist/style.css";
 type Props = {
   task: TodoType;
   onUpdate: (todoId: number, updated: Partial<TodoType>) => void;
-  onOpenModal: (e: React.MouseEvent, type: "assignee" | "date") => void;
+  onOpenModal: (
+    e: React.MouseEvent,
+    type: "assignee" | "date",
+    task: TodoType
+  ) => void;
 };
 
 const ToDoCard = ({ task, onUpdate, onOpenModal }: Props) => {
@@ -97,19 +101,23 @@ const ToDoCard = ({ task, onUpdate, onOpenModal }: Props) => {
           <Label onClick={() => handleStatusChange(0)}>완료</Label>
         )}
       </StatusWrapper>
-      <AssigneeWrapper onClick={(e) => onOpenModal(e, "assignee")}>
-        <IconLabel
-          fontSize="body"
-          colors="text"
-          size="lg"
-          full
-          type="image"
-          icon="https://we-up-public.s3.ap-northeast-2.amazonaws.com/smiley1.png"
-        >
-          정윤석
-        </IconLabel>
+      <AssigneeWrapper onClick={(e) => onOpenModal(e, "assignee", task)}>
+        {task.assignee.map((member) => (
+          <IconLabel
+            key={member.memberId}
+            fontSize="body"
+            colors="text"
+            size="lg"
+            full
+            type="image"
+            icon={member.profileImage}
+            gap="0.5rem"
+          >
+            {member.name}
+          </IconLabel>
+        ))}
       </AssigneeWrapper>
-      <DateWrapper onClick={(e) => onOpenModal(e, "date")}>
+      <DateWrapper onClick={(e) => onOpenModal(e, "date", task)}>
         <Label colors="secondary" textColors="text">
           {task.startDate}
         </Label>

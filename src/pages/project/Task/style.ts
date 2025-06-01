@@ -53,7 +53,6 @@ export const ModalContainer = styled.div<{ top: number; left: number }>`
   left: ${({ left }) => `${left}px`};
   z-index: ${({ theme }) => theme.zIndex.modal};
   width: 200px;
-  padding: 10px 4px;
 
   border-radius: ${({ theme }) => theme.radius.lg};
   border: 1px solid ${({ theme }) => theme.colors.border};
