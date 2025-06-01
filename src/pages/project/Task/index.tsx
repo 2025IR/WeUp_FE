@@ -6,6 +6,7 @@ import { LuListMinus } from "react-icons/lu";
 import {
   AddItem,
   HeaderTitle,
+  ModalContainer,
   TaskContainer,
   TaskHeader,
   TaskItem,
@@ -17,6 +18,9 @@ import { useGetTodoList } from "@/query/todo/useGetTodoList";
 import { updateTodo, updateTodoStatus } from "@/apis/todo/todo";
 import IconLabel from "@/components/common/IconLabel";
 import { useCreateTodo } from "@/query/todo/useCreateTodo";
+import { useContextMenuModal } from "@/hooks/useContextMenuModal";
+import AssigneeModal from "@/components/project/task/AssigneeModal";
+import DateModal from "@/components/project/task/DateModal";
 
 const Task = () => {
   const { projectId } = useParams();
@@ -25,9 +29,22 @@ const Task = () => {
   const [tasks, setTasks] = useState<TodoType[]>([]);
 
   const { mutate: createTodo } = useCreateTodo();
+  const { isOpen, modalRef, modalType, modalPosition, openModal, closeModal } =
+    useContextMenuModal();
 
   const handleAddTodo = () => {
     createTodo(parsedProjectId);
+  };
+
+  const handleOpenModal = (e: React.MouseEvent, type: "assignee" | "date") => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    openModal(
+      {
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX,
+      },
+      type
+    );
   };
 
   useEffect(() => {
@@ -73,7 +90,11 @@ const Task = () => {
 
       {tasks.map((todo) => (
         <TaskItem key={todo.todoId}>
-          <ToDoCard task={todo} onUpdate={updateTodoHandler} />
+          <ToDoCard
+            task={todo}
+            onUpdate={updateTodoHandler}
+            onOpenModal={handleOpenModal}
+          />
         </TaskItem>
       ))}
 
@@ -82,6 +103,17 @@ const Task = () => {
           New To Do
         </IconLabel>
       </AddItem>
+
+      {isOpen && (
+        <ModalContainer
+          ref={modalRef}
+          top={modalPosition.top}
+          left={modalPosition.left}
+        >
+          {modalType === "assignee" && <AssigneeModal />}
+          {modalType === "date" && <DateModal />}
+        </ModalContainer>
+      )}
     </TaskContainer>
   );
 };

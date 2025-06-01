@@ -46,3 +46,17 @@ export const AddItem = styled.div`
     background-color: ${({ theme }) => theme.colors.secondary};
   }
 `;
+
+export const ModalContainer = styled.div<{ top: number; left: number }>`
+  position: absolute;
+  top: ${({ top }) => `${top}px`};
+  left: ${({ left }) => `${left}px`};
+  z-index: ${({ theme }) => theme.zIndex.modal};
+  width: 200px;
+  padding: 10px 4px;
+
+  border-radius: ${({ theme }) => theme.radius.lg};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  background-color: ${({ theme }) => theme.colors.background};
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+`;

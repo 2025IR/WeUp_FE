@@ -58,6 +58,7 @@ export const AssigneeWrapper = styled.div`
   justify-content: start;
   align-items: center;
 
+  cursor: pointer;
   border-left: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
@@ -68,5 +69,7 @@ export const DateWrapper = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
+
+  cursor: pointer;
   border-left: 1px solid ${({ theme }) => theme.colors.border};
 `;

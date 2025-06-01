@@ -19,9 +19,10 @@ import "react-day-picker/dist/style.css";
 type Props = {
   task: TodoType;
   onUpdate: (todoId: number, updated: Partial<TodoType>) => void;
+  onOpenModal: (e: React.MouseEvent, type: "assignee" | "date") => void;
 };
 
-const ToDoCard = ({ task, onUpdate }: Props) => {
+const ToDoCard = ({ task, onUpdate, onOpenModal }: Props) => {
   const [status, setStatus] = useState(task.status);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -96,7 +97,7 @@ const ToDoCard = ({ task, onUpdate }: Props) => {
           <Label onClick={() => handleStatusChange(0)}>완료</Label>
         )}
       </StatusWrapper>
-      <AssigneeWrapper>
+      <AssigneeWrapper onClick={(e) => onOpenModal(e, "assignee")}>
         <IconLabel
           fontSize="body"
           colors="text"
@@ -108,7 +109,7 @@ const ToDoCard = ({ task, onUpdate }: Props) => {
           정윤석
         </IconLabel>
       </AssigneeWrapper>
-      <DateWrapper>
+      <DateWrapper onClick={(e) => onOpenModal(e, "date")}>
         <Label colors="secondary" textColors="text">
           {task.startDate}
         </Label>
