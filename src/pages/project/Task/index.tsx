@@ -6,17 +6,22 @@ import { LuListMinus } from "react-icons/lu";
 import {
   AddItem,
   HeaderTitle,
+  ModalContainer,
   TaskContainer,
   TaskHeader,
-  TaskItem,
 } from "./style";
-import { TodoType } from "@/types/todo";
+import { TodoType, TodoUpdateType } from "@/types/todo";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetTodoList } from "@/query/todo/useGetTodoList";
 import { updateTodo, updateTodoStatus } from "@/apis/todo/todo";
 import IconLabel from "@/components/common/IconLabel";
 import { useCreateTodo } from "@/query/todo/useCreateTodo";
+import { useContextMenuModal } from "@/hooks/useContextMenuModal";
+import AssigneeModal from "@/components/project/task/AssigneeModal";
+import DateModal from "@/components/project/task/DateModal";
+import queryClient from "@/query/reactQueryClient";
+import { useDeleteTodo } from "@/query/todo/useDeleteTodo";
 
 const Task = () => {
   const { projectId } = useParams();
@@ -25,9 +30,35 @@ const Task = () => {
   const [tasks, setTasks] = useState<TodoType[]>([]);
 
   const { mutate: createTodo } = useCreateTodo();
+  const { isOpen, modalRef, modalType, payload, modalPosition, openModal } =
+    useContextMenuModal();
+
+  const { mutate: deleteTodo } = useDeleteTodo();
 
   const handleAddTodo = () => {
     createTodo(parsedProjectId);
+  };
+
+  const handleOpenModal = (
+    e: React.MouseEvent,
+    type: "assignee" | "date",
+    task: TodoType
+  ) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+
+    openModal(
+      {
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX,
+      },
+      type,
+      task
+    );
+  };
+
+  const deleteTodoHandler = (todoId: number) => {
+    setTasks((prev) => prev.filter((t) => t.todoId !== todoId));
+    deleteTodo(todoId);
   };
 
   useEffect(() => {
@@ -35,7 +66,7 @@ const Task = () => {
   }, [data]);
 
   const updateTodoHandler = useCallback(
-    async (todoId: number, updated: Partial<TodoType>) => {
+    async (todoId: number, updated: Partial<TodoUpdateType>) => {
       setTasks((prev) =>
         prev.map((t) => (t.todoId === todoId ? { ...t, ...updated } : t))
       );
@@ -45,6 +76,10 @@ const Task = () => {
       } else {
         await updateTodo({ todoId, ...updated });
       }
+
+      queryClient.invalidateQueries({
+        queryKey: ["todoList", parsedProjectId],
+      });
     },
     []
   );
@@ -69,12 +104,17 @@ const Task = () => {
           <AiOutlineCalendar />
           <p>Date</p>
         </HeaderTitle>
+        <div />
       </TaskHeader>
 
       {tasks.map((todo) => (
-        <TaskItem key={todo.todoId}>
-          <ToDoCard task={todo} onUpdate={updateTodoHandler} />
-        </TaskItem>
+        <ToDoCard
+          key={todo.todoId}
+          task={todo}
+          onUpdate={updateTodoHandler}
+          onOpenModal={handleOpenModal}
+          onDelete={deleteTodoHandler}
+        />
       ))}
 
       <AddItem onClick={handleAddTodo}>
@@ -82,6 +122,25 @@ const Task = () => {
           New To Do
         </IconLabel>
       </AddItem>
+
+      {isOpen && payload && (
+        <ModalContainer
+          ref={modalRef}
+          top={modalPosition.top}
+          left={modalPosition.left}
+        >
+          {modalType === "assignee" && (
+            <AssigneeModal
+              projectId={parsedProjectId}
+              task={payload}
+              onUpdate={updateTodoHandler}
+            />
+          )}
+          {modalType === "date" && (
+            <DateModal task={payload} onUpdate={updateTodoHandler} />
+          )}
+        </ModalContainer>
+      )}
     </TaskContainer>
   );
 };

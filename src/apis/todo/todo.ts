@@ -1,4 +1,4 @@
-import { TodoType } from "@/types/todo";
+import { TodoType, TodoUpdateType } from "@/types/todo";
 import instance from "../axiosInstance";
 
 // 투두 생성
@@ -14,7 +14,7 @@ export const getTodoList = async (project_id: number): Promise<TodoType[]> => {
 
 // 투두 리스트 수정
 export const updateTodo = async (
-  updated: Partial<TodoType> & { todoId: number }
+  updated: Partial<TodoUpdateType> & { todoId: number }
 ) => {
   console.log(updated);
   const res = await instance.put("/todo/edit", updated, {
@@ -37,4 +37,9 @@ export const updateTodoStatus = async (payload: {
     },
   });
   return res.data.data;
+};
+
+// 투두 삭제
+export const deleteTodo = (todoId: number) => {
+  return instance.delete(`/todo/delete/${todoId}`);
 };
