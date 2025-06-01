@@ -15,6 +15,7 @@ import {
 import { TodoType } from "@/types/todo";
 import { useEffect, useState } from "react";
 import "react-day-picker/dist/style.css";
+import { formatTodoDateOutput } from "@/utils/formatTime";
 
 type Props = {
   task: TodoType;
@@ -119,7 +120,7 @@ const ToDoCard = ({ task, onUpdate, onOpenModal }: Props) => {
       </AssigneeWrapper>
       <DateWrapper onClick={(e) => onOpenModal(e, "date", task)}>
         <Label colors="secondary" textColors="text">
-          {task.startDate}
+          {formatTodoDateOutput(task.startDate, task.endDate || undefined)}
         </Label>
       </DateWrapper>
     </>

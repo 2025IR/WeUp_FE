@@ -43,6 +43,7 @@ const Task = () => {
     task: TodoType
   ) => {
     const rect = e.currentTarget.getBoundingClientRect();
+
     openModal(
       {
         top: rect.bottom + window.scrollY,
@@ -127,7 +128,9 @@ const Task = () => {
               onUpdate={updateTodoHandler}
             />
           )}
-          {modalType === "date" && <DateModal />}
+          {modalType === "date" && (
+            <DateModal task={payload} onUpdate={updateTodoHandler} />
+          )}
         </ModalContainer>
       )}
     </TaskContainer>

@@ -6,21 +6,28 @@ export const useContextMenuModal = () => {
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const [modalType, setModalType] = useState<"assignee" | "date" | null>(null);
   const [payload, setPayload] = useState<TodoType | null>(null);
+  const [onCloseCallback, setOnCloseCallback] = useState<(() => void) | null>(
+    null
+  );
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   const openModal = (
     pos: { top: number; left: number },
     type: "assignee" | "date",
-    task: TodoType
+    task: TodoType,
+    onClose?: () => void
   ) => {
     setPosition(pos);
     setModalType(type);
     setPayload(task);
+    setOnCloseCallback(() => onClose ?? null);
     setIsOpen(true);
   };
 
   const closeModal = () => {
     setIsOpen(false);
+    onCloseCallback?.();
+    setOnCloseCallback(null);
   };
 
   useEffect(() => {
