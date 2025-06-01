@@ -9,7 +9,6 @@ import {
   ModalContainer,
   TaskContainer,
   TaskHeader,
-  TaskItem,
 } from "./style";
 import { TodoType, TodoUpdateType } from "@/types/todo";
 import { useCallback, useEffect, useState } from "react";
@@ -22,6 +21,7 @@ import { useContextMenuModal } from "@/hooks/useContextMenuModal";
 import AssigneeModal from "@/components/project/task/AssigneeModal";
 import DateModal from "@/components/project/task/DateModal";
 import queryClient from "@/query/reactQueryClient";
+import { useDeleteTodo } from "@/query/todo/useDeleteTodo";
 
 const Task = () => {
   const { projectId } = useParams();
@@ -32,6 +32,8 @@ const Task = () => {
   const { mutate: createTodo } = useCreateTodo();
   const { isOpen, modalRef, modalType, payload, modalPosition, openModal } =
     useContextMenuModal();
+
+  const { mutate: deleteTodo } = useDeleteTodo();
 
   const handleAddTodo = () => {
     createTodo(parsedProjectId);
@@ -52,6 +54,11 @@ const Task = () => {
       type,
       task
     );
+  };
+
+  const deleteTodoHandler = (todoId: number) => {
+    setTasks((prev) => prev.filter((t) => t.todoId !== todoId));
+    deleteTodo(todoId);
   };
 
   useEffect(() => {
@@ -97,16 +104,17 @@ const Task = () => {
           <AiOutlineCalendar />
           <p>Date</p>
         </HeaderTitle>
+        <div />
       </TaskHeader>
 
       {tasks.map((todo) => (
-        <TaskItem key={todo.todoId}>
-          <ToDoCard
-            task={todo}
-            onUpdate={updateTodoHandler}
-            onOpenModal={handleOpenModal}
-          />
-        </TaskItem>
+        <ToDoCard
+          key={todo.todoId}
+          task={todo}
+          onUpdate={updateTodoHandler}
+          onOpenModal={handleOpenModal}
+          onDelete={deleteTodoHandler}
+        />
       ))}
 
       <AddItem onClick={handleAddTodo}>

@@ -1,5 +1,15 @@
 import styled from "@emotion/styled";
 
+export const TodoWrapper = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: 62px 1fr 130px 200px 200px 20px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  &:hover .delete-wrapper {
+    display: block;
+  }
+`;
+
 export const CheckWrapper = styled.div<{ isGreen: boolean }>`
   width: 100%;
 
@@ -72,4 +82,15 @@ export const DateWrapper = styled.div`
 
   cursor: pointer;
   border-left: 1px solid ${({ theme }) => theme.colors.border};
+`;
+
+export const DeleteWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > svg {
+    display: none;
+    cursor: pointer;
+    color: ${({ theme }) => theme.colors.textLight};
+  }
 `;

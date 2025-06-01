@@ -9,13 +9,16 @@ import {
   AssigneeWrapper,
   CheckWrapper,
   DateWrapper,
+  DeleteWrapper,
   StatusWrapper,
   SummaryWrapper,
+  TodoWrapper,
 } from "./style";
 import { TodoType } from "@/types/todo";
 import { useEffect, useState } from "react";
 import "react-day-picker/dist/style.css";
 import { formatTodoDateOutput } from "@/utils/formatTime";
+import { AiFillDelete } from "react-icons/ai";
 
 type Props = {
   task: TodoType;
@@ -25,9 +28,10 @@ type Props = {
     type: "assignee" | "date",
     task: TodoType
   ) => void;
+  onDelete: (todoId: number) => void;
 };
 
-const ToDoCard = ({ task, onUpdate, onOpenModal }: Props) => {
+const ToDoCard = ({ task, onUpdate, onOpenModal, onDelete }: Props) => {
   const [status, setStatus] = useState(task.status);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -57,7 +61,7 @@ const ToDoCard = ({ task, onUpdate, onOpenModal }: Props) => {
   };
 
   return (
-    <>
+    <TodoWrapper>
       <CheckWrapper isGreen={status === 2}>
         {status === 0 ? (
           <BiCheckbox onClick={() => handleStatusChange(1)} />
@@ -123,7 +127,13 @@ const ToDoCard = ({ task, onUpdate, onOpenModal }: Props) => {
           {formatTodoDateOutput(task.startDate, task.endDate || undefined)}
         </Label>
       </DateWrapper>
-    </>
+      <DeleteWrapper>
+        <AiFillDelete
+          onClick={() => onDelete(task.todoId)}
+          className="delete-wrapper"
+        />
+      </DeleteWrapper>
+    </TodoWrapper>
   );
 };
 

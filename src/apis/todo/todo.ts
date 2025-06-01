@@ -38,3 +38,8 @@ export const updateTodoStatus = async (payload: {
   });
   return res.data.data;
 };
+
+// 투두 삭제
+export const deleteTodo = (todoId: number) => {
+  return instance.delete(`/todo/delete/${todoId}`);
+};
