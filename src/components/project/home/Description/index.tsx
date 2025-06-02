@@ -49,9 +49,12 @@ const Description = () => {
     <Wrapper>
       <StyledTextarea
         value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        onChange={(e) => {
+          const lines = e.target.value.split("\n");
+          if (lines.length <= 4) setDescription(e.target.value);
+        }}
         readOnly={!isEditable}
-        rows={3}
+        rows={4}
       />
       <StyledButton onClick={handleEdit}>
         {isEditable ? <BiCheck /> : <BiEditAlt />}
