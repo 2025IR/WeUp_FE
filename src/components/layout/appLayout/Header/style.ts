@@ -24,6 +24,11 @@ export const Logo = styled.div`
   gap: 1rem;
   color: ${({ theme }) => theme.colors.text};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
+
+  > img {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
 `;
 
 export const UserSection = styled.div`
