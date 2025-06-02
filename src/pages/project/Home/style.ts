@@ -10,6 +10,10 @@ export const Container = styled.div`
   gap: 1.5rem;
 
   overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const CalendarWrapper = styled.div`
