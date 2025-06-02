@@ -6,12 +6,12 @@ export const useEditSchedule = (projectId: number) => {
 
   return useMutation({
     mutationFn: ({
-      memberId,
+      projectId,
       availableTime,
     }: {
-      memberId: number;
+      projectId: number;
       availableTime: string;
-    }) => editSchedule(memberId, availableTime),
+    }) => editSchedule(projectId, availableTime),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["teamSchedule", projectId] });
     },

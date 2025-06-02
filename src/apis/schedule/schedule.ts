@@ -10,6 +10,9 @@ export const getSchedules = async (
 };
 
 // 일정 수정
-export const editSchedule = async (memberId: number, availableTime: string) => {
-  await instance.put("/schedule/edit", { data: { memberId, availableTime } });
+export const editSchedule = async (
+  projectId: number,
+  availableTime: string
+) => {
+  await instance.put(`/schedule/edit/${projectId}`, availableTime);
 };

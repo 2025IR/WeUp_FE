@@ -1,3 +1,5 @@
 export type ScheduleType = {
-  [userName: string]: string;
+  userName: string;
+  availableTime: string;
+  ismine: boolean;
 };
