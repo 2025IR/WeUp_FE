@@ -51,10 +51,10 @@ const Description = () => {
         value={description}
         onChange={(e) => {
           const lines = e.target.value.split("\n");
-          if (lines.length <= 5) setDescription(e.target.value);
+          if (lines.length <= 4) setDescription(e.target.value);
         }}
         readOnly={!isEditable}
-        rows={5}
+        rows={4}
       />
       <StyledButton onClick={handleEdit}>
         {isEditable ? <BiCheck /> : <BiEditAlt className="edit_icon" />}
