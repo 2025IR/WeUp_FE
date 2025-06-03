@@ -8,8 +8,10 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { CalendarWrapper, Container } from "./style";
 import { useGetTodoList } from "@/query/todo/useGetTodoList";
+import { useTheme } from "@emotion/react";
 
 const Home = () => {
+  const theme = useTheme();
   const { projectId } = useParams();
   const parsedProjectId = Number(projectId);
   const dispatch = useDispatch();
@@ -34,13 +36,20 @@ const Home = () => {
         <FullCalendar
           plugins={[dayGridPlugin]}
           initialView="dayGridMonth"
-          events={[
+          events={
             getTodoList?.map((todo) => ({
               title: todo.todoName,
               start: todo.startDate,
               end: todo.endDate ?? undefined,
-            })) ?? [],
-          ]}
+              textColor: todo.isMyTodo
+                ? theme.colors.textWhite
+                : theme.colors.textLight,
+              backgroundColor: todo.isMyTodo
+                ? theme.colors.primary
+                : theme.colors.secondary,
+              borderColor: theme.colors.border,
+            })) ?? []
+          }
         />
       </CalendarWrapper>
     </Container>

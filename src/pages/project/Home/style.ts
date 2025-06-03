@@ -18,7 +18,7 @@ export const Container = styled.div`
 
 export const CalendarWrapper = styled.div`
   --fc-border-color: ${({ theme }) => theme.colors.border};
-  --fc-today-bg-color: ${({ theme }) => theme.colors.secondary};
+  --fc-today-bg-color: ${({ theme }) => theme.colors.background};
   --fc-event-bg-color: ${({ theme }) => theme.colors.primary};
   --fc-event-border-color: ${({ theme }) => theme.colors.primary};
 
@@ -50,6 +50,12 @@ export const CalendarWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.textLight};
     border: none;
+  }
+
+  .fc-day-today .fc-daygrid-day-number {
+    color: ${({ theme }) => theme.colors.primary}; /* 원하는 테마 색상 */
+    font-weight: bold;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
   }
 
   .fc-today-button {
