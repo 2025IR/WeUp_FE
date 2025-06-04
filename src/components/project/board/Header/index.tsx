@@ -22,7 +22,6 @@ const BoardHeader = ({ tag, search, onFilterChange }: BoardHeaderProps) => {
     <Container>
       <div>
         <FilterSection>
-          <p>총 6건</p>
           <div>
             <StyledSelect
               value={tag ?? "전체"}
