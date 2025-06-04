@@ -7,7 +7,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1.5rem;
 `;
 
 export const MainSection = styled.div`
@@ -82,7 +82,6 @@ export const FileWrapper = styled.div`
   padding: 6px;
 
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -111,6 +110,50 @@ export const FilePlaceholder = styled.div`
   }
 `;
 
+export const FilePreview = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 0.25rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5rem;
+`;
+
+export const FileCard = styled.div`
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  & > svg:first-of-type {
+    width: ${({ theme }) => theme.icon.sm};
+    height: ${({ theme }) => theme.icon.sm};
+    color: ${({ theme }) => theme.colors.primary};
+  }
+
+  & > p:nth-of-type(1) {
+    flex: 1;
+    font-size: ${({ theme }) => theme.fontSize.caption};
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  & > p:nth-of-type(2) {
+    font-size: 10px;
+  }
+
+  & > svg:last-of-type {
+    width: ${({ theme }) => theme.icon.sm};
+    height: ${({ theme }) => theme.icon.sm};
+    color: ${({ theme }) => theme.colors.danger};
+  }
+`;
+
 export const TextAreaWrapper = styled.div`
   width: 100%;
   flex: 1;
@@ -125,4 +168,17 @@ export const TextAreaWrapper = styled.div`
 
     font-size: ${({ theme }) => theme.fontSize.base};
   }
+`;
+
+export const ModalContainer = styled.div<{ top: number; left: number }>`
+  position: absolute;
+  top: ${({ top }) => `${top}px`};
+  left: ${({ left }) => `${left}px`};
+  z-index: ${({ theme }) => theme.zIndex.modal};
+  width: 150px;
+
+  border-radius: ${({ theme }) => theme.radius.lg};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  background-color: ${({ theme }) => theme.colors.background};
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;

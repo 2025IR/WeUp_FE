@@ -40,6 +40,11 @@ export const AddItem = styled.div`
   }
 `;
 
+export const LabelWrapper = styled.div`
+  position: relative;
+  cursor: pointer;
+`;
+
 export const ModalContainer = styled.div<{ top: number; left: number }>`
   position: absolute;
   top: ${({ top }) => `${top}px`};
