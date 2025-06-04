@@ -21,8 +21,8 @@ const ProjectsList = () => {
             dispatch(
               setProject({
                 id: project.projectId,
-                name: project.projectName,
-                image: project.projectImage,
+                projectName: project.projectName,
+                projectImage: project.projectImage,
               })
             );
             navigate(`/project/${project.projectId}/home`);

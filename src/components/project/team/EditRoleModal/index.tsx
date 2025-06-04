@@ -80,7 +80,7 @@ const EditRoleModal = ({
             >
               <div />
               <p>{c.name}</p>
-              {c.code === color && <BiCheck />}
+              {c.name === color && <BiCheck />}
             </ColorCard>
           ))}
         </div>

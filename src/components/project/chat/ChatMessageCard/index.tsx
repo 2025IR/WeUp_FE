@@ -1,3 +1,4 @@
+import { ChatMessageProps } from "@/types/chat";
 import {
   ContainerCard,
   ImageCard,
@@ -7,33 +8,27 @@ import {
   TextCard,
   TextCardWrapper,
 } from "./style";
-
-type ChatMessageCardProps = {
-  senderMe: boolean;
-  name: string;
-  text: string;
-  time: string;
-  profile: string;
-  isImage: boolean;
-};
+import { formatChatTime } from "@/utils/formatTime";
 
 const ChatMessageCard = ({
-  senderMe,
-  name,
-  text,
-  time,
-  profile,
+  senderId,
+  senderName,
+  senderProfileImage,
+  message,
+  sentAt,
   isImage,
-}: ChatMessageCardProps) => {
-  if (senderMe) {
+}: ChatMessageProps) => {
+  const isRight = senderId === 6;
+
+  if (isRight) {
     return (
       <MyCardContainer>
-        <MessageTime>{time}</MessageTime>
+        <MessageTime>{formatChatTime(sentAt)}</MessageTime>
         {isImage ? (
-          <ImageCard src={text} alt="" />
+          <ImageCard src={message} alt="" />
         ) : (
           <MyTextCard>
-            <p>{text}</p>
+            <p>{message}</p>
           </MyTextCard>
         )}
       </MyCardContainer>
@@ -42,19 +37,18 @@ const ChatMessageCard = ({
 
   return (
     <ContainerCard>
-      <img src={profile} alt="user-profile" />
+      <img src={senderProfileImage} alt="user-profile" />
       <TextCardWrapper>
-        <p>{name}</p>
+        <p>{senderName}</p>
         {isImage ? (
-          <ImageCard src={text} alt="" />
+          <ImageCard src={message} />
         ) : (
           <TextCard>
-            <p>{text}</p>
+            <p>{message}</p>
           </TextCard>
         )}
       </TextCardWrapper>
-
-      <MessageTime>{time}</MessageTime>
+      <MessageTime>{formatChatTime(sentAt)}</MessageTime>
     </ContainerCard>
   );
 };

@@ -24,6 +24,11 @@ export const Logo = styled.div`
   gap: 1rem;
   color: ${({ theme }) => theme.colors.text};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
+
+  > img {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 export const AuthActions = styled.div`

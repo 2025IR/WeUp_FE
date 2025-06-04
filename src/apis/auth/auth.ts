@@ -11,6 +11,7 @@ import { AxiosResponse } from "axios";
 // 로그인
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const res = await publicInstance.post("/user/signIn", data);
+  console.log(res.data.data);
   return res.data.data;
 };
 

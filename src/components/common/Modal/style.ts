@@ -72,6 +72,8 @@ export const IconWrapper = styled.div`
 
 // default
 export const ButtonWrapper = styled.div`
+  width: 100%;
+
   display: flex;
   align-items: center;
   gap: 0.5rem;

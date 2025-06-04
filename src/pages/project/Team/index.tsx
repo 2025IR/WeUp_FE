@@ -20,6 +20,7 @@ import { useEditMember } from "@/query/team/useEditMember";
 import { useGetRole } from "@/query/team/useGetRole";
 import { useDispatch } from "react-redux";
 import { setRoles } from "@/store/role";
+import ScheduleModal from "@/components/project/team/ScheduleModal";
 
 const Team = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,8 @@ const Team = () => {
     top: 0,
     left: 0,
   });
+
+  const [openScheduleModal, setOpenScheduleModal] = useState(false);
 
   // 멤버 역할 수정 훅 (모달 창 닫힐 때 실행)
   const { mutate: editMemberMutate } = useEditMember();
@@ -127,7 +130,9 @@ const Team = () => {
           />
         ))}
       </TeamWrapper>
-      <Button size="lg">Schedule</Button>
+      <Button size="lg" onClick={() => setOpenScheduleModal(true)}>
+        Schedule
+      </Button>
 
       {/* 인원 추가 모달 */}
       {openModal && <AddMemberModal onClose={() => setOpenModal(false)} />}
@@ -145,6 +150,11 @@ const Team = () => {
             onChangeRoles={updateRoles}
           />
         </RoleModalContainer>
+      )}
+
+      {/* 스케줄 확인 모달 */}
+      {openScheduleModal && (
+        <ScheduleModal onClose={() => setOpenScheduleModal(false)} />
       )}
     </Container>
   );
