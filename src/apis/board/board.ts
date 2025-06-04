@@ -9,3 +9,15 @@ export const fetchBoardList = async (
   const response = await instance.post(`/board/list/${projectId}`, body);
   return response.data.data;
 };
+
+// 게시글 작성
+export const createPost = async (
+  projectId: number,
+  formData: FormData
+): Promise<void> => {
+  await instance.post(`/board/create/${projectId}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

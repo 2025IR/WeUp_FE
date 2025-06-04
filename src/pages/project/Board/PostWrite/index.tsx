@@ -22,10 +22,11 @@ import {
   TextAreaWrapper,
 } from "./style";
 import { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useCategoryModal } from "@/hooks/useCategoryModal";
 import CategorySelectModal from "@/components/project/postWrite/CategorySelectModal";
 import { LabelWrapper } from "../../Task/style";
+import { useCreatePost } from "@/query/board/useCreatePost";
+import { useParams } from "react-router-dom";
 
 const PostWrite = () => {
   const { projectId } = useParams();
@@ -38,10 +39,11 @@ const PostWrite = () => {
   const { isOpen, position, modalRef, openModal, closeModal } =
     useCategoryModal();
 
+  const mutation = useCreatePost();
+
   const handleSubmit = () => {
     const formData = new FormData();
 
-    formData.append("projectId", projectId!.toString());
     formData.append("title", title);
     formData.append("contents", contents);
     formData.append("tag", tag.label);
@@ -49,6 +51,8 @@ const PostWrite = () => {
     files.forEach((file) => {
       formData.append("file", file);
     });
+
+    mutation.mutate({ projectId: Number(projectId), formData });
   };
 
   const handleOpenModal = () => {
@@ -63,7 +67,7 @@ const PostWrite = () => {
 
   return (
     <Container>
-      <PostWriteHeader />
+      <PostWriteHeader onSubmit={handleSubmit} />
 
       <MainSection>
         <InputWrapper>
