@@ -46,7 +46,7 @@ const Description = () => {
   }, [data]);
 
   return (
-    <Wrapper>
+    <Wrapper isFill={isEditable}>
       <StyledTextarea
         value={description}
         onChange={(e) => {
@@ -57,7 +57,7 @@ const Description = () => {
         rows={4}
       />
       <StyledButton onClick={handleEdit}>
-        {isEditable ? <BiCheck /> : <BiEditAlt />}
+        {isEditable ? <BiCheck /> : <BiEditAlt className="edit_icon" />}
       </StyledButton>
     </Wrapper>
   );
