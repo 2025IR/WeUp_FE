@@ -21,15 +21,21 @@ import {
   StyledInput,
   TextAreaWrapper,
 } from "./style";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCategoryModal } from "@/hooks/useCategoryModal";
 import CategorySelectModal from "@/components/project/postWrite/CategorySelectModal";
 import { LabelWrapper } from "../../Task/style";
 import { useCreatePost } from "@/query/board/useCreatePost";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useUpdatePost } from "@/query/board/useUpdatePost";
 
 const PostWrite = () => {
-  const { projectId } = useParams();
+  const { projectId, postId } = useParams();
+
+  const location = useLocation();
+  const isEdit = location.state?.isEdit ?? false;
+  const postData = location.state?.postData;
+
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [tag, setTag] = useState({ label: "기타", color: "brown" });
@@ -40,6 +46,16 @@ const PostWrite = () => {
     useCategoryModal();
 
   const mutation = useCreatePost();
+  const updateMutation = useUpdatePost();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isEdit && postData) {
+      setTitle(postData.title);
+      setContents(postData.contents);
+      setTag({ label: postData.tag, color: "brown" });
+    }
+  }, [isEdit, postData]);
 
   const handleSubmit = () => {
     const formData = new FormData();
@@ -55,6 +71,25 @@ const PostWrite = () => {
     mutation.mutate({ projectId: Number(projectId), formData });
   };
 
+  const handleUpdate = () => {
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("contents", contents);
+    formData.append("tag", tag.label);
+    files.forEach((file) => {
+      formData.append("file", file);
+    });
+
+    updateMutation.mutate(
+      { postId: Number(postId), formData },
+      {
+        onSuccess: () => {
+          navigate(-1);
+        },
+      }
+    );
+  };
+
   const handleOpenModal = () => {
     if (labelRef.current) {
       openModal(labelRef.current);
@@ -67,7 +102,10 @@ const PostWrite = () => {
 
   return (
     <Container>
-      <PostWriteHeader onSubmit={handleSubmit} />
+      <PostWriteHeader
+        onSubmit={isEdit ? handleUpdate : handleSubmit}
+        isEdit={isEdit}
+      />
 
       <MainSection>
         <InputWrapper>

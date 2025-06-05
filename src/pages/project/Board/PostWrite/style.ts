@@ -167,6 +167,7 @@ export const TextAreaWrapper = styled.div`
     overflow: hidden;
 
     font-size: ${({ theme }) => theme.fontSize.base};
+    color: ${({ theme }) => theme.colors.text};
   }
 `;
 

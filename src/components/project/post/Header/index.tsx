@@ -4,7 +4,15 @@ import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { ButtonWrapper, HeaderWrapper, LeftSection } from "./style";
 
-const PostHeader = ({ postTitle }: { postTitle: string }) => {
+const PostHeader = ({
+  postTitle,
+  onEdit,
+  onDelete,
+}: {
+  postTitle: string;
+  onEdit: () => void;
+  onDelete: () => void;
+}) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -17,8 +25,10 @@ const PostHeader = ({ postTitle }: { postTitle: string }) => {
         <h1>{postTitle}</h1>
       </LeftSection>
       <ButtonWrapper>
-        <Button variant="secondary">삭제</Button>
-        <Button>수정</Button>
+        <Button variant="secondary" onClick={onDelete}>
+          삭제
+        </Button>
+        <Button onClick={onEdit}>수정</Button>
       </ButtonWrapper>
     </HeaderWrapper>
   );

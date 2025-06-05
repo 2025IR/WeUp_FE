@@ -104,7 +104,7 @@ export const FilePreview = styled.div`
   gap: 0.5rem;
 `;
 
-export const FileCard = styled.div`
+export const FileCard = styled.a`
   width: 100%;
 
   display: flex;
@@ -128,6 +128,10 @@ export const FileCard = styled.div`
 
   & > p:nth-of-type(2) {
     font-size: 10px;
+  }
+
+  &:hover > p:nth-of-type(1) {
+    text-decoration: underline;
   }
 `;
 

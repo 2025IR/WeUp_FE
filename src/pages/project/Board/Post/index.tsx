@@ -21,26 +21,40 @@ import {
 } from "./style";
 import PostHeader from "@/components/project/post/Header";
 import IconLabel from "@/components/common/IconLabel";
-
-const data = {
-  title: "회의록",
-  content: "게시글 내용",
-  writer: "정윤석",
-  createdAt: "2025-06-05",
-  tag: { label: "라벨" },
-  files: [
-    {
-      name: "example.pdf",
-      size: 1048576, // 바이트 단위
-      url: "https://example.com/files/example.pdf",
-    },
-  ],
-};
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetPost } from "@/query/board/useGetPost";
+import { formatTodoDate } from "@/utils/formatTime";
+import { useDeletePost } from "@/query/board/useDeletePost";
 
 const Post = () => {
+  const { postId } = useParams();
+  const navigate = useNavigate();
+  const { data, isLoading } = useGetPost(Number(postId));
+  const deleteMutation = useDeletePost();
+
+  const handleEdit = () => {
+    navigate(`edit`, {
+      state: { isEdit: true, postData: data },
+    });
+  };
+
+  const handleDelete = () => {
+    deleteMutation.mutate(Number(postId), {
+      onSuccess: () => {
+        navigate(-1);
+      },
+    });
+  };
+
+  if (isLoading || !data) return <p>불러오는 중...</p>;
+
   return (
     <Container>
-      <PostHeader postTitle={data.title} />
+      <PostHeader
+        postTitle={data.title}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
 
       <MainSection>
         <InfoWrapper>
@@ -50,8 +64,8 @@ const Post = () => {
           </InfoTitle>
 
           <LabelWrapper>
-            <IconLabel type="image" icon={"sdd"}>
-              정윤석
+            <IconLabel type="image" icon={data.profileImage}>
+              {data.name}
             </IconLabel>
           </LabelWrapper>
         </InfoWrapper>
@@ -64,7 +78,7 @@ const Post = () => {
 
           <LabelWrapper>
             <Label colors="secondary" textColors="textLight">
-              {data.createdAt}
+              {formatTodoDate(new Date(data.boardCreatedTime))}
             </Label>
           </LabelWrapper>
         </InfoWrapper>
@@ -76,7 +90,7 @@ const Post = () => {
           </InfoTitle>
 
           <LabelWrapper>
-            <Label textColors="textWhite">라벨</Label>
+            <Label textColors="textWhite">{data.tag}</Label>
           </LabelWrapper>
         </InfoWrapper>
 
@@ -94,10 +108,10 @@ const Post = () => {
             ) : (
               <FilePreview>
                 {data.files.map((file, i) => (
-                  <FileCard key={i}>
+                  <FileCard href={file.downloadUrl} download key={i}>
                     <BiSolidReport />
-                    <p>{file.name}</p>
-                    <p>{(file.size / 1024).toFixed(1)} KB</p>
+                    <p>{file.fileName}</p>
+                    <p>{(file.fileSize / 1024).toFixed(1)} KB</p>
                   </FileCard>
                 ))}
               </FilePreview>
@@ -106,7 +120,7 @@ const Post = () => {
         </FileInputWrapper>
 
         <TextAreaWrapper>
-          <textarea placeholder="게시글을 작성해주세요" disabled></textarea>
+          <textarea value={data.contents} disabled></textarea>
         </TextAreaWrapper>
       </MainSection>
     </Container>
