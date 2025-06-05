@@ -20,23 +20,6 @@ export const MainSection = styled.div`
   gap: 1.5rem;
 `;
 
-export const InputWrapper = styled.div`
-  width: 100%;
-  padding: 1rem;
-
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-`;
-
-export const StyledInput = styled.input`
-  width: 100%;
-  font-size: 1.25rem;
-  color: ${({ theme }) => theme.colors.text};
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.textLight};
-  }
-`;
-
 export const InfoWrapper = styled.div`
   width: 100%;
   padding: 0 1rem;
@@ -121,7 +104,7 @@ export const FilePreview = styled.div`
   gap: 0.5rem;
 `;
 
-export const FileCard = styled.div`
+export const FileCard = styled.a`
   width: 100%;
 
   display: flex;
@@ -147,10 +130,8 @@ export const FileCard = styled.div`
     font-size: 10px;
   }
 
-  & > svg:last-of-type {
-    width: ${({ theme }) => theme.icon.sm};
-    height: ${({ theme }) => theme.icon.sm};
-    color: ${({ theme }) => theme.colors.danger};
+  &:hover > p:nth-of-type(1) {
+    text-decoration: underline;
   }
 `;
 
@@ -167,19 +148,5 @@ export const TextAreaWrapper = styled.div`
     overflow: hidden;
 
     font-size: ${({ theme }) => theme.fontSize.base};
-    color: ${({ theme }) => theme.colors.text};
   }
-`;
-
-export const ModalContainer = styled.div<{ top: number; left: number }>`
-  position: absolute;
-  top: ${({ top }) => `${top}px`};
-  left: ${({ left }) => `${left}px`};
-  z-index: ${({ theme }) => theme.zIndex.modal};
-  width: 150px;
-
-  border-radius: ${({ theme }) => theme.radius.lg};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  background-color: ${({ theme }) => theme.colors.background};
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;

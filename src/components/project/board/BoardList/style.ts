@@ -18,6 +18,7 @@ export const CardWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  cursor: pointer;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
 

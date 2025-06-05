@@ -5,20 +5,23 @@ import { useNavigate } from "react-router-dom";
 
 type Props = {
   onSubmit: () => void;
+  isEdit: boolean;
 };
 
-const PostWriteHeader = ({ onSubmit }: Props) => {
+const PostWriteHeader = ({ onSubmit, isEdit }: Props) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate(-1);
   };
+
   return (
     <HeaderWrapper>
       <LeftSection>
         <BiArrowBack onClick={handleBack} />
-        <h1>게시글 작성</h1>
+        <h1>{isEdit ? "게시글 수정" : "게시글 작성"}</h1>
       </LeftSection>
+
       <ButtonWrapper>
         <Button variant="secondary" onClick={handleBack}>
           취소
