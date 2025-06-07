@@ -9,6 +9,8 @@ import {
   TextCardWrapper,
 } from "./style";
 import { formatChatTime } from "@/utils/formatTime";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const ChatMessageCard = ({
   senderId,
@@ -18,7 +20,8 @@ const ChatMessageCard = ({
   sentAt,
   isImage,
 }: ChatMessageProps) => {
-  const isRight = senderId === 6;
+  const userId = useSelector((state: RootState) => state.auth.userId);
+  const isRight = senderId === userId;
 
   if (isRight) {
     return (

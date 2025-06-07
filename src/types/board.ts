@@ -13,3 +13,17 @@ export interface BoardCardProps {
   tag: string;
   hasFile: boolean;
 }
+
+export interface PostProps {
+  name: number;
+  profileImage: string;
+  title: string;
+  contents: string;
+  boardCreatedTime: string;
+  tag: string;
+  files: {
+    fileName: string;
+    fileSize: number;
+    downloadUrl: string;
+  }[];
+}

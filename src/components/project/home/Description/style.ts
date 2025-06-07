@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isFill: boolean }>`
   width: 100%;
   padding: 2rem;
 
@@ -9,8 +9,14 @@ export const Wrapper = styled.div`
   align-items: flex-start;
   gap: 2rem;
 
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radius.lg};
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme, isFill }) =>
+    isFill ? theme.colors.background : theme.colors.secondary};
+
+  &:hover .edit_icon {
+    display: block;
+  }
 `;
 
 export const StyledTextarea = styled.textarea`
@@ -32,5 +38,9 @@ export const StyledButton = styled.button`
     width: 100%;
     height: 100%;
     color: ${({ theme }) => theme.colors.textLight};
+  }
+
+  .edit_icon {
+    display: none;
   }
 `;
