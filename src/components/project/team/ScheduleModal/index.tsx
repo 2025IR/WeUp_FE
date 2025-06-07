@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Button from "@/components/common/Button";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiCheck, BiCheckSquare, BiEditAlt, BiSquare } from "react-icons/bi";
@@ -32,19 +32,24 @@ const ScheduleModal = ({ onClose }: Type) => {
   const parsedProjectId = Number(projectId);
 
   const { data } = useGetSchedule(parsedProjectId);
-  const availabilityList = Object.entries(data!).map(
-    ([name, availableTime], idx) => ({
-      memberId: idx + 1,
-      name,
-      availableTime,
-    })
-  );
+  const availabilityList = useMemo(() => {
+    return (
+      data?.map((item, idx) => ({
+        memberId: idx + 1,
+        ...item,
+        availableTime:
+          item.availableTime && item.availableTime.length === 252
+            ? item.availableTime
+            : "0".repeat(252),
+      })) ?? []
+    );
+  }, [data]);
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(
     new Set(availabilityList.map((m) => m.memberId))
   );
-  console.log(data);
+  console.log(availabilityList);
 
   const toggleSelect = (id: number) => {
     setSelectedIds((prev) => {
@@ -93,13 +98,11 @@ const ScheduleModal = ({ onClose }: Type) => {
   const { mutate: editScheduleMutate } = useEditSchedule(parsedProjectId);
 
   useEffect(() => {
-    const mySchedule = availabilityList.find(
-      (m) => m.memberId === memberId
-    )?.availableTime;
+    const mySchedule = availabilityList.find((m) => m.isMine)?.availableTime;
     if (mySchedule) {
       setEditedSchedule(mySchedule);
     }
-  }, []);
+  }, [availabilityList]);
 
   return (
     <Background>
@@ -121,7 +124,6 @@ const ScheduleModal = ({ onClose }: Type) => {
                   onClick={() => {
                     if (memberId && editedSchedule) {
                       editScheduleMutate({
-                        memberId,
                         availableTime: editedSchedule,
                       });
                       setIsEditMode(false);
@@ -156,7 +158,10 @@ const ScheduleModal = ({ onClose }: Type) => {
           </TimeTable>
           <div>
             {isEditMode ? (
-              <EditTimeGrid initialEditString={editedSchedule ?? ""} />
+              <EditTimeGrid
+                initialEditString={editedSchedule ?? ""}
+                onEditChange={setEditedSchedule}
+              />
             ) : (
               <ViewTimeGrid
                 averageTimeArray={averageTimeArray}

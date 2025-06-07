@@ -4,7 +4,7 @@ import instance from "../axiosInstance";
 // 일정 불러오기
 export const getSchedules = async (
   projectId: number
-): Promise<ScheduleType> => {
+): Promise<ScheduleType[]> => {
   const response = await instance.post(`/schedule/${projectId}`);
   return response.data.data;
 };
@@ -14,5 +14,13 @@ export const editSchedule = async (
   projectId: number,
   availableTime: string
 ) => {
-  await instance.put(`/schedule/edit/${projectId}`, availableTime);
+  await instance.put(
+    `/schedule/edit/${projectId}`,
+    { availableTime },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };

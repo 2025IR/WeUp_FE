@@ -3,9 +3,10 @@ import { GridContainer, TimeDiv } from "./style";
 
 type Props = {
   initialEditString: string;
+  onEditChange: (newString: string) => void;
 };
 
-const EditTimeGrid = ({ initialEditString }: Props) => {
+const EditTimeGrid = ({ initialEditString, onEditChange }: Props) => {
   const [editString, setEditString] = useState(initialEditString);
   const [isDragging, setIsDragging] = useState(false);
   const [dragTarget, setDragTarget] = useState<"1" | "0" | null>(null);
@@ -32,7 +33,9 @@ const EditTimeGrid = ({ initialEditString }: Props) => {
   const updateAtIndex = (i: number, value: "1" | "0") => {
     const arr = [...editString];
     arr[i] = value;
-    setEditString(arr.join(""));
+    const newString = arr.join("");
+    setEditString(newString);
+    onEditChange(newString); // 부모에 알림
   };
 
   return (

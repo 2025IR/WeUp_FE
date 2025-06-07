@@ -5,13 +5,8 @@ export const useEditSchedule = (projectId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      projectId,
-      availableTime,
-    }: {
-      projectId: number;
-      availableTime: string;
-    }) => editSchedule(projectId, availableTime),
+    mutationFn: ({ availableTime }: { availableTime: string }) =>
+      editSchedule(projectId, availableTime),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["teamSchedule", projectId] });
     },
