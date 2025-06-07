@@ -1,21 +1,16 @@
-import { useState } from "react";
 import { GridContainer, TimeDiv } from "./style";
-import { getAverageTimeArray } from "@/utils/getAverageTimeArray";
 
 type Props = {
   averageTimeArray: number[];
   onHoverIndexChange: (index: number | null) => void;
 };
 
-const TimeGrid = ({ onHoverIndexChange, averageTimeArray }: Props) => {
-  const [timeSlots, setTimeSlots] = useState<boolean[]>(Array(252).fill(false));
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-
+const ViewTimeGrid = ({ onHoverIndexChange, averageTimeArray }: Props) => {
   return (
     <GridContainer>
-      {timeSlots.map((_, i) => {
+      {Array.from({ length: 252 }).map((_, i) => {
         const row = Math.floor(i / 7);
-        const totalRows = timeSlots.length / 7;
+        const totalRows = 252 / 7;
         const isBottomHighlight = row % 2 === 1 && row !== totalRows - 1;
         const opacity = averageTimeArray[i] ?? 0;
 
@@ -25,11 +20,9 @@ const TimeGrid = ({ onHoverIndexChange, averageTimeArray }: Props) => {
             opacity={opacity}
             isBottomHighlight={isBottomHighlight}
             onMouseEnter={() => {
-              setHoverIndex(i);
               onHoverIndexChange(i);
             }}
             onMouseLeave={() => {
-              setHoverIndex(null);
               onHoverIndexChange(null);
             }}
           >
@@ -41,4 +34,4 @@ const TimeGrid = ({ onHoverIndexChange, averageTimeArray }: Props) => {
   );
 };
 
-export default TimeGrid;
+export default ViewTimeGrid;
