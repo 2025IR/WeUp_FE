@@ -1,13 +1,22 @@
+import { AuthStoreInfo } from "@/types/auth";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const initialState: AuthStoreInfo = {
+  accessToken: null,
+  userId: null,
+};
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: null as string | null,
+  initialState,
   reducers: {
-    setAccessToken: (_, action: PayloadAction<string>) => action.payload,
-    clearAccessToken: () => null,
+    setAuth: (_, action: PayloadAction<AuthStoreInfo>) => action.payload,
+    setAccessToken: (state, action: PayloadAction<string>) => {
+      state.accessToken = action.payload;
+    },
+    clearAuth: () => ({ accessToken: null, userId: null }),
   },
 });
 
-export const { setAccessToken, clearAccessToken } = authSlice.actions;
+export const { setAuth, setAccessToken, clearAuth } = authSlice.actions;
 export default authSlice.reducer;

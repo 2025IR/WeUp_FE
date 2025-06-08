@@ -1,12 +1,6 @@
 import styled from "@emotion/styled";
 import { BoardLabelProps } from "./type";
-
-const tagColorMap: Record<string, string> = {
-  회의록: "#CC9500",
-  파일: "#015C99",
-  기타: "#995501",
-  공지: "#019963",
-};
+import { tagColorMap } from "@/utils/postTagColor";
 
 export const ListContainer = styled.div``;
 
@@ -18,6 +12,7 @@ export const CardWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  cursor: pointer;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
@@ -52,7 +47,7 @@ export const BoardLabel = styled.div<BoardLabelProps>`
   align-items: center;
 
   border-radius: 20px;
-  background-color: ${({ tag }) => tagColorMap[tag]};
+  background-color: ${({ tag, theme }) => theme.colors[tagColorMap[tag]]};
 
   > p {
     font-size: ${({ theme }) => theme.fontSize.caption};

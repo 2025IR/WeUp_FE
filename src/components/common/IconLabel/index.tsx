@@ -25,7 +25,7 @@ const IconLabel = ({
       onClick={onClick}
     >
       {type === "image" ? <img src={icon as string} /> : icon}
-      <p>{children}</p>
+      <div>{children}</div>
     </Wrapper>
   );
 };

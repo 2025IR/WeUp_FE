@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./auth";
 import projectReducer from "./project";
+import roleReducer from "./role";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     project: projectReducer,
+    role: roleReducer,
   },
 });
 

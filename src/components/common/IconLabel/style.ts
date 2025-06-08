@@ -24,7 +24,7 @@ export const Wrapper = styled.div<IconLabelStyledProps>`
     `;
   }}
   ${({ onClick }) => onClick && `cursor: pointer;`}
-  > p {
+  > div {
     font-size: ${({ theme, fontSize }) => theme.fontSize[fontSize]};
     font-weight: ${({ theme, fontWeight }) => theme.fontWeight[fontWeight]};
   }

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useLoginMutation } from "@/query/auth/useLoginMutation";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setAccessToken } from "@/store/auth";
+import { setAuth } from "@/store/auth";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +15,7 @@ const LoginForm = () => {
 
   const { mutate, isPending } = useLoginMutation({
     onSuccess: (res) => {
-      dispatch(setAccessToken(res.accessToken));
+      dispatch(setAuth({ accessToken: res.accessToken, userId: res.userId }));
       console.log("✅ 로그인 성공!");
       navigate("/projects");
     },
