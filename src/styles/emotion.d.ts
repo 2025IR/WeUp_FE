@@ -22,6 +22,7 @@ declare module "@emotion/react" {
       brown: string;
       gray: string;
       default: string;
+      [key: string]: string;
     };
     fontSize: Record<string, string>;
     fontWeight: Record<string, number>;

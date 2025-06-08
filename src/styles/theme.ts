@@ -71,7 +71,7 @@ export const darkTheme = {
     danger: "#EF4444",
     red: "#783A39",
     orange: "#7D4D24",
-    yellow: "#8F6B3",
+    yellow: "#8F6B34",
     green: "#2F654A",
     blue: "#2C5167",
     purple: "#51376B",

@@ -25,6 +25,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetPost } from "@/query/board/useGetPost";
 import { formatTodoDate } from "@/utils/formatTime";
 import { useDeletePost } from "@/query/board/useDeletePost";
+import { tagColorMap } from "@/utils/postTagColor";
 
 const Post = () => {
   const { postId } = useParams();
@@ -90,7 +91,9 @@ const Post = () => {
           </InfoTitle>
 
           <LabelWrapper>
-            <Label textColors="textWhite">{data.tag}</Label>
+            <Label colors={tagColorMap[data.tag]} textColors="textWhite">
+              {data.tag}
+            </Label>
           </LabelWrapper>
         </InfoWrapper>
 

@@ -28,6 +28,7 @@ import { LabelWrapper } from "../../Task/style";
 import { useCreatePost } from "@/query/board/useCreatePost";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useUpdatePost } from "@/query/board/useUpdatePost";
+import { tagColorMap } from "@/utils/postTagColor";
 
 const PostWrite = () => {
   const { projectId, postId } = useParams();
@@ -124,7 +125,7 @@ const PostWrite = () => {
           </InfoTitle>
 
           <LabelWrapper ref={labelRef} onClick={handleOpenModal}>
-            <Label textColors="textWhite" colors={tag.color}>
+            <Label textColors="textWhite" colors={tagColorMap[tag.label]}>
               {tag.label}
             </Label>
           </LabelWrapper>
