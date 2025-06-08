@@ -1,8 +1,14 @@
 import { useState } from "react";
-import { BsSendFill } from "react-icons/bs";
+import { BsLightbulb, BsLightbulbFill, BsSendFill } from "react-icons/bs";
 import { BiImageAdd } from "react-icons/bi";
 import Button from "@/components/common/Button";
-import { ImageWrapper, InputContainer, StyledInput } from "./style";
+import {
+  AiButton,
+  ImageWrapper,
+  InputContainer,
+  StyledInput,
+  StyledTag,
+} from "./style";
 import { ChatInputProps } from "./type";
 import { ChatSendProps } from "@/types/chat";
 import { useSendImage } from "@/query/chat/usePostImage";
@@ -14,6 +20,7 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAI, setIsAI] = useState(false);
 
   const { mutate: sendImage } = useSendImage({
     onSuccess: () => {
@@ -84,15 +91,19 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
 
   return (
     <InputContainer>
-      <label htmlFor="imageUpload">
-        <BiImageAdd style={{ cursor: "pointer" }} />
-        <input
-          id="imageUpload"
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-        />
-      </label>
+      {isAI ? (
+        <StyledTag>@돌돌이</StyledTag>
+      ) : (
+        <label htmlFor="imageUpload">
+          <BiImageAdd style={{ cursor: "pointer" }} />
+          <input
+            id="imageUpload"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+        </label>
+      )}
 
       <StyledInput
         type="text"
@@ -119,6 +130,11 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
           </ImageWrapper>
         </Modal>
       )}
+
+      <AiButton onClick={() => setIsAI(!isAI)} isAI={isAI}>
+        {isAI ? <BsLightbulbFill /> : <BsLightbulb />}
+        <p>AI에게 질문하기</p>
+      </AiButton>
     </InputContainer>
   );
 };
