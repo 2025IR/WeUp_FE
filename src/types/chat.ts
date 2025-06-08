@@ -17,3 +17,9 @@ export type ChatApiResponse = {
   lastPage: boolean;
   page: number;
 };
+
+export type AiMessageResponse = {
+  senderId: number;
+  userInput: string;
+  projectId: number;
+};

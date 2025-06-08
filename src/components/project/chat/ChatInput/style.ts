@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 export const InputContainer = styled.div`
+  position: relative;
   width: 100%;
   height: auto;
   padding: 0.5rem 1rem;
@@ -59,5 +60,39 @@ export const ImageWrapper = styled.div`
     max-width: 100%;
     max-height: 200px;
     object-fit: contain;
+  }
+`;
+
+export const StyledTag = styled.p`
+  color: ${({ theme }) => theme.colors.primary};
+  text-decoration: underline;
+`;
+
+export const AiButton = styled.div<{ isAI: boolean }>`
+  position: absolute;
+  top: -45px;
+  left: 0;
+  padding: 0.5rem 1rem;
+
+  display: flex;
+  gap: 0.5rem;
+
+  background-color: ${({ theme }) => theme.colors.background};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radius.sm};
+  cursor: pointer;
+
+  opacity: ${({ isAI }) => (isAI ? 1 : 0.5)};
+
+  > svg {
+    width: ${({ theme }) => theme.icon.md};
+    height: ${({ theme }) => theme.icon.md};
+    color: #e6dc6d;
+  }
+
+  > p {
+    font-size: ${({ theme }) => theme.fontSize.caption};
+    font-weight: ${({ theme }) => theme.fontWeight.semibold};
+    color: ${({ theme }) => theme.colors.text};
   }
 `;
