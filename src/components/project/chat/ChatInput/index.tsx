@@ -14,6 +14,7 @@ import { ChatSendProps } from "@/types/chat";
 import { useSendImage } from "@/query/chat/usePostImage";
 import Modal from "@/components/common/Modal";
 import { AiFillFileImage } from "react-icons/ai";
+import { useSendAiMessage } from "@/query/chat/usePostAIMessage";
 
 const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
   const [input, setInput] = useState("");
@@ -32,9 +33,22 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
     },
   });
 
+  const { mutate: sendAiMessage } = useSendAiMessage();
+
   const handleSend = () => {
     if (!input.trim() || !client || !client.connected) {
       console.log(client);
+      return;
+    }
+
+    if (isAI) {
+      sendAiMessage({
+        senderId,
+        userInput: input,
+        projectId: roomId,
+      });
+      setInput("");
+      setIsAI(false);
       return;
     }
 
