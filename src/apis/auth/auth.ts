@@ -44,7 +44,8 @@ export const reissueToken = async (userId: number) => {
 
 // 회원 정보 요청
 export const getUserProfile = async () => {
-  return instance.post("/user/profile");
+  const res = await instance.post("/user/profile");
+  return res.data.data
 };
 
 // 회원 정보 수정
