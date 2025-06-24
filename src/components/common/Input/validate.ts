@@ -23,3 +23,11 @@ export const validatePassword = (password: string) => {
 export const validateName = (name: string) => {
   return name.length >= 2 && name.length <= 20;
 };
+
+export const validatePhoneNumber = (phone: string) => {
+  if (phone.trim() === "" || phone.trim() === "-") return true;
+
+  const onlyNums = phone.replace(/\D/g, "");
+  const regex = /^010\d{8}$/;
+  return regex.test(onlyNums);
+};

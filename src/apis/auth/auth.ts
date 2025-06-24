@@ -1,9 +1,4 @@
-import {
-  EditProfileRequest,
-  LoginRequest,
-  LoginResponse,
-  SignUpRequest,
-} from "@/types/auth";
+import { LoginRequest, LoginResponse, SignUpRequest } from "@/types/auth";
 import publicInstance from "../publicInstance";
 import instance from "../axiosInstance";
 import { AxiosResponse } from "axios";
@@ -45,15 +40,19 @@ export const reissueToken = async (userId: number) => {
 // 회원 정보 요청
 export const getUserProfile = async () => {
   const res = await instance.post("/user/profile");
-  return res.data.data
+  return res.data.data;
 };
 
 // 회원 정보 수정
-export const editUserProfile = (data: EditProfileRequest) => {
-  return publicInstance.put("/user/profile/edit", data);
+export const editUserProfile = (data: FormData) => {
+  return instance.put("/user/profile/edit", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 // 회원 탈퇴
 export const withdrawUser = () => {
-  return publicInstance.put("/user/withdraw");
+  return instance.put("/user/withdraw");
 };

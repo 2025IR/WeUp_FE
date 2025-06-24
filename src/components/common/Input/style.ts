@@ -46,6 +46,11 @@ export const StyledInput = styled.div<{ status: string }>`
   > input {
     flex: 1;
     color: ${({ theme }) => theme.colors.text};
+
+    &:read-only {
+      color: ${({ theme }) => theme.colors.textLight};
+      cursor: default;
+    }
   }
 
   > svg {
