@@ -17,6 +17,7 @@ export interface SignUpRequest {
 export interface EditProfileRequest {
   name: string;
   profile_image: string;
+  phoneNumbe: string;
 }
 
 export interface AuthStoreInfo {

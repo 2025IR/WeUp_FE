@@ -3,7 +3,12 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { BiSolidErrorCircle } from "react-icons/bi";
 import { InputProps } from "./type";
 import { Content, InputWrapper, Label, Message, StyledInput } from "./style";
-import { validateEmail, validatePassword, validateName } from "./validate";
+import {
+  validateEmail,
+  validatePassword,
+  validateName,
+  validatePhoneNumber,
+} from "./validate";
 import Button from "../Button";
 
 const Input = ({
@@ -13,6 +18,7 @@ const Input = ({
   message,
   label,
   isButton,
+  readOnly = false,
   onButtonClick,
   onChange,
 }: InputProps) => {
@@ -66,6 +72,16 @@ const Input = ({
         }
         break;
 
+      case "tel":
+        if (validatePhoneNumber(internalValue)) {
+          setInputStatus("success");
+          setInnerMessage("");
+        } else {
+          setInputStatus("error");
+          setInnerMessage("올바른 전화번호를 입력해주세요");
+        }
+        break;
+
       default:
         break;
     }
@@ -87,6 +103,7 @@ const Input = ({
             value={internalValue}
             maxLength={30}
             onChange={handleChange}
+            readOnly={readOnly}
           />
 
           {inputStatus === "success" ? (

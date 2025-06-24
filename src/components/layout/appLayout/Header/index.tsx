@@ -38,7 +38,9 @@ const Header = () => {
         </UserSection>
       </Content>
 
-      <UserEditModal isOpen={isModalOpen} onClose={handleClose} />
+      {data && (
+        <UserEditModal isOpen={isModalOpen} onClose={handleClose} user={data} />
+      )}
     </Container>
   );
 };
