@@ -54,5 +54,5 @@ export const editUserProfile = (data: FormData) => {
 
 // 회원 탈퇴
 export const withdrawUser = () => {
-  return publicInstance.put("/user/withdraw");
+  return instance.put("/user/withdraw");
 };

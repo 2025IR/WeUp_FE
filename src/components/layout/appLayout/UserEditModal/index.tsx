@@ -7,6 +7,8 @@ import { AiOutlineUpload } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { useEditUserProfile } from "@/query/auth/useEditUserProfile";
 import queryClient from "@/query/reactQueryClient";
+import { useWithdrawUser } from "@/query/auth/useWithdrawUser";
+import { useNavigate } from "react-router-dom";
 
 export interface UserEditModalProps {
   isOpen: boolean;
@@ -20,6 +22,8 @@ export interface UserEditModalProps {
 }
 
 const UserEditModal = ({ isOpen, onClose, user }: UserEditModalProps) => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");
@@ -47,6 +51,8 @@ const UserEditModal = ({ isOpen, onClose, user }: UserEditModalProps) => {
     },
   });
 
+  const { mutate: deleteUserMutate } = useWithdrawUser();
+
   if (!isOpen) return null;
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,6 +73,11 @@ const UserEditModal = ({ isOpen, onClose, user }: UserEditModalProps) => {
     editUserMutate({
       data: formData,
     });
+  };
+
+  const handleDelete = () => {
+    deleteUserMutate();
+    navigate("/auth");
   };
 
   return (
@@ -116,7 +127,7 @@ const UserEditModal = ({ isOpen, onClose, user }: UserEditModalProps) => {
         />
 
         <Section>
-          <p>회원 탈퇴</p>
+          <p onClick={handleDelete}>회원 탈퇴</p>
         </Section>
       </ModalContainer>
     </Modal>

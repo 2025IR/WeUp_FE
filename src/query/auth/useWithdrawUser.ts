@@ -5,6 +5,7 @@ export const useWithdrawUser = () => {
   return useMutation({
     mutationFn: withdrawUser,
     onSuccess: () => {
+      alert("회원 탈퇴가 완료되었습니다.");
       console.log("회원 탈퇴가 완료되었습니다.");
     },
     onError: () => {
