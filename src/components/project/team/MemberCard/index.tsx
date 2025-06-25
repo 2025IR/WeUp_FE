@@ -1,14 +1,24 @@
 import IconLabel from "@/components/common/IconLabel";
-import { EmailSection, GridItem, NameSection, RoleSection } from "./style";
+import {
+  EmailSection,
+  GridItem,
+  MemberEditButton,
+  NameSection,
+  PhoneNumberSection,
+  RoleSection,
+} from "./style";
 import Label from "@/components/common/Label";
 import { MemberCardProps } from "./type";
 import { usePopoverPosition } from "@/hooks/useModalPosition";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
+import { FaCrown } from "react-icons/fa";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
   const { targetRef, calculatePosition } = usePopoverPosition();
   const roleList = useSelector((state: RootState) => state.role.roles);
+  console.log(member);
 
   const handleClick = () => {
     const pos = calculatePosition();
@@ -22,17 +32,19 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
         <IconLabel
           icon={member.profileImage}
           type="image"
-          gap="1rem"
+          gap="0.5rem"
           colors="text"
           size="lg"
+          full
         >
           {member.name}
         </IconLabel>
+        {member.isLeader && <FaCrown />}
       </NameSection>
       <EmailSection>
         <p>{member.email}</p>
       </EmailSection>
-      <div>{member.phoneNumber}</div>
+      <PhoneNumberSection>{member.phoneNumber}</PhoneNumberSection>
       <RoleSection ref={targetRef}>
         <div onClick={handleClick}>
           {roles.length > 0 ? (
@@ -52,6 +64,9 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
           )}
         </div>
       </RoleSection>
+      <MemberEditButton className="edit-btn">
+        <BiDotsVerticalRounded />
+      </MemberEditButton>
     </GridItem>
   );
 };

@@ -5,6 +5,7 @@ import {
   GridHeader,
   InviteButton,
   NameSection,
+  PhoneNumberSection,
   RoleModalContainer,
   RoleSection,
   TeamWrapper,
@@ -109,9 +110,9 @@ const Team = () => {
           <EmailSection>
             <p>이메일</p>
           </EmailSection>
-          <div>
+          <PhoneNumberSection>
             <p>연락처</p>
-          </div>
+          </PhoneNumberSection>
           <RoleSection>
             <p>역할</p>
           </RoleSection>
