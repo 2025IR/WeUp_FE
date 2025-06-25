@@ -122,14 +122,18 @@ const Team = () => {
         </GridHeader>
 
         {/* map 이용 mockdata 출력 */}
-        {teamMembers?.map((member) => (
-          <MemberCard
-            key={member.memberId}
-            member={member}
-            roles={memberRoles[member.memberId] ?? member.roleIds}
-            onOpenRoleModal={handleOpenRoleModal}
-          />
-        ))}
+        {[...(teamMembers ?? [])]
+          .sort((a, b) => {
+            return Number(b.isLeader) - Number(a.isLeader);
+          })
+          .map((member) => (
+            <MemberCard
+              key={member.memberId}
+              member={member}
+              roles={memberRoles[member.memberId] ?? member.roleIds}
+              onOpenRoleModal={handleOpenRoleModal}
+            />
+          ))}
       </TeamWrapper>
       <Button size="lg" onClick={() => setOpenScheduleModal(true)}>
         Schedule
