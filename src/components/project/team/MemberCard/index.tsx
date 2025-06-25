@@ -1,8 +1,10 @@
 import IconLabel from "@/components/common/IconLabel";
 import {
+  ContextMenu,
   EmailSection,
   GridItem,
   MemberEditButton,
+  MenuWrapper,
   NameSection,
   PhoneNumberSection,
   RoleSection,
@@ -14,11 +16,17 @@ import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import { FaCrown } from "react-icons/fa";
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import { useCategoryModal } from "@/hooks/useCategoryModal";
 
 const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
   const { targetRef, calculatePosition } = usePopoverPosition();
   const roleList = useSelector((state: RootState) => state.role.roles);
-  console.log(member);
+
+  const { isOpen, position, modalRef, openModal } = useCategoryModal();
+
+  const handleMenuClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    openModal(e.currentTarget);
+  };
 
   const handleClick = () => {
     const pos = calculatePosition();
@@ -64,8 +72,19 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
           )}
         </div>
       </RoleSection>
-      <MemberEditButton className="edit-btn">
+      <MemberEditButton className="edit-btn" onClick={handleMenuClick}>
         <BiDotsVerticalRounded />
+        {isOpen && (
+          <ContextMenu ref={modalRef} top={position.top} left={position.left}>
+            <MenuWrapper>
+              <p>팀장 위임하기</p>
+            </MenuWrapper>
+            <hr />
+            <MenuWrapper>
+              <p>팀원 내보내기</p>
+            </MenuWrapper>
+          </ContextMenu>
+        )}
       </MemberEditButton>
     </GridItem>
   );

@@ -71,3 +71,49 @@ export const MemberEditButton = styled.div`
     display: none;
   }
 `;
+
+export const ContextMenu = styled.div<{ top: number; left: number }>`
+  position: absolute;
+  width: 7.5rem;
+  height: 4.25rem;
+  top: ${({ top }) => top + 10}px;
+  left: ${({ left }) => left - 90}px;
+  z-index: ${({ theme }) => theme.zIndex.toast};
+  background-color: white;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  padding: 0.25rem;
+  border-radius: ${({ theme }) => theme.radius.sm};
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 14px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+
+  > hr {
+    width: 80%;
+    height: 1px;
+    background-color: ${({ theme }) => theme.colors.border};
+    border: none;
+  }
+`;
+
+export const MenuWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: ${({ theme }) => theme.radius.sm};
+  color: ${({ theme }) => theme.colors.textLight};
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.text};
+  }
+`;

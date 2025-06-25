@@ -5,3 +5,8 @@ export interface MemberCardProps {
   roles: number[];
   onOpenRoleModal: (id: number, pos: { top: number; left: number }) => void;
 }
+
+export type Position = {
+  top: number;
+  left: number;
+};
