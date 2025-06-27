@@ -7,7 +7,7 @@ const initialState: ProjectStoreInfo = {
   projectImage: "",
   description: "",
   revealedNumber: false,
-  isLeader: false,
+  leader: false,
   status: false,
 };
 

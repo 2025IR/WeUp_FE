@@ -27,6 +27,8 @@ const Home = () => {
           ...data,
         })
       );
+
+      console.log(data);
     }
   }, [data, dispatch, parsedProjectId]);
   return (

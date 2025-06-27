@@ -75,7 +75,6 @@ export const MemberEditButton = styled.div`
 export const ContextMenu = styled.div<{ top: number; left: number }>`
   position: absolute;
   width: 7.5rem;
-  height: 4.25rem;
   top: ${({ top }) => top + 10}px;
   left: ${({ left }) => left - 90}px;
   z-index: ${({ theme }) => theme.zIndex.toast};
@@ -102,7 +101,7 @@ export const ContextMenu = styled.div<{ top: number; left: number }>`
 
 export const MenuWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: 1.5rem;
 
   display: flex;
   align-items: center;

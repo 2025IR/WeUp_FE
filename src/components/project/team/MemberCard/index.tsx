@@ -40,6 +40,10 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
   const { mutate: delegateLeader } = useDelegateLeader();
   const { mutate: deleteMember } = useDeleteMember();
 
+  const { leader, revealedNumber } = useSelector(
+    (state: RootState) => state.project
+  );
+
   const handleMenuClick = (e: React.MouseEvent<HTMLDivElement>) => {
     openModal(e.currentTarget);
   };
@@ -110,7 +114,9 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
       <EmailSection>
         <p>{member.email}</p>
       </EmailSection>
-      <PhoneNumberSection>{member.phoneNumber}</PhoneNumberSection>
+      <PhoneNumberSection>
+        {revealedNumber ? member.phoneNumber : "-"}
+      </PhoneNumberSection>
       <RoleSection ref={targetRef}>
         <div onClick={handleClick}>
           {roles.length > 0 ? (
@@ -129,28 +135,30 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
           )}
         </div>
       </RoleSection>
-      <MemberEditButton className="edit-btn" onClick={handleMenuClick}>
-        <BiDotsVerticalRounded />
-        {isOpen && (
-          <ContextMenu ref={modalRef} top={position.top} left={position.left}>
-            <MenuWrapper
-              onClick={() => {
-                setIsDelegateModalOpen(true);
-              }}
-            >
-              <p>팀장 위임하기</p>
-            </MenuWrapper>
-            <hr />
-            <MenuWrapper
-              onClick={() => {
-                setIsDeleteModalOpen(true);
-              }}
-            >
-              <p>팀원 내보내기</p>
-            </MenuWrapper>
-          </ContextMenu>
-        )}
-      </MemberEditButton>
+      {!member.isLeader && leader && (
+        <MemberEditButton className="edit-btn" onClick={handleMenuClick}>
+          <BiDotsVerticalRounded />
+          {isOpen && (
+            <ContextMenu ref={modalRef} top={position.top} left={position.left}>
+              <MenuWrapper
+                onClick={() => {
+                  setIsDelegateModalOpen(true);
+                }}
+              >
+                <p>팀장 위임하기</p>
+              </MenuWrapper>
+              <hr />
+              <MenuWrapper
+                onClick={() => {
+                  setIsDeleteModalOpen(true);
+                }}
+              >
+                <p>팀원 내보내기</p>
+              </MenuWrapper>
+            </ContextMenu>
+          )}
+        </MemberEditButton>
+      )}
 
       {isDelegateModalOpen && (
         <Modal
