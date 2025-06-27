@@ -5,6 +5,7 @@ import {
   GridItem,
   MemberEditButton,
   MenuWrapper,
+  ModalContent,
   NameSection,
   PhoneNumberSection,
   RoleSection,
@@ -17,12 +18,27 @@ import { useSelector } from "react-redux";
 import { FaCrown } from "react-icons/fa";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useCategoryModal } from "@/hooks/useCategoryModal";
+import { useDelegateLeader } from "@/query/team/useDelegateLeader";
+import { useParams } from "react-router-dom";
+import queryClient from "@/query/reactQueryClient";
+import { useState } from "react";
+import Modal from "@/components/common/Modal";
+import { AiOutlineUserSwitch } from "react-icons/ai";
+import { useDeleteMember } from "@/query/team/useDeleteMember";
 
 const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
   const { targetRef, calculatePosition } = usePopoverPosition();
+  const { projectId } = useParams();
   const roleList = useSelector((state: RootState) => state.role.roles);
 
-  const { isOpen, position, modalRef, openModal } = useCategoryModal();
+  const { isOpen, position, modalRef, openModal, closeModal } =
+    useCategoryModal();
+
+  const [isDelegateModalOpen, setIsDelegateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const { mutate: delegateLeader } = useDelegateLeader();
+  const { mutate: deleteMember } = useDeleteMember();
 
   const handleMenuClick = (e: React.MouseEvent<HTMLDivElement>) => {
     openModal(e.currentTarget);
@@ -34,6 +50,48 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
       onOpenRoleModal(member.memberId, pos);
     }
   };
+
+  const handleDelegate = () => {
+    delegateLeader(
+      {
+        projectId: Number(projectId),
+        newLeaderId: member.memberId,
+      },
+      {
+        onSuccess: () => {
+          closeModal();
+          queryClient.invalidateQueries({
+            queryKey: ["memberList", Number(projectId)],
+          });
+          setIsDelegateModalOpen(false);
+        },
+        onError: (err) => {
+          console.error("위임 실패:", err);
+        },
+      }
+    );
+  };
+
+  const handleDelete = () => {
+    deleteMember(
+      {
+        projectId: Number(projectId),
+        memberId: member.memberId,
+      },
+      {
+        onSuccess: () => {
+          closeModal();
+          queryClient.invalidateQueries({
+            queryKey: ["memberList", Number(projectId)],
+          });
+        },
+        onError: (err) => {
+          console.error("삭제 실패:", err);
+        },
+      }
+    );
+  };
+
   return (
     <GridItem key={member.memberId}>
       <NameSection>
@@ -59,7 +117,6 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
             roles.map((roleId, idx) => {
               const role = roleList.find((r) => r.roleId === roleId);
               return role ? (
-                // <Label key={idx} colors={role.roleColor}>
                 <Label key={idx} colors={role.roleColor}>
                   {role.roleName}
                 </Label>
@@ -76,16 +133,54 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
         <BiDotsVerticalRounded />
         {isOpen && (
           <ContextMenu ref={modalRef} top={position.top} left={position.left}>
-            <MenuWrapper>
+            <MenuWrapper
+              onClick={() => {
+                setIsDelegateModalOpen(true);
+              }}
+            >
               <p>팀장 위임하기</p>
             </MenuWrapper>
             <hr />
-            <MenuWrapper>
+            <MenuWrapper
+              onClick={() => {
+                setIsDeleteModalOpen(true);
+              }}
+            >
               <p>팀원 내보내기</p>
             </MenuWrapper>
           </ContextMenu>
         )}
       </MemberEditButton>
+
+      {isDelegateModalOpen && (
+        <Modal
+          buttonText="위임하기"
+          type="default"
+          title="조장을 위임하시겠습니까?"
+          icon={<AiOutlineUserSwitch />}
+          onClick={handleDelegate}
+          onClose={() => setIsDelegateModalOpen(false)}
+        >
+          <ModalContent>
+            조장을 위임하시면, 인원 관리 및 프로젝트 관리 권한이 변경됩니다.
+          </ModalContent>
+        </Modal>
+      )}
+
+      {isDeleteModalOpen && (
+        <Modal
+          buttonText="내보내기"
+          type="default"
+          title="팀원을 내보내시겠습니끼?"
+          icon={<AiOutlineUserSwitch />}
+          onClick={handleDelete}
+          onClose={() => setIsDeleteModalOpen(false)}
+        >
+          <ModalContent>
+            <span>{member.name}</span> 님을 프로젝트에서 내보내시겠습니까?
+          </ModalContent>
+        </Modal>
+      )}
     </GridItem>
   );
 };

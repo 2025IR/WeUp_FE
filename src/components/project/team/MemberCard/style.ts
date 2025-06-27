@@ -117,3 +117,10 @@ export const MenuWrapper = styled.div`
     color: ${({ theme }) => theme.colors.text};
   }
 `;
+
+export const ModalContent = styled.p`
+  > span {
+    font-size: ${({ theme }) => theme.fontSize.body};
+    color: ${({ theme }) => theme.colors.textPrimary};
+  }
+`;

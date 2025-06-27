@@ -15,8 +15,8 @@ export const fetchTeamMembers = async (
 };
 
 // 팀원 삭제
-export const deleteMember = (project_id: number, member_id: number) => {
-  return instance.delete("/member/delete", { data: { project_id, member_id } });
+export const deleteMember = (projectId: number, memberId: number) => {
+  return instance.put("/member/delete", { data: { projectId, memberId } });
 };
 
 // 팀원 역할 수정
@@ -71,6 +71,6 @@ export const removeRole = (projectId: number, roleId: number) => {
 };
 
 // 팀장 위임
-export const delegateLeader = (project_id: number, member_id: number) => {
-  return instance.put("/member/delegate/leader", { project_id, member_id });
+export const delegateLeader = (projectId: number, newLeaderId: number) => {
+  return instance.put("/member/delegate/leader", { projectId, newLeaderId });
 };
