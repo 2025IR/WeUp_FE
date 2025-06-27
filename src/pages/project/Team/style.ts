@@ -23,7 +23,7 @@ export const GridHeader = styled.div`
   padding: 0 2rem;
 
   display: grid;
-  grid-template-columns: 2fr 3fr 2fr 6fr;
+  grid-template-columns: 2fr 3fr 2fr 6fr 1.25rem;
   column-gap: 5rem;
   align-items: center;
   justify-items: center;
@@ -65,6 +65,13 @@ export const NameSection = styled.div`
 
 export const EmailSection = styled.div`
   min-width: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const PhoneNumberSection = styled.div`
+  min-width: 7.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
