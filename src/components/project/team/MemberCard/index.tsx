@@ -23,7 +23,7 @@ import { useParams } from "react-router-dom";
 import queryClient from "@/query/reactQueryClient";
 import { useState } from "react";
 import Modal from "@/components/common/Modal";
-import { AiOutlineUserSwitch } from "react-icons/ai";
+import { AiOutlineUserDelete, AiOutlineUserSwitch } from "react-icons/ai";
 import { useDeleteMember } from "@/query/team/useDeleteMember";
 import { setLeader } from "@/store/project";
 
@@ -180,7 +180,13 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
           onClose={() => setIsDelegateModalOpen(false)}
         >
           <ModalContent>
-            조장을 위임하시면, 인원 관리 및 프로젝트 관리 권한이 변경됩니다.
+            <>
+              선택된 팀원인 <span>{member.name}</span> 님에게 조장 권한을
+              위임하시겠습니까?
+              <br />
+              위임 후에는 인원 관리 및 프로젝트 설정 권한이 이전되며, 다시
+              되돌릴 수 없습니다.
+            </>
           </ModalContent>
         </Modal>
       )}
@@ -190,12 +196,17 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
           buttonText="내보내기"
           type="default"
           title="팀원을 내보내시겠습니끼?"
-          icon={<AiOutlineUserSwitch />}
+          icon={<AiOutlineUserDelete />}
           onClick={handleDelete}
           onClose={() => setIsDeleteModalOpen(false)}
         >
           <ModalContent>
-            <span>{member.name}</span> 님을 프로젝트에서 내보내시겠습니까?
+            <>
+              <span>{member.name}</span> 님을 프로젝트에서 내보내시겠습니까?
+              <br />
+              내보내면 프로젝트 참여 권한이 제거되며, 작성한 내용은 그대로
+              유지됩니다.
+            </>
           </ModalContent>
         </Modal>
       )}
