@@ -16,7 +16,7 @@ export const fetchTeamMembers = async (
 
 // 팀원 삭제
 export const deleteMember = (projectId: number, memberId: number) => {
-  return instance.put("/member/delete", { data: { projectId, memberId } });
+  return instance.put("/member/delete", { projectId, memberId });
 };
 
 // 팀원 역할 수정
