@@ -14,7 +14,7 @@ import Label from "@/components/common/Label";
 import { MemberCardProps } from "./type";
 import { usePopoverPosition } from "@/hooks/useModalPosition";
 import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaCrown } from "react-icons/fa";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useCategoryModal } from "@/hooks/useCategoryModal";
@@ -25,6 +25,7 @@ import { useState } from "react";
 import Modal from "@/components/common/Modal";
 import { AiOutlineUserSwitch } from "react-icons/ai";
 import { useDeleteMember } from "@/query/team/useDeleteMember";
+import { setLeader } from "@/store/project";
 
 const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
   const { targetRef, calculatePosition } = usePopoverPosition();
@@ -43,6 +44,7 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
   const { leader, revealedNumber } = useSelector(
     (state: RootState) => state.project
   );
+  const dispatch = useDispatch();
 
   const handleMenuClick = (e: React.MouseEvent<HTMLDivElement>) => {
     openModal(e.currentTarget);
@@ -63,10 +65,18 @@ const MemberCard = ({ member, roles, onOpenRoleModal }: MemberCardProps) => {
       },
       {
         onSuccess: () => {
+          // 모달 닫기
           closeModal();
+
+          // 팀장 위임 시 현재 사용자의 leader 상태를 false로 변경 (전역)
+          dispatch(setLeader(false));
+
+          // 팀원 목록 쿼리 무효화 (다시 불러오기)
           queryClient.invalidateQueries({
             queryKey: ["memberList", Number(projectId)],
           });
+
+          // 위임 재확인 모달 닫기
           setIsDelegateModalOpen(false);
         },
         onError: (err) => {
