@@ -26,7 +26,7 @@ export const ContentWrapper = styled.div`
 
 export const CalendarWrapper = styled.div`
   padding: 0 1rem;
-  flex: 2;
+  flex: 1;
   width: 100%;
 
   --fc-border-color: ${({ theme }) => theme.colors.border};
@@ -89,5 +89,40 @@ export const CalendarWrapper = styled.div`
 `;
 
 export const SideWrapper = styled.div`
-  flex: 1;
+  width: 332px;
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 `;
+
+export const ProjectDayCounter = styled.div`
+  width: 300px;
+  padding: 1.4rem 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  color: ${({ theme }) => theme.colors.textLight};
+  font-weight: 900;
+  opacity: 0.5;
+
+  p:nth-child(1) {
+    font-size: 1.5rem;
+  }
+
+  p:nth-child(2) {
+    font-size: 1rem;
+  }
+
+  p:nth-child(3) {
+    font-size: 2.5rem;
+    text-align: right;
+    align-self: flex-end;
+  }
+`;
+
+export const TodoList = styled.div``;

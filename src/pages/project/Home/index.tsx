@@ -10,7 +10,9 @@ import {
   CalendarWrapper,
   Container,
   ContentWrapper,
+  ProjectDayCounter,
   SideWrapper,
+  TodoList,
 } from "./style";
 import { useGetTodoList } from "@/query/todo/useGetTodoList";
 import { useTheme } from "@emotion/react";
@@ -47,6 +49,18 @@ const Home = () => {
     return newDate;
   };
 
+  // 현재 시간 기반 D+ 꼐산 함수
+  const calculateDday = (isoString?: string): string => {
+    if (!isoString) return "";
+    const startDate = new Date(isoString);
+    const today = new Date();
+
+    const diffTime = today.getTime() - startDate.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    return `D+${diffDays}`;
+  };
+
   return (
     <Container>
       <Description />
@@ -73,7 +87,14 @@ const Home = () => {
             }
           />
         </CalendarWrapper>
-        <SideWrapper></SideWrapper>
+        <SideWrapper>
+          <ProjectDayCounter>
+            <p>Together since</p>
+            <p>{data?.projectCreatedTime}</p>
+            <p>{calculateDday(data?.projectCreatedTime)}</p>
+          </ProjectDayCounter>
+          <TodoList></TodoList>
+        </SideWrapper>
       </ContentWrapper>
     </Container>
   );
