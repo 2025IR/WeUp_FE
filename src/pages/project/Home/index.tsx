@@ -13,10 +13,14 @@ import {
   ProjectDayCounter,
   SideWrapper,
   TodoList,
+  TodoListCard,
+  TodoListWrapper,
+  TodoTitle,
 } from "./style";
 import { useGetTodoList } from "@/query/todo/useGetTodoList";
 import { useTheme } from "@emotion/react";
 import { formatTodoDate } from "@/utils/formatTime";
+import Label from "@/components/common/Label";
 
 const Home = () => {
   const theme = useTheme();
@@ -61,6 +65,19 @@ const Home = () => {
     return `D+${diffDays}`;
   };
 
+  // 오늘 날짜 문자열
+  const todayStr = formatTodoDate(new Date());
+
+  // 오늘 날짜 + 상태 순서대로 해당하는 일정 반환
+  const todayTodos = getTodoList
+    ?.filter((todo) => {
+      const startStr = formatTodoDate(new Date(todo.startDate));
+      return startStr === todayStr;
+    })
+    .sort((a, b) => a.status - b.status);
+
+  console.log(todayTodos);
+
   return (
     <Container>
       <Description />
@@ -89,11 +106,36 @@ const Home = () => {
         </CalendarWrapper>
         <SideWrapper>
           <ProjectDayCounter>
-            <p>Together since</p>
+            <p>TOGETHER SINCE</p>
             <p>{data?.projectCreatedTime}</p>
             <p>{calculateDday(data?.projectCreatedTime)}</p>
           </ProjectDayCounter>
-          <TodoList></TodoList>
+          <TodoListWrapper>
+            <h2>ToDo List</h2>
+            <TodoList>
+              {todayTodos?.map((todo) => (
+                <TodoListCard key={todo.todoId}>
+                  <TodoTitle>
+                    <h3>{todo.todoName}</h3>
+                    <p>{todo.assignee?.map((user) => user.name).join(", ")}</p>
+                  </TodoTitle>
+                  <div>
+                    {todo.status === 0 ? (
+                      <Label>시작 전</Label>
+                    ) : todo.status === 1 ? (
+                      <Label colors="blue" textColors="textWhite">
+                        진행 중
+                      </Label>
+                    ) : (
+                      <Label colors="secondary" textColors="text">
+                        완료
+                      </Label>
+                    )}
+                  </div>
+                </TodoListCard>
+              ))}
+            </TodoList>
+          </TodoListWrapper>
         </SideWrapper>
       </ContentWrapper>
     </Container>

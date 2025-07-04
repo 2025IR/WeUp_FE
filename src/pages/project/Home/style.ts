@@ -125,4 +125,57 @@ export const ProjectDayCounter = styled.div`
   }
 `;
 
-export const TodoList = styled.div``;
+export const TodoListWrapper = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+
+  > h2 {
+    padding-left: 0.5rem;
+    font-size: ${({ theme }) => theme.fontSize.body};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
+    color: ${({ theme }) => theme.colors.textLight};
+  }
+`;
+
+export const TodoList = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+export const TodoListCard = styled.div`
+  width: 100%;
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  color: ${({ theme }) => theme.colors.textLight};
+  border-radius: ${({ theme }) => theme.radius.sm};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
+`;
+
+export const TodoTitle = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  > h3 {
+    font-size: ${({ theme }) => theme.fontSize.body};
+    font-weight: ${({ theme }) => theme.fontWeight.semibold};
+  }
+
+  > p {
+    font-size: ${({ theme }) => theme.fontSize.caption};
+  }
+`;
