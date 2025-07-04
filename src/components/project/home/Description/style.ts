@@ -32,6 +32,7 @@ export const StyledButton = styled.button`
   width: 1.5rem;
   height: 1.5rem;
   cursor: pointer;
+  opacity: 0.5;
 
   > svg {
     width: 100%;

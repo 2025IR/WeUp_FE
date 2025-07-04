@@ -136,7 +136,7 @@ export const TodoListWrapper = styled.div`
   > h2 {
     padding-left: 0.5rem;
     font-size: ${({ theme }) => theme.fontSize.body};
-    font-weight: ${({ theme }) => theme.fontWeight.bold};
+    font-weight: ${({ theme }) => theme.fontWeight.semibold};
     color: ${({ theme }) => theme.colors.textLight};
   }
 `;
