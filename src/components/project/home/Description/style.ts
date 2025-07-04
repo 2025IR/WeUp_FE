@@ -9,10 +9,9 @@ export const Wrapper = styled.div<{ isFill: boolean }>`
   align-items: flex-start;
   gap: 2rem;
 
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.radius.lg};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   background-color: ${({ theme, isFill }) =>
-    isFill ? theme.colors.background : theme.colors.secondary};
+    isFill ? theme.colors.secondary : theme.colors.background};
 
   &:hover .edit_icon {
     display: block;
