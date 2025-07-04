@@ -9,6 +9,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import { CalendarWrapper, Container } from "./style";
 import { useGetTodoList } from "@/query/todo/useGetTodoList";
 import { useTheme } from "@emotion/react";
+import { formatTodoDate } from "@/utils/formatTime";
 
 const Home = () => {
   const theme = useTheme();
@@ -18,6 +19,8 @@ const Home = () => {
 
   const { data } = useProjectInfo(parsedProjectId);
   const { data: getTodoList } = useGetTodoList(parsedProjectId);
+
+  console.log(getTodoList);
 
   useEffect(() => {
     if (data) {
@@ -31,6 +34,14 @@ const Home = () => {
       console.log(data);
     }
   }, [data, dispatch, parsedProjectId]);
+
+  // 달력에 종료 날짜까지 표시하기 위해 종료 날짜를 하루 미루는 로직 추가
+  const addOneDay = (date: Date): Date => {
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + 1);
+    return newDate;
+  };
+
   return (
     <Container>
       <Description />
@@ -42,7 +53,9 @@ const Home = () => {
             getTodoList?.map((todo) => ({
               title: todo.todoName,
               start: todo.startDate,
-              end: todo.endDate ?? undefined,
+              end: todo.endDate
+                ? formatTodoDate(addOneDay(new Date(todo.endDate)))
+                : undefined,
               textColor: todo.isMyTodo
                 ? theme.colors.textWhite
                 : theme.colors.textLight,
