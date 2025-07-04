@@ -16,7 +16,19 @@ export const Container = styled.div`
   }
 `;
 
+export const ContentWrapper = styled.div`
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5px;
+`;
+
 export const CalendarWrapper = styled.div`
+  padding: 0 1rem;
+  flex: 2;
+  width: 100%;
+
   --fc-border-color: ${({ theme }) => theme.colors.border};
   --fc-today-bg-color: ${({ theme }) => theme.colors.background};
   --fc-event-bg-color: ${({ theme }) => theme.colors.primary};
@@ -74,4 +86,8 @@ export const CalendarWrapper = styled.div`
     border: none;
     box-shadow: none;
   }
+`;
+
+export const SideWrapper = styled.div`
+  flex: 1;
 `;

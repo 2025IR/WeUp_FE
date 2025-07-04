@@ -6,7 +6,12 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import { CalendarWrapper, Container } from "./style";
+import {
+  CalendarWrapper,
+  Container,
+  ContentWrapper,
+  SideWrapper,
+} from "./style";
 import { useGetTodoList } from "@/query/todo/useGetTodoList";
 import { useTheme } from "@emotion/react";
 import { formatTodoDate } from "@/utils/formatTime";
@@ -45,28 +50,31 @@ const Home = () => {
   return (
     <Container>
       <Description />
-      <CalendarWrapper>
-        <FullCalendar
-          plugins={[dayGridPlugin]}
-          initialView="dayGridMonth"
-          events={
-            getTodoList?.map((todo) => ({
-              title: todo.todoName,
-              start: todo.startDate,
-              end: todo.endDate
-                ? formatTodoDate(addOneDay(new Date(todo.endDate)))
-                : undefined,
-              textColor: todo.isMyTodo
-                ? theme.colors.textWhite
-                : theme.colors.textLight,
-              backgroundColor: todo.isMyTodo
-                ? theme.colors.primary
-                : theme.colors.secondary,
-              borderColor: theme.colors.border,
-            })) ?? []
-          }
-        />
-      </CalendarWrapper>
+      <ContentWrapper>
+        <CalendarWrapper>
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView="dayGridMonth"
+            events={
+              getTodoList?.map((todo) => ({
+                title: todo.todoName,
+                start: todo.startDate,
+                end: todo.endDate
+                  ? formatTodoDate(addOneDay(new Date(todo.endDate)))
+                  : undefined,
+                textColor: todo.isMyTodo
+                  ? theme.colors.textWhite
+                  : theme.colors.textLight,
+                backgroundColor: todo.isMyTodo
+                  ? theme.colors.primary
+                  : theme.colors.secondary,
+                borderColor: theme.colors.border,
+              })) ?? []
+            }
+          />
+        </CalendarWrapper>
+        <SideWrapper></SideWrapper>
+      </ContentWrapper>
     </Container>
   );
 };
