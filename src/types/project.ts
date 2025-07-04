@@ -15,7 +15,7 @@ export interface ProjectInfo {
   projectImage: string;
   description: string;
   revealedNumber: boolean;
-  isLeader: boolean;
+  leader: boolean;
   status: boolean;
 }
 

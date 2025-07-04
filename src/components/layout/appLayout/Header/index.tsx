@@ -2,8 +2,18 @@ import Button from "@/components/common/Button";
 import { AiOutlineBell } from "react-icons/ai";
 import { Container, Content, Logo, UserInfo, UserSection } from "./style";
 import logo from "@/assets/logo/logo.png";
+import { useUserProfile } from "@/query/auth/useUserProfile";
+import { IoMdSettings } from "react-icons/io";
+import { useState } from "react";
+import UserEditModal from "../UserEditModal";
 
 const Header = () => {
+  const { data } = useUserProfile();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClose = () => setIsModalOpen(false);
+  const handleOpen = () => setIsModalOpen(true);
+
   return (
     <Container>
       <Content>
@@ -14,19 +24,23 @@ const Header = () => {
 
         <UserSection>
           <UserInfo>
-            <Button>yundoll</Button>
-            <Button variant="secondary">mar0722@naver.com</Button>
+            <Button variant="primary">{data?.name}</Button>
+            <Button variant="secondary">{data?.email}</Button>
+            <Button onClick={handleOpen} variant="secondary" iconOnly>
+              <IoMdSettings />
+            </Button>
             <Button variant="secondary" iconOnly>
               <AiOutlineBell />
             </Button>
           </UserInfo>
 
-          <img
-            src="https://we-up-public.s3.ap-northeast-2.amazonaws.com/smiley3.png"
-            alt="profile-iamge"
-          />
+          <img src={data?.profileImage} alt="profile-iamge" />
         </UserSection>
       </Content>
+
+      {data && (
+        <UserEditModal isOpen={isModalOpen} onClose={handleClose} user={data} />
+      )}
     </Container>
   );
 };

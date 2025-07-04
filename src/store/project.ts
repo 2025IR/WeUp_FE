@@ -7,7 +7,7 @@ const initialState: ProjectStoreInfo = {
   projectImage: "",
   description: "",
   revealedNumber: false,
-  isLeader: false,
+  leader: false,
   status: false,
 };
 
@@ -21,8 +21,11 @@ const projectSlice = createSlice({
     resetProject() {
       return initialState;
     },
+    setLeader(state, action: PayloadAction<boolean>) {
+      state.leader = action.payload;
+    },
   },
 });
 
-export const { setProject, resetProject } = projectSlice.actions;
+export const { setProject, resetProject, setLeader } = projectSlice.actions;
 export default projectSlice.reducer;

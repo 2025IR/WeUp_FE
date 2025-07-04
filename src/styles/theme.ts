@@ -21,8 +21,8 @@ const shared = {
     base: 1,
     header: 10,
     dropdown: 100,
-    modal: 1000,
-    toast: 1100,
+    toast: 1000,
+    modal: 1100,
   },
   radius: {
     sm: "5px",

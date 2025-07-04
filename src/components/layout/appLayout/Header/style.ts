@@ -47,4 +47,13 @@ export const UserInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
+  > button {
+    cursor: auto;
+  }
+
+  > button:nth-child(3),
+  > button:nth-child(4) {
+    cursor: pointer;
+  }
 `;
