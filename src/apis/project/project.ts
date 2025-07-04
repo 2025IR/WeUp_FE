@@ -29,8 +29,13 @@ export const updateProject = async (project_id: number, data: FormData) => {
 };
 
 // 프로젝트 삭제
-export const deleteProject = async (project_id: number) => {
-  await instance.delete("/project/delete", { data: { project_id } });
+export const deleteProject = async (projectId: number) => {
+  await instance.put(`/project/delete/${projectId}`);
+};
+
+// 프로젝트 삭제 임시...
+export const deleteProjectTest = async () => {
+  await instance.post(`/project/delete/test`);
 };
 
 // 프로젝트 설명 수정
