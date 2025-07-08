@@ -6,6 +6,7 @@ const initialState: ProjectStoreInfo = {
   projectName: "",
   projectImage: "",
   description: "",
+  projectCreatedTime: "",
   revealedNumber: false,
   leader: false,
   status: false,
