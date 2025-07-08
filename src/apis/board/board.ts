@@ -11,11 +11,8 @@ export const fetchBoardList = async (
 };
 
 // 게시글 작성
-export const createPost = async (
-  projectId: number,
-  formData: FormData
-): Promise<void> => {
-  await instance.post(`/board/create/${projectId}`, formData, {
+export const createPost = async (formData: FormData): Promise<void> => {
+  await instance.post("/board/create", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

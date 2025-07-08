@@ -13,7 +13,8 @@ export const useCreatePost = () => {
       projectId: number;
       formData: FormData;
     }) => {
-      return await createPost(projectId, formData);
+      formData.append("projectId", String(projectId));
+      return await createPost(formData);
     },
 
     onSuccess: (res, { projectId }) => {

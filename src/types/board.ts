@@ -7,7 +7,7 @@ export interface FetchBoardListParams {
 export interface BoardCardProps {
   boardId: number;
   title: string;
-  nickname: string;
+  name: string;
   profileImage: string;
   boardCreatedTime: string | null;
   tag: string;

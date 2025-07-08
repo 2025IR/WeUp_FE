@@ -45,7 +45,7 @@ const BoardList = ({ posts, isLoading }: BoardListProps) => {
           </CardInfo>
           <UserInfo>
             <IconLabel type="image" size="lg" full icon={post.profileImage}>
-              {post.nickname}
+              {post.name}
             </IconLabel>
             <p>{formatDate(post.boardCreatedTime)}</p>
           </UserInfo>
