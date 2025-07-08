@@ -176,12 +176,12 @@ const PostWrite = () => {
           )}
         </InfoWrapper>
 
-        <FileInputWrapper htmlFor="file">
+        <FileInputWrapper>
           <InfoTitle>
             <AiOutlineFileAdd />
             <p>파일 첨부</p>
           </InfoTitle>
-          <FileWrapper>
+          <FileWrapper htmlFor="file">
             {files.length === 0 ? (
               <FilePlaceholder>
                 <AiOutlineUpload />

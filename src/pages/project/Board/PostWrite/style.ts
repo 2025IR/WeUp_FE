@@ -47,7 +47,7 @@ export const InfoWrapper = styled.div`
   gap: 3rem;
 `;
 
-export const FileInputWrapper = styled.label`
+export const FileInputWrapper = styled.div`
   width: 100%;
   padding: 0 1rem;
 
@@ -81,7 +81,7 @@ export const InfoTitle = styled.div`
   }
 `;
 
-export const FileWrapper = styled.div`
+export const FileWrapper = styled.label`
   width: 360px;
   height: 81px;
   padding: 6px;
