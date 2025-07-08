@@ -29,6 +29,7 @@ import { useCreatePost } from "@/query/board/useCreatePost";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useUpdatePost } from "@/query/board/useUpdatePost";
 import { tagColorMap } from "@/utils/postTagColor";
+import { CustomFile, UploadFile } from "./type";
 
 const PostWrite = () => {
   const { projectId, postId } = useParams();
@@ -37,10 +38,13 @@ const PostWrite = () => {
   const isEdit = location.state?.isEdit ?? false;
   const postData = location.state?.postData;
 
+  console.log(postData);
+
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [tag, setTag] = useState({ label: "기타", color: "brown" });
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<UploadFile[]>([]);
+  const [removeFileIds, setRemoveFileIds] = useState<number[]>([]);
 
   const labelRef = useRef<HTMLDivElement>(null);
   const { isOpen, position, modalRef, openModal, closeModal } =
@@ -55,6 +59,15 @@ const PostWrite = () => {
       setTitle(postData.title);
       setContents(postData.contents);
       setTag({ label: postData.tag, color: "brown" });
+
+      const existingFiles = postData.files?.map((file: CustomFile) => ({
+        name: file.fileName,
+        size: file.fileSize,
+        url: file.downloadUrl,
+        id: file.fileId,
+      }));
+
+      setFiles(existingFiles || []);
     }
   }, [isEdit, postData]);
 
@@ -66,7 +79,9 @@ const PostWrite = () => {
     formData.append("tag", tag.label);
 
     files.forEach((file) => {
-      formData.append("file", file);
+      if (file instanceof File) {
+        formData.append("file", file);
+      }
     });
 
     mutation.mutate({ projectId: Number(projectId), formData });
@@ -78,7 +93,13 @@ const PostWrite = () => {
     formData.append("contents", contents);
     formData.append("tag", tag.label);
     files.forEach((file) => {
-      formData.append("file", file);
+      if (file instanceof File) {
+        formData.append("file", file);
+      }
+    });
+    console.log(removeFileIds);
+    removeFileIds.forEach((id) => {
+      formData.append("removeFileIds", String(id));
     });
 
     updateMutation.mutate(
@@ -98,7 +119,15 @@ const PostWrite = () => {
   };
 
   const handleRemoveFile = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
+    setFiles((prev) => {
+      const removed = prev[index];
+
+      if ("id" in removed) {
+        setRemoveFileIds((prevIds) => [...prevIds, removed.id!]);
+      }
+
+      return prev.filter((_, i) => i !== index);
+    });
   };
 
   return (
@@ -147,12 +176,12 @@ const PostWrite = () => {
           )}
         </InfoWrapper>
 
-        <FileInputWrapper htmlFor="file">
+        <FileInputWrapper>
           <InfoTitle>
             <AiOutlineFileAdd />
             <p>파일 첨부</p>
           </InfoTitle>
-          <FileWrapper>
+          <FileWrapper htmlFor="file">
             {files.length === 0 ? (
               <FilePlaceholder>
                 <AiOutlineUpload />

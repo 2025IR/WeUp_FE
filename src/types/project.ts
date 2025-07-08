@@ -14,9 +14,10 @@ export interface ProjectInfo {
   projectName: string;
   projectImage: string;
   description: string;
+  projectCreatedTime: string;
+  status: boolean;
   revealedNumber: boolean;
   leader: boolean;
-  status: boolean;
 }
 
 // 프로젝트 저장

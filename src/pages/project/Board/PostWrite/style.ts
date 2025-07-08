@@ -47,7 +47,7 @@ export const InfoWrapper = styled.div`
   gap: 3rem;
 `;
 
-export const FileInputWrapper = styled.label`
+export const FileInputWrapper = styled.div`
   width: 100%;
   padding: 0 1rem;
 
@@ -68,15 +68,20 @@ export const InfoTitle = styled.div`
   align-items: center;
   gap: 0.5rem;
 
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.textLight};
 
   > svg {
     width: ${({ theme }) => theme.icon.md};
     height: ${({ theme }) => theme.icon.md};
   }
+
+  > p {
+    font-size: ${({ theme }) => theme.fontSize.caption};
+    font-weight: ${({ theme }) => theme.fontWeight.semibold};
+  }
 `;
 
-export const FileWrapper = styled.div`
+export const FileWrapper = styled.label`
   width: 360px;
   height: 81px;
   padding: 6px;
@@ -168,6 +173,8 @@ export const TextAreaWrapper = styled.div`
 
     font-size: ${({ theme }) => theme.fontSize.base};
     color: ${({ theme }) => theme.colors.text};
+
+    line-height: 1.6;
   }
 `;
 
