@@ -68,11 +68,16 @@ export const InfoTitle = styled.div`
   align-items: center;
   gap: 0.5rem;
 
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.textLight};
 
   > svg {
     width: ${({ theme }) => theme.icon.md};
     height: ${({ theme }) => theme.icon.md};
+  }
+
+  > p {
+    font-size: ${({ theme }) => theme.fontSize.caption};
+    font-weight: ${({ theme }) => theme.fontWeight.semibold};
   }
 `;
 
@@ -168,6 +173,8 @@ export const TextAreaWrapper = styled.div`
 
     font-size: ${({ theme }) => theme.fontSize.base};
     color: ${({ theme }) => theme.colors.text};
+
+    line-height: 1.6;
   }
 `;
 
