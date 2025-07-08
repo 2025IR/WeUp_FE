@@ -21,6 +21,8 @@ const Board = () => {
     page: filters.page,
   });
 
+  console.log(data);
+
   return (
     <BoardContainer>
       <BoardHeader

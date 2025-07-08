@@ -34,7 +34,7 @@ const ProjectCreateModal = ({ isOpen, onClose }: ProjectCreateModalProps) => {
     if (!projectName) return alert("프로젝트 이름을 입력해주세요.");
     const formData = new FormData();
     formData.append("projectName", projectName);
-    if (imageFile) formData.append("file", imageFile);
+    if (imageFile) formData.append("projectImage", imageFile);
 
     mutate(formData);
 
