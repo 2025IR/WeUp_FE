@@ -6,6 +6,7 @@ import "@livekit/components-styles/index.css";
 // import { useEnterMeeting } from "@/query/meeting/useEnterMeeting";
 import { AccessToken } from "livekit-server-sdk";
 import { useEffect, useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const serverUrl = import.meta.env.VITE_LIVEKIT_URL;
 // 임시 토큰
@@ -17,6 +18,7 @@ const Meeting = () => {
   const [searchParams] = useSearchParams();
   const isMicOn = searchParams.get("isMicOn") === "true";
   const isCamOn = searchParams.get("isCamOn") === "true";
+  const themeFromUrl = searchParams.get("theme");
   // const project_id = Number(projectId);
   // 임시 토큰
   const [token, setToken] = useState<string | null>(null);
@@ -34,6 +36,14 @@ const Meeting = () => {
     fetchToken();
   }, [projectId]);
 
+  const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    if (themeFromUrl && themeFromUrl !== theme) {
+      toggleTheme();
+    }
+  }, [themeFromUrl]);
+
   // const { mutate, data: token, isPending } = useEnterMeeting();
 
   // useEffect(() => {
@@ -49,6 +59,7 @@ const Meeting = () => {
       <MeetingHeader />
       <Main>
         <LiveKitRoom
+          data-lk-theme="default"
           token={token}
           serverUrl={serverUrl}
           connect
