@@ -18,6 +18,7 @@ import { useState } from "react";
 import { useMediaStream } from "@/hooks/useMediaStream";
 import { useParams } from "react-router-dom";
 import { useMeetingCount } from "@/query/meeting/useMeetingCount";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const WaitingRoom = () => {
   // const navigate = useNavigate();
@@ -27,6 +28,8 @@ const WaitingRoom = () => {
   const { data: count } = useMeetingCount(project_id);
   const [isMicOn, setIsMicOn] = useState(true);
   const [isCamOn, setIsCamOn] = useState(true);
+
+  const { theme } = useTheme();
 
   console.log(`인원 수 ${count}`);
 
@@ -40,7 +43,7 @@ const WaitingRoom = () => {
   const handleJoinMeeting = () => {
     // navigate(`/meeting/${projectId}`);
     window.open(
-      `/meeting/${projectId}?isMicOn=${isMicOn}&isCamOn=${isCamOn}`,
+      `/meeting/${projectId}?isMicOn=${isMicOn}&isCamOn=${isCamOn}&theme=${theme}`,
       "_blank",
       "width=932,height=808,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,noopener,noreferrer"
     );
