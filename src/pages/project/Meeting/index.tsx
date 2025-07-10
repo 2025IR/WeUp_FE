@@ -65,6 +65,7 @@ const Meeting = () => {
           connect
           video={isCamOn}
           audio={isMicOn}
+          onDisconnected={() => window.close()}
         >
           <VideoConference />
         </LiveKitRoom>
