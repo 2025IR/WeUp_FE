@@ -12,6 +12,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: .env 파일 생성
+        run: |
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
+          echo "VITE_LIVEKIT_URL=${{ secrets.VITE_LIVEKIT_URL }}" >> .env
+          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
+          echo "VITE_API_SECRET=${{ secrets.VITE_API_SECRET }}" >> .env
+
       - name: DockerHub 로그인
         uses: docker/login-action@v3
         with:
