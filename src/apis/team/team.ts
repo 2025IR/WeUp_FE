@@ -1,5 +1,5 @@
 import { MemberType, RoleType } from "@/types/team";
-import instance from "../axiosInstance";
+import instance from "../../utils/axios/axiosInstance";
 
 // 팀원 초대
 export const inviteMember = (projectId: number, email: string) => {
