@@ -1,6 +1,6 @@
 import { LoginRequest, LoginResponse, SignUpRequest } from "@/types/auth";
-import publicInstance from "../publicInstance";
-import instance from "../axiosInstance";
+import publicInstance from "../../utils/axios/publicInstance";
+import instance from "../../utils/axios/axiosInstance";
 import { AxiosResponse } from "axios";
 
 // 로그인
@@ -8,6 +8,10 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const res = await publicInstance.post("/user/signIn", data);
   console.log(res.data.data);
   return res.data.data;
+};
+
+export const logout = async () => {
+  return instance.post("/user/logout");
 };
 
 // 회원가입
@@ -31,9 +35,9 @@ export const checkEmailCode = ({
   return publicInstance.post("/user/email/check", { email, checkCode });
 };
 
-// 토큰 재발급 (임시)
-export const reissueToken = async (userId: number) => {
-  const response = await publicInstance.post("/user/reissue", { userId });
+// 토큰 재발급
+export const reissueToken = async () => {
+  const response = await publicInstance.post("/user/reissuetoken");
   return response.data.data;
 };
 

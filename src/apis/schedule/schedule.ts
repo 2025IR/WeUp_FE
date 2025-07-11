@@ -1,5 +1,5 @@
 import { ScheduleType } from "@/types/schedule";
-import instance from "../axiosInstance";
+import instance from "../../utils/axios/axiosInstance";
 
 // 일정 불러오기
 export const getSchedules = async (

@@ -13,6 +13,7 @@ import {
 import ProjectsList from "../ProjectsList";
 import ThemeToggle from "../ThemeToggle";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useLogout } from "@/query/auth/useLogout";
 
 const SideNav = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const SideNav = () => {
 
   const path = location.pathname;
 
+  const { mutate: logout } = useLogout();
   const isActive = (keyword: string) => path.includes(keyword);
 
   return (
@@ -49,7 +51,7 @@ const SideNav = () => {
         <NavItem>
           <IconLabel icon={<IoMdSettings />}>Setting</IconLabel>
         </NavItem>
-        <NavItem>
+        <NavItem onClick={() => logout}>
           <IconLabel icon={<HiOutlineLogout />}>Logout</IconLabel>
         </NavItem>
       </NavWrapper>
