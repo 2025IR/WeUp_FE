@@ -1,5 +1,5 @@
 import { ProjectInfo, ProjectType } from "@/types/project";
-import instance from "../axiosInstance";
+import instance from "../../utils/axios/axiosInstance";
 
 // 리스트 불러오기
 export const getProjectList = async (): Promise<ProjectType[]> => {

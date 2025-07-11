@@ -1,4 +1,4 @@
-import instance from "../axiosInstance";
+import instance from "../../utils/axios/axiosInstance";
 
 // 참가 인원 수 조회
 export const getMeetingCount = async (project_id: number) => {

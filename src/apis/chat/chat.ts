@@ -1,5 +1,5 @@
 import { AiMessageResponse, ChatApiResponse } from "@/types/chat";
-import instance from "../axiosInstance";
+import instance from "../../utils/axios/axiosInstance";
 
 // 채팅 내역 조회
 export const getChatHistory = async (

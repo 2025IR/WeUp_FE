@@ -1,5 +1,5 @@
 import { FetchBoardListParams, PostProps } from "@/types/board";
-import instance from "../axiosInstance";
+import instance from "../../utils/axios/axiosInstance";
 
 // 게시글 목록 조회
 export const fetchBoardList = async (

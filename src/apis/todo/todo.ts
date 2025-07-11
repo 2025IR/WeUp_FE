@@ -1,5 +1,5 @@
 import { TodoType, TodoUpdateType } from "@/types/todo";
-import instance from "../axiosInstance";
+import instance from "../../utils/axios/axiosInstance";
 
 // 투두 생성
 export const CreateTodo = (projectId: number) => {
