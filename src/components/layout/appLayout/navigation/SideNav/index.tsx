@@ -51,7 +51,7 @@ const SideNav = () => {
         <NavItem>
           <IconLabel icon={<IoMdSettings />}>Setting</IconLabel>
         </NavItem>
-        <NavItem onClick={() => logout}>
+        <NavItem onClick={() => logout()}>
           <IconLabel icon={<HiOutlineLogout />}>Logout</IconLabel>
         </NavItem>
       </NavWrapper>
