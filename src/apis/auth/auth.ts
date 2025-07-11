@@ -1,5 +1,5 @@
 import { LoginRequest, LoginResponse, SignUpRequest } from "@/types/auth";
-import publicInstance from "../publicInstance";
+import publicInstance from "../../utils/axios/publicInstance";
 import instance from "../../utils/axios/axiosInstance";
 import { AxiosResponse } from "axios";
 
@@ -8,6 +8,10 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const res = await publicInstance.post("/user/signIn", data);
   console.log(res.data.data);
   return res.data.data;
+};
+
+export const logout = async () => {
+  return instance.post("/user/logout");
 };
 
 // 회원가입
