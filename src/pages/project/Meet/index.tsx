@@ -8,6 +8,7 @@ import {
   ButtonWrapper,
   Container,
   InfoSection,
+  MeetHeader,
   MeetingCard,
   Overlay,
   ToggleButton,
@@ -19,8 +20,10 @@ import { useMediaStream } from "@/hooks/useMediaStream";
 import { useParams } from "react-router-dom";
 import { useMeetingCount } from "@/query/meeting/useMeetingCount";
 import { useTheme } from "@/contexts/ThemeContext";
+import IconLabel from "@/components/common/IconLabel";
+import { BsHeadphones } from "react-icons/bs";
 
-const WaitingRoom = () => {
+const Meet = () => {
   // const navigate = useNavigate();
   const { projectId } = useParams();
   const project_id = Number(projectId);
@@ -53,6 +56,11 @@ const WaitingRoom = () => {
 
   return (
     <Container>
+      <MeetHeader>
+        <IconLabel icon={<BsHeadphones />} size="lg" fontSize="body">
+          화상회의 대기실
+        </IconLabel>
+      </MeetHeader>
       <MeetingCard>
         <VideoPreview>
           {/* 항상 video 태그는 유지 */}
@@ -91,4 +99,4 @@ const WaitingRoom = () => {
   );
 };
 
-export default WaitingRoom;
+export default Meet;
