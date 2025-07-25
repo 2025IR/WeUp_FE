@@ -44,6 +44,7 @@ const routes: RouteObject[] = [
           { path: "post/:postId", element: <Post /> },
           { path: "post/:postId/edit", element: <PostWrite /> },
           { path: "post/new", element: <PostWrite /> },
+          { path: "chat", element: <Chat /> },
           {
             path: "meet",
             element: <MeetLayout />,
