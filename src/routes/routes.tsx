@@ -11,9 +11,8 @@ import AppLayout from "../components/layout/appLayout/AppLayout";
 import PublicLayout from "@/components/layout/publicLayout/PublicLayout";
 import Task from "@/pages/project/Task";
 import Auth from "@/pages/Auth";
-import MeetLayout from "@/components/layout/meetLayout/MeetLayout";
-import WaitingRoom from "@/pages/project/WaitingRoom";
 import Chat from "@/pages/project/Chat";
+import Meet from "@/pages/project/Meet";
 
 const routes: RouteObject[] = [
   {
@@ -44,13 +43,10 @@ const routes: RouteObject[] = [
           { path: "post/:postId", element: <Post /> },
           { path: "post/:postId/edit", element: <PostWrite /> },
           { path: "post/new", element: <PostWrite /> },
+          { path: "chat", element: <Chat /> },
           {
             path: "meet",
-            element: <MeetLayout />,
-            children: [
-              { path: "chat", element: <Chat /> },
-              { path: "waiting", element: <WaitingRoom /> },
-            ],
+            element: <Meet />,
           },
         ],
       },

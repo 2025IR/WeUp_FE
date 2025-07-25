@@ -1,8 +1,14 @@
 import styled from "@emotion/styled";
 
+export const InputSection = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 0.75rem;
+`;
+
 export const InputContainer = styled.div`
   position: relative;
-  width: 100%;
+  flex: 1;
   height: auto;
   padding: 0.5rem 1rem;
 
@@ -10,8 +16,8 @@ export const InputContainer = styled.div`
   align-items: center;
   gap: 1rem;
 
-  border-radius: ${({ theme }) => theme.radius.lg};
-  background-color: ${({ theme }) => theme.colors.secondary};
+  border-radius: ${({ theme }) => theme.radius.sm};
+  background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.border};
 
   > label {
@@ -94,5 +100,29 @@ export const AiButton = styled.div<{ isAI: boolean }>`
     font-size: ${({ theme }) => theme.fontSize.caption};
     font-weight: ${({ theme }) => theme.fontWeight.semibold};
     color: ${({ theme }) => theme.colors.text};
+  }
+`;
+
+export const SendButton = styled.div`
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  border-radius: ${({ theme }) => theme.radius.sm};
+  border: 1px solid ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primary};
+
+  > svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.textWhite};
+    background-color: ${({ theme }) => theme.colors.primary};
   }
 `;

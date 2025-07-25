@@ -38,8 +38,8 @@ export const MyTextCard = styled.div`
   overflow-wrap: break-word;
 
   font-size: 0.875rem;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.textWhite};
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.text};
   border-radius: ${({ theme }) => theme.radius.md};
 `;
 
@@ -64,8 +64,9 @@ export const TextCard = styled.div`
   overflow-wrap: break-word;
 
   font-size: 0.875rem;
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radius.md};
 `;
 

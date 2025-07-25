@@ -1,8 +1,3 @@
-export type ChatSendPayload = {
-  senderId: number;
-  message: string;
-};
-
 export interface ChatRoom {
   id: number;
   title: string;
