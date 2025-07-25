@@ -8,7 +8,7 @@ export const InputSection = styled.div`
 
 export const InputContainer = styled.div`
   position: relative;
-  width: 100%;
+  flex: 1;
   height: auto;
   padding: 0.5rem 1rem;
 
