@@ -5,6 +5,7 @@ export type ChatMessageProps = {
   message: string;
   sentAt: string;
   isImage: boolean;
+  displayType: "Default" | "SameSender" | "SameTime";
 };
 
 export type ChatSendProps = {
@@ -22,4 +23,9 @@ export type AiMessageResponse = {
   senderId: number;
   userInput: string;
   projectId: number;
+};
+
+export type ChatCardProps = ChatMessageProps & {
+  isShowTime: boolean;
+  isShowUserInfo: boolean;
 };

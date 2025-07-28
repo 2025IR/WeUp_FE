@@ -94,9 +94,21 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
 
   return (
     <MessagesContainer ref={containerRef} onScroll={handleScroll}>
-      {allMessages.map((msg, index) => (
-        <ChatMessageCard key={index} {...msg} />
-      ))}
+      {allMessages.map((msg, index) => {
+        const nextChat = allMessages[index + 1];
+        const isShowTime = !nextChat || nextChat.displayType !== "SameTime";
+        const isShowUserInfo =
+          msg.displayType === "Default" || msg.displayType === "SameSender";
+
+        return (
+          <ChatMessageCard
+            key={index}
+            isShowTime={isShowTime}
+            isShowUserInfo={isShowUserInfo}
+            {...msg}
+          />
+        );
+      })}
       <div ref={scrollRef} />
     </MessagesContainer>
   );
