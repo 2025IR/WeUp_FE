@@ -16,13 +16,18 @@ export const ContainerCard = styled.div`
   justify-content: start;
   align-items: end;
   gap: 0.5rem;
+`;
+
+export const ImgWrapper = styled.div`
+  width: 50px;
+  margin-right: 0.5rem;
+  border-radius: ${({ theme }) => theme.radius.full};
+  align-self: flex-start;
+  overflow: hidden;
 
   > img {
-    width: 50px;
-    height: 50px;
-    margin-right: 0.5rem;
-    border-radius: ${({ theme }) => theme.radius.full};
-    align-self: flex-start;
+    width: 100%;
+    height: 100%;
   }
 `;
 
@@ -38,8 +43,8 @@ export const MyTextCard = styled.div`
   overflow-wrap: break-word;
 
   font-size: 0.875rem;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.textWhite};
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.text};
   border-radius: ${({ theme }) => theme.radius.md};
 `;
 
@@ -64,8 +69,9 @@ export const TextCard = styled.div`
   overflow-wrap: break-word;
 
   font-size: 0.875rem;
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radius.md};
 `;
 

@@ -6,17 +6,15 @@ export const MeetContainer = styled.div`
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 `;
 
-export const ChatSection = styled.div`
-  width: 70%;
-  max-width: 800px;
+export const ChatMain = styled.div`
+  flex: 1;
   height: 100%;
-  overflow: hidden;
   padding: 0 1rem;
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 `;

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { BsLightbulb, BsLightbulbFill, BsSendFill } from "react-icons/bs";
 import { BiImageAdd } from "react-icons/bi";
-import Button from "@/components/common/Button";
 import {
   AiButton,
   ImageWrapper,
   InputContainer,
+  InputSection,
+  SendButton,
   StyledInput,
   StyledTag,
 } from "./style";
@@ -104,10 +105,18 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
   };
 
   return (
-    <InputContainer>
-      {isAI ? (
-        <StyledTag>@돌돌이</StyledTag>
-      ) : (
+    <InputSection>
+      <InputContainer>
+        {isAI && <StyledTag>@AI 비서</StyledTag>}
+
+        <StyledInput
+          type="text"
+          placeholder="메시지 입력"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+
         <label htmlFor="imageUpload">
           <BiImageAdd style={{ cursor: "pointer" }} />
           <input
@@ -117,39 +126,31 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
             onChange={handleImageChange}
           />
         </label>
-      )}
 
-      <StyledInput
-        type="text"
-        placeholder="메시지 입력"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-      />
+        {isModalOpen && previewUrl && (
+          <Modal
+            icon={<AiFillFileImage />}
+            title="이미지 전송"
+            buttonText="보내기"
+            onClick={handleSendImage}
+            onClose={handleClearImage}
+          >
+            <ImageWrapper>
+              <img src={previewUrl} alt="" />
+            </ImageWrapper>
+          </Modal>
+        )}
 
-      <Button iconOnly variant="primary" size="lg" onClick={handleSend}>
+        <AiButton onClick={() => setIsAI(!isAI)} isAI={isAI}>
+          {isAI ? <BsLightbulbFill /> : <BsLightbulb />}
+          <p>AI에게 질문하기</p>
+        </AiButton>
+      </InputContainer>
+
+      <SendButton onClick={handleSend}>
         <BsSendFill />
-      </Button>
-
-      {isModalOpen && previewUrl && (
-        <Modal
-          icon={<AiFillFileImage />}
-          title="이미지 전송"
-          buttonText="보내기"
-          onClick={handleSendImage}
-          onClose={handleClearImage}
-        >
-          <ImageWrapper>
-            <img src={previewUrl} alt="" />
-          </ImageWrapper>
-        </Modal>
-      )}
-
-      <AiButton onClick={() => setIsAI(!isAI)} isAI={isAI}>
-        {isAI ? <BsLightbulbFill /> : <BsLightbulb />}
-        <p>AI에게 질문하기</p>
-      </AiButton>
-    </InputContainer>
+      </SendButton>
+    </InputSection>
   );
 };
 

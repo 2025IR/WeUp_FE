@@ -27,6 +27,11 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
     ...newMessages,
   ];
 
+  // 서버에서 새 데이터 오면 초기화 (중복 방지)
+  useEffect(() => {
+    setNewMessages([]);
+  }, [data]);
+
   // 구독, 메세지 창 변경되면 웹소켓 유지한 채로 구독 정보 변경
   useEffect(() => {
     if (!client || !client.connected) return;
@@ -89,9 +94,21 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
 
   return (
     <MessagesContainer ref={containerRef} onScroll={handleScroll}>
-      {allMessages.map((msg, index) => (
-        <ChatMessageCard key={index} {...msg} />
-      ))}
+      {allMessages.map((msg, index) => {
+        const nextChat = allMessages[index + 1];
+        const isShowTime = !nextChat || nextChat.displayType !== "SameTime";
+        const isShowUserInfo =
+          msg.displayType === "Default" || msg.displayType === "SameSender";
+
+        return (
+          <ChatMessageCard
+            key={index}
+            isShowTime={isShowTime}
+            isShowUserInfo={isShowUserInfo}
+            {...msg}
+          />
+        );
+      })}
       <div ref={scrollRef} />
     </MessagesContainer>
   );

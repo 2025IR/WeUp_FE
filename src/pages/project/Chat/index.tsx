@@ -1,48 +1,71 @@
-import { useEffect, useState } from "react";
-import { Client } from "@stomp/stompjs";
-import ChatMessages from "@/components/project/chat/ChatMessages";
-import ChatInput from "@/components/project/chat/ChatInput";
-import { ChatSection, MeetContainer } from "./style";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import useStompClient from "@/hooks/useStompClient";
+import ChatSection from "@/components/project/chat/ChatSection";
+import { ChatMain, MeetContainer } from "./style";
+import ChatList from "@/components/project/chat/ChatList";
+import { useState } from "react";
+import ChatHeader from "@/components/project/chat/ChatHeader";
+import { ChatRoom } from "./type";
+
+const dummyChatRooms: ChatRoom[] = [
+  {
+    id: 1,
+    title: "전체 회의방",
+    preview: "7시 반에 회의하는거 어떤가요??",
+    unreadCount: 5,
+    members: ["윤석", "지민", "태형", "정국"],
+  },
+  {
+    id: 2,
+    title: "기획 파트",
+    preview: "이번 화면 구성안 검토해봤어!",
+    unreadCount: 0,
+    members: ["윤석", "지민"],
+  },
+  {
+    id: 3,
+    title: "디자인",
+    preview: "Figma 새로 올렸어~ 확인 부탁해!",
+    unreadCount: 2,
+    members: ["태형", "정국", "윤석"],
+  },
+];
 
 const Chat = () => {
   const { projectId } = useParams();
   const parsedProjectId = Number(projectId);
   const memberId = useSelector((state: RootState) => state.auth.userId);
+  const client = useStompClient();
 
-  const [stompClient, setStompClient] = useState<Client | null>(null);
-
-  useEffect(() => {
-    const client = new Client({
-      brokerURL: `${import.meta.env.VITE_API_URL}/ws`,
-      reconnectDelay: 5000,
-      debug: (msg) => console.log("[STOMP]", msg),
-      onConnect: () => {
-        console.log("✅ 웹소켓 연결 (Chat 컴포넌트)");
-        setStompClient(client);
-      },
-    });
-
-    client.activate();
-    return () => {
-      client.deactivate();
-      console.log("❌ 웹소켓 종료 (Chat 컴포넌트)");
-    };
-  }, []);
+  const [selectedChat, setSelectedChat] = useState(1);
+  const selectedRoom = dummyChatRooms.find((room) => room.id === selectedChat);
 
   return (
     <MeetContainer>
-      <ChatSection>
-        <ChatMessages roomId={parsedProjectId} client={stompClient} />
+      {/* 채팅 리스트 */}
+      <ChatList
+        selectedChat={selectedChat}
+        setSelectedChat={setSelectedChat}
+        dummyChatRooms={dummyChatRooms}
+      />
 
-        <ChatInput
-          roomId={parsedProjectId}
-          senderId={memberId!}
-          client={stompClient}
+      {/* 채팅섹션 */}
+      <ChatMain>
+        <ChatHeader
+          chatRoom={{
+            id: selectedRoom?.id ?? 0,
+            title: selectedRoom?.title ?? "",
+            members: selectedRoom?.members ?? [],
+          }}
         />
-      </ChatSection>
+        <ChatSection
+          roomId={parsedProjectId}
+          memberId={memberId}
+          client={client}
+        />
+      </ChatMain>
     </MeetContainer>
   );
 };

@@ -3,13 +3,23 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
   width: 100%;
   height: 100%;
+  padding: 0 1rem;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
+export const MeetHeader = styled.div`
+  width: 100%;
+  padding: 0.75rem 1rem;
+
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+`;
+
 export const MeetingCard = styled.div`
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 2.5rem;

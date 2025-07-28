@@ -1,5 +1,5 @@
 import { editUserProfile } from "@/apis/auth/auth";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 export const useEditUserProfile = ({
@@ -9,9 +9,13 @@ export const useEditUserProfile = ({
   onSuccess?: () => void;
   onError?: (error: AxiosError<{ message: string }>) => void;
 }) => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ data }: { data: FormData }) => editUserProfile(data),
-    onSuccess,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+      onSuccess?.();
+    },
     onError,
   });
 };
