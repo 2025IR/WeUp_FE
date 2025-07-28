@@ -16,13 +16,18 @@ export const ContainerCard = styled.div`
   justify-content: start;
   align-items: end;
   gap: 0.5rem;
+`;
+
+export const ImgWrapper = styled.div`
+  width: 50px;
+  margin-right: 0.5rem;
+  border-radius: ${({ theme }) => theme.radius.full};
+  align-self: flex-start;
+  overflow: hidden;
 
   > img {
-    width: 50px;
-    height: 50px;
-    margin-right: 0.5rem;
-    border-radius: ${({ theme }) => theme.radius.full};
-    align-self: flex-start;
+    width: 100%;
+    height: 100%;
   }
 `;
 

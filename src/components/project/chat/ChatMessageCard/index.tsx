@@ -1,7 +1,8 @@
-import { ChatMessageProps } from "@/types/chat";
+import { ChatCardProps } from "@/types/chat";
 import {
   ContainerCard,
   ImageCard,
+  ImgWrapper,
   MessageTime,
   MyCardContainer,
   MyTextCard,
@@ -19,14 +20,16 @@ const ChatMessageCard = ({
   message,
   sentAt,
   isImage,
-}: ChatMessageProps) => {
+  isShowTime,
+  isShowUserInfo,
+}: ChatCardProps) => {
   const userId = useSelector((state: RootState) => state.auth.userId);
   const isRight = senderId === userId;
 
   if (isRight) {
     return (
       <MyCardContainer>
-        <MessageTime>{formatChatTime(sentAt)}</MessageTime>
+        {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
         {isImage ? (
           <ImageCard src={message} alt="" />
         ) : (
@@ -40,9 +43,11 @@ const ChatMessageCard = ({
 
   return (
     <ContainerCard>
-      <img src={senderProfileImage} alt="user-profile" />
+      <ImgWrapper>
+        {isShowUserInfo && <img src={senderProfileImage} alt="user-profile" />}
+      </ImgWrapper>
       <TextCardWrapper>
-        <p>{senderName}</p>
+        {isShowUserInfo && <p>{senderName}</p>}
         {isImage ? (
           <ImageCard src={message} />
         ) : (
@@ -51,7 +56,7 @@ const ChatMessageCard = ({
           </TextCard>
         )}
       </TextCardWrapper>
-      <MessageTime>{formatChatTime(sentAt)}</MessageTime>
+      {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
     </ContainerCard>
   );
 };
