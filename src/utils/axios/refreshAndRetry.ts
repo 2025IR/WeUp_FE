@@ -1,5 +1,5 @@
 import { reissueToken } from "@/apis/auth/auth";
-import { setAccessToken, clearAuth } from "@/store/auth";
+import { clearAuth, setAuth } from "@/store/auth";
 import { store } from "@/store/store";
 import axios, { InternalAxiosRequestConfig } from "axios";
 
@@ -8,14 +8,13 @@ export const refreshAndRetry = async (
 ) => {
   try {
     const res = await reissueToken();
-    const newAccessToken = res.accessToken;
 
     // 토큰 Redux에 저장
-    store.dispatch(setAccessToken(newAccessToken));
+    store.dispatch(setAuth(res));
 
     // 재요청
     if (originalRequest.headers) {
-      originalRequest.headers["Authorization"] = `${newAccessToken}`;
+      originalRequest.headers["Authorization"] = `${res.accessToken}`;
     }
 
     return axios(originalRequest);
