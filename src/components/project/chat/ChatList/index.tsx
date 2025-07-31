@@ -13,6 +13,10 @@ import { BiChat } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { ChatRoom } from "./type";
+import { useState } from "react";
+import ChatCreateModal from "../ChatCreateModal";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 interface ChatListProps {
   dummyChatRooms: ChatRoom[];
@@ -25,7 +29,9 @@ const ChatList = ({
   setSelectedChat,
   dummyChatRooms,
 }: ChatListProps) => {
-  console.log(selectedChat);
+  const projectId = useSelector((state: RootState) => state.project.id);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
   return (
     <Container>
       <Title>
@@ -72,10 +78,17 @@ const ChatList = ({
         ))}
 
         {/* 채팅방 생성 */}
-        <NewChatArea>
+        <NewChatArea onClick={() => setIsCreateModalOpen(true)}>
           <AiOutlinePlus />
         </NewChatArea>
       </ChatListWrapper>
+
+      {isCreateModalOpen && projectId && (
+        <ChatCreateModal
+          projectId={projectId}
+          onClose={() => setIsCreateModalOpen(false)}
+        />
+      )}
     </Container>
   );
 };
