@@ -29,3 +29,22 @@ export type ChatCardProps = ChatMessageProps & {
   isShowTime: boolean;
   isShowUserInfo: boolean;
 };
+
+export type CreateChatRoomPayload = {
+  chatRoomName: string;
+  projectId: number;
+  chatRoomMemberId: number[];
+};
+
+export type ChatRoomItem = {
+  chatRoomId: number;
+  chatRoomMemberId: number;
+  chatRoomName: string;
+  chatRoomMemberNames: string[];
+};
+
+export type InvitableMember = {
+  memberId: number;
+  memberName: string;
+  profileImage: string;
+};
