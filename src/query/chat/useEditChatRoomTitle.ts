@@ -1,5 +1,5 @@
 // @/hooks/chat/useInviteMembers.ts
-import { changeChatRoomTitle } from "@/apis/chat/chat";
+import { editChatRoomTitle } from "@/apis/chat/chat";
 import { useMutation } from "@tanstack/react-query";
 
 interface Params {
@@ -7,10 +7,10 @@ interface Params {
   chatRoomName: string;
 }
 
-export const useInviteMembers = () => {
+export const useEditChatRoomTitle = () => {
   return useMutation({
     mutationFn: ({ chatRoomId, chatRoomName }: Params) =>
-      changeChatRoomTitle(chatRoomId, chatRoomName),
+      editChatRoomTitle(chatRoomId, chatRoomName),
 
     onSuccess: () => {
       console.log("변경 성공!");

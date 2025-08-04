@@ -33,7 +33,7 @@ export const getInvitableMembers = async (
 };
 
 // 채팅방 이름 변경
-export const changeChatRoomTitle = async (
+export const editChatRoomTitle = async (
   chatRoomId: number,
   chatRoomName: string
 ) => {
