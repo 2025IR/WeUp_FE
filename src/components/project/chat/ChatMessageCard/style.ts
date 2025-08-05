@@ -1,5 +1,29 @@
 import styled from "@emotion/styled";
 
+export const SystemCardContainer = styled.div`
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const SystemCard = styled.div`
+  padding: 0.25rem 1.25rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: ${({ theme }) => theme.radius.lg};
+  background-color: ${({ theme }) => theme.colors.secondary};
+
+  > p {
+    color: ${({ theme }) => theme.colors.textPrimary};
+    font-size: ${({ theme }) => theme.fontSize.caption};
+  }
+`;
+
 export const MyCardContainer = styled.div`
   width: 100%;
 
@@ -63,14 +87,16 @@ export const TextCardWrapper = styled.div`
   }
 `;
 
-export const TextCard = styled.div`
+export const TextCard = styled.div<{ isAi: boolean }>`
   width: 100%;
   padding: 0.5rem 1rem;
   overflow-wrap: break-word;
 
   font-size: 0.875rem;
-  background-color: ${({ theme }) => theme.colors.background};
-  color: ${({ theme }) => theme.colors.text};
+  background-color: ${({ theme, isAi }) =>
+    isAi ? theme.colors.primary : theme.colors.background};
+  color: ${({ theme, isAi }) =>
+    isAi ? theme.colors.textWhite : theme.colors.text};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radius.md};
 `;

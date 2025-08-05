@@ -5,15 +5,14 @@ import { Client } from "@stomp/stompjs";
 
 interface ChatSectionProps {
   roomId: number;
-  memberId: number | null;
   client: Client | null;
 }
 
-const ChatSection = ({ roomId, memberId, client }: ChatSectionProps) => {
+const ChatSection = ({ roomId, client }: ChatSectionProps) => {
   return (
     <Container>
       <ChatMessages roomId={roomId} client={client} />
-      <ChatInput roomId={roomId} senderId={memberId!} client={client} />
+      <ChatInput roomId={roomId} client={client} />
     </Container>
   );
 };

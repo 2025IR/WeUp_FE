@@ -6,6 +6,7 @@ export type ChatMessageProps = {
   sentAt: string;
   isImage: boolean;
   displayType: "Default" | "SameSender" | "SameTime";
+  senderType: "MEMBER" | "AI" | "SYSTEM" | "WITHDRAW";
 };
 
 export type ChatSendProps = {
@@ -28,4 +29,24 @@ export type AiMessageResponse = {
 export type ChatCardProps = ChatMessageProps & {
   isShowTime: boolean;
   isShowUserInfo: boolean;
+};
+
+export type CreateChatRoomPayload = {
+  chatRoomName: string;
+  projectId: number;
+  chatRoomMemberId: number[];
+};
+
+export type ChatRoomItem = {
+  chatRoomId: number;
+  chatRoomMemberId: number;
+  chatRoomName: string;
+  chatRoomMemberNames: string[];
+  isBasic: boolean;
+};
+
+export type InvitableMember = {
+  memberId: number;
+  memberName: string;
+  profileImage: string;
 };

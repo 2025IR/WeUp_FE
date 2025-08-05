@@ -7,31 +7,7 @@ import { ChatMain, MeetContainer } from "./style";
 import ChatList from "@/components/project/chat/ChatList";
 import { useState } from "react";
 import ChatHeader from "@/components/project/chat/ChatHeader";
-import { ChatRoom } from "./type";
-
-const dummyChatRooms: ChatRoom[] = [
-  {
-    id: 1,
-    title: "전체 회의방",
-    preview: "7시 반에 회의하는거 어떤가요??",
-    unreadCount: 5,
-    members: ["윤석", "지민", "태형", "정국"],
-  },
-  {
-    id: 2,
-    title: "기획 파트",
-    preview: "이번 화면 구성안 검토해봤어!",
-    unreadCount: 0,
-    members: ["윤석", "지민"],
-  },
-  {
-    id: 3,
-    title: "디자인",
-    preview: "Figma 새로 올렸어~ 확인 부탁해!",
-    unreadCount: 2,
-    members: ["태형", "정국", "윤석"],
-  },
-];
+import { useChatRoomList } from "@/query/chat/useGetChatRoomList";
 
 const Chat = () => {
   const { projectId } = useParams();
@@ -40,7 +16,11 @@ const Chat = () => {
   const client = useStompClient();
 
   const [selectedChat, setSelectedChat] = useState(1);
-  const selectedRoom = dummyChatRooms.find((room) => room.id === selectedChat);
+  const { data: chatRooms = [] } = useChatRoomList(parsedProjectId);
+  console.log(chatRooms);
+  const selectedRoom = chatRooms?.find(
+    (room) => room.chatRoomId === selectedChat
+  );
 
   return (
     <MeetContainer>
@@ -48,16 +28,16 @@ const Chat = () => {
       <ChatList
         selectedChat={selectedChat}
         setSelectedChat={setSelectedChat}
-        dummyChatRooms={dummyChatRooms}
+        chatRooms={chatRooms}
       />
 
       {/* 채팅섹션 */}
       <ChatMain>
         <ChatHeader
           chatRoom={{
-            id: selectedRoom?.id ?? 0,
-            title: selectedRoom?.title ?? "",
-            members: selectedRoom?.members ?? [],
+            id: selectedRoom?.chatRoomId ?? 0,
+            title: selectedRoom?.chatRoomName ?? "",
+            members: selectedRoom?.chatRoomMemberNames ?? [],
           }}
         />
         <ChatSection
