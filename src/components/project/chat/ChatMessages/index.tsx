@@ -4,6 +4,7 @@ import { MessagesContainer } from "./style";
 import { ChatMessagesProps } from "./type";
 import { useEffect, useRef, useState } from "react";
 import { ChatMessageProps } from "@/types/chat";
+import { store } from "@/store/store";
 
 const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
   // 데이터 내역 받아오는 함수
@@ -36,12 +37,17 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
   useEffect(() => {
     if (!client || !client.connected) return;
 
+    const token = store.getState().auth;
+
     const subscription = client.subscribe(
       `/topic/chat/${roomId}`,
       (message) => {
         const newMessage = JSON.parse(message.body);
         console.log("📥 새 메시지 도착:", newMessage);
         setNewMessages((prev) => [...prev, newMessage]);
+      },
+      {
+        Authorization: `${token.accessToken}`,
       }
     );
 
