@@ -6,6 +6,8 @@ import {
   MessageTime,
   MyCardContainer,
   MyTextCard,
+  SystemCard,
+  SystemCardContainer,
   TextCard,
   TextCardWrapper,
 } from "./style";
@@ -24,9 +26,20 @@ const ChatMessageCard = React.memo(
     isImage,
     isShowTime,
     isShowUserInfo,
+    senderType,
   }: ChatCardProps) => {
     const userId = useSelector((state: RootState) => state.auth.userId);
     const isRight = senderId === userId;
+
+    if (senderType === "SYSTEM") {
+      return (
+        <SystemCardContainer>
+          <SystemCard>
+            <p>{message}</p>
+          </SystemCard>
+        </SystemCardContainer>
+      );
+    }
 
     if (isRight) {
       return (
@@ -55,7 +68,7 @@ const ChatMessageCard = React.memo(
           {isImage ? (
             <ImageCard src={message} />
           ) : (
-            <TextCard>
+            <TextCard isAi={senderType === "AI"}>
               <p>{message}</p>
             </TextCard>
           )}

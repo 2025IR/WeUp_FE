@@ -6,6 +6,7 @@ export type ChatMessageProps = {
   sentAt: string;
   isImage: boolean;
   displayType: "Default" | "SameSender" | "SameTime";
+  senderType: "MEMBER" | "AI" | "SYSTEM" | "WITHDRAW";
 };
 
 export type ChatSendProps = {
@@ -41,6 +42,7 @@ export type ChatRoomItem = {
   chatRoomMemberId: number;
   chatRoomName: string;
   chatRoomMemberNames: string[];
+  isBasic: boolean;
 };
 
 export type InvitableMember = {
