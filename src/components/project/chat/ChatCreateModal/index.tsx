@@ -9,6 +9,8 @@ import {
 } from "react-icons/bi";
 import { MemberItem, MemberItemWrapper, MemberSection } from "./style";
 import { useCreateChat } from "@/query/chat/useCreatChatRoom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 interface Props {
   projectId: number;
@@ -24,6 +26,8 @@ const ChatCreateModal = ({ onClose, projectId }: Props) => {
   const { data: invitableMembers } = useGetMembers(projectId);
   // 채팅방 생성
   const { mutate: createChatRoom } = useCreateChat();
+  // memberId 꺼내오기
+  const isMyId = useSelector((state: RootState) => state.project.memberId);
 
   const handleCreateChat = () => {
     if (!chatTitle.trim()) {
@@ -58,29 +62,31 @@ const ChatCreateModal = ({ onClose, projectId }: Props) => {
       <MemberSection>
         <p>팀원 선택</p>
         <MemberItemWrapper>
-          {invitableMembers?.map((member) => {
-            const isSelected = selectedUserIds.includes(member.memberId);
+          {invitableMembers
+            ?.filter((member) => member.memberId !== isMyId)
+            .map((member) => {
+              const isSelected = selectedUserIds.includes(member.memberId);
 
-            return (
-              <MemberItem
-                key={member.memberId}
-                isSelected={isSelected}
-                onClick={() => {
-                  setSelectedUserIds((prev) =>
-                    isSelected
-                      ? prev.filter((id) => id !== member.memberId)
-                      : [...prev, member.memberId]
-                  );
-                }}
-                className={isSelected ? "selected" : ""}
-              >
-                <img src={member.profileImage} alt="member_profile" />
-                <p>{member.name}</p>
+              return (
+                <MemberItem
+                  key={member.memberId}
+                  isSelected={isSelected}
+                  onClick={() => {
+                    setSelectedUserIds((prev) =>
+                      isSelected
+                        ? prev.filter((id) => id !== member.memberId)
+                        : [...prev, member.memberId]
+                    );
+                  }}
+                  className={isSelected ? "selected" : ""}
+                >
+                  <img src={member.profileImage} alt="member_profile" />
+                  <p>{member.name}</p>
 
-                {isSelected ? <BiSolidCheckboxChecked /> : <BiCheckbox />}
-              </MemberItem>
-            );
-          })}
+                  {isSelected ? <BiSolidCheckboxChecked /> : <BiCheckbox />}
+                </MemberItem>
+              );
+            })}
         </MemberItemWrapper>
       </MemberSection>
     </Modal>
