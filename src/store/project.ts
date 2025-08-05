@@ -8,6 +8,7 @@ const initialState: ProjectStoreInfo = {
   description: "",
   projectCreatedTime: "",
   revealedNumber: false,
+  memberId: 0,
   leader: false,
   status: false,
 };
