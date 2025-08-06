@@ -24,7 +24,7 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
     ...(data?.pages
       .slice()
       .reverse()
-      .flatMap((page) => page.messageList) ?? []),
+      .flatMap((page) => page.content) ?? []),
     ...newMessages,
   ];
 

@@ -17,9 +17,9 @@ export type ChatSendProps = {
 };
 
 export type ChatApiResponse = {
-  messageList: ChatMessageProps[];
-  lastPage: boolean;
-  page: number;
+  content: ChatMessageProps[];
+  last: boolean;
+  number: number;
 };
 
 export type AiMessageResponse = {
