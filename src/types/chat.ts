@@ -7,6 +7,8 @@ export type ChatMessageProps = {
   isImage: boolean;
   displayType: "Default" | "SameSender" | "SameTime";
   senderType: "MEMBER" | "AI" | "SYSTEM" | "WITHDRAW";
+  originalSenderName: string;
+  originalMessage: string;
 };
 
 export type ChatSendProps = {
