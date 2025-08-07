@@ -33,7 +33,7 @@ const ChatMessageCard = React.memo(
     originalMessage,
     originalSenderName,
   }: ChatCardProps) => {
-    const userId = useSelector((state: RootState) => state.auth.userId);
+    const userId = useSelector((state: RootState) => state.project.memberId);
     const isRight = senderId === userId;
 
     if (senderType === "SYSTEM") {
