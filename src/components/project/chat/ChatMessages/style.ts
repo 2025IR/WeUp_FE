@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const MessagesContainer = styled.div`
   flex: 1;
-  padding: 0 0.75rem;
+  padding: 0.625rem 0.75rem;
 
   display: flex;
   flex-direction: column;
