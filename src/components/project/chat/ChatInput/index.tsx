@@ -85,16 +85,14 @@ const ChatInput = ({ roomId, client }: ChatInputProps) => {
     if (!imageFile || !roomId) return;
 
     const formData = new FormData();
-    formData.append("projectId", String(roomId));
-    formData.append("roomId", String(roomId));
-    formData.append("userId", String(senderId));
+    formData.append("senderId", String(senderId));
     formData.append("file", imageFile);
 
     formData.forEach((value, key) => {
       console.log(`${key}:`, value);
     });
 
-    sendImage(formData);
+    sendImage({ data: formData, roomId });
     setIsModalOpen(false);
   };
 
