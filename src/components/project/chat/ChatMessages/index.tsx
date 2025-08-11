@@ -4,8 +4,13 @@ import { MessagesContainer } from "./style";
 import { ChatMessagesProps } from "./type";
 import { useEffect, useRef, useState } from "react";
 import { ChatMessageProps } from "@/types/chat";
+import { RootState, store } from "@/store/store";
+import queryClient from "@/query/reactQueryClient";
+import { useSelector } from "react-redux";
 
 const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
+  const projectId = useSelector((state: RootState) => state.project.id);
+
   // 데이터 내역 받아오는 함수
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetChat(roomId);
@@ -23,7 +28,7 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
     ...(data?.pages
       .slice()
       .reverse()
-      .flatMap((page) => page.messageList) ?? []),
+      .flatMap((page) => page.content) ?? []),
     ...newMessages,
   ];
 
@@ -36,19 +41,34 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
   useEffect(() => {
     if (!client || !client.connected) return;
 
+    const token = store.getState().auth;
+
     const subscription = client.subscribe(
       `/topic/chat/${roomId}`,
       (message) => {
         const newMessage = JSON.parse(message.body);
+
+        // 새 메시지가 시스템 메시지인 경우, 채팅방 목록을 갱신
+        if (newMessage.senderType === "SYSTEM") {
+          queryClient.invalidateQueries({
+            queryKey: ["chatRoomList", projectId],
+          });
+        }
+
         console.log("📥 새 메시지 도착:", newMessage);
         setNewMessages((prev) => [...prev, newMessage]);
+      },
+      {
+        Authorization: `${token.accessToken}`,
       }
     );
 
     return () => {
-      subscription.unsubscribe();
+      subscription.unsubscribe({
+        Authorization: `${token.accessToken}`,
+      });
     };
-  }, [client, roomId]);
+  }, [client, roomId, projectId]);
 
   // 데이터 받아온 이후
   useEffect(() => {
@@ -96,9 +116,8 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
     <MessagesContainer ref={containerRef} onScroll={handleScroll}>
       {allMessages.map((msg, index) => {
         const nextChat = allMessages[index + 1];
-        const isShowTime = !nextChat || nextChat.displayType !== "SameTime";
-        const isShowUserInfo =
-          msg.displayType === "Default" || msg.displayType === "SameSender";
+        const isShowTime = !nextChat || nextChat.displayType !== "SAME_TIME";
+        const isShowUserInfo = msg.displayType === "DEFAULT";
 
         return (
           <ChatMessageCard

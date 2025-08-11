@@ -18,6 +18,7 @@ export interface ProjectInfo {
   status: boolean;
   revealedNumber: boolean;
   leader: boolean;
+  memberId: number;
 }
 
 // 프로젝트 저장

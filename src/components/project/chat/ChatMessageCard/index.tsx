@@ -1,11 +1,16 @@
 import { ChatCardProps } from "@/types/chat";
 import {
+  AiTextCard,
   ContainerCard,
   ImageCard,
   ImgWrapper,
   MessageTime,
   MyCardContainer,
   MyTextCard,
+  ReplyMessage,
+  ReplyName,
+  SystemCard,
+  SystemCardContainer,
   TextCard,
   TextCardWrapper,
 } from "./style";
@@ -24,9 +29,22 @@ const ChatMessageCard = React.memo(
     isImage,
     isShowTime,
     isShowUserInfo,
+    senderType,
+    originalMessage,
+    originalSenderName,
   }: ChatCardProps) => {
-    const userId = useSelector((state: RootState) => state.auth.userId);
+    const userId = useSelector((state: RootState) => state.project.memberId);
     const isRight = senderId === userId;
+
+    if (senderType === "SYSTEM") {
+      return (
+        <SystemCardContainer>
+          <SystemCard>
+            <p>{message}</p>
+          </SystemCard>
+        </SystemCardContainer>
+      );
+    }
 
     if (isRight) {
       return (
@@ -40,6 +58,34 @@ const ChatMessageCard = React.memo(
             </MyTextCard>
           )}
         </MyCardContainer>
+      );
+    }
+
+    if (senderType === "AI") {
+      return (
+        <ContainerCard>
+          <ImgWrapper>
+            {isShowUserInfo && (
+              <img src={senderProfileImage} alt="ai profile" />
+            )}
+          </ImgWrapper>
+          <TextCardWrapper>
+            {isShowUserInfo && <p>{senderName}</p>}
+            {isImage ? (
+              <ImageCard src={message} />
+            ) : (
+              <AiTextCard>
+                <div>
+                  <ReplyName>{originalSenderName}</ReplyName>
+                  <ReplyMessage>{originalMessage}</ReplyMessage>
+                </div>
+                <hr />
+                <p>{message}</p>
+              </AiTextCard>
+            )}
+          </TextCardWrapper>
+          {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
+        </ContainerCard>
       );
     }
 

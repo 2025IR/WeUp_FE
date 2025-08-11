@@ -16,13 +16,16 @@ import { useSendImage } from "@/query/chat/usePostImage";
 import Modal from "@/components/common/Modal";
 import { AiFillFileImage } from "react-icons/ai";
 import { useSendAiMessage } from "@/query/chat/usePostAIMessage";
+import { RootState, store } from "@/store/store";
+import { useSelector } from "react-redux";
 
-const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
+const ChatInput = ({ roomId, client }: ChatInputProps) => {
   const [input, setInput] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAI, setIsAI] = useState(false);
+  const senderId = useSelector((state: RootState) => state.project.memberId);
 
   const { mutate: sendImage } = useSendImage({
     onSuccess: () => {
@@ -53,6 +56,8 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
       return;
     }
 
+    const token = store.getState().auth;
+
     const payload: ChatSendProps = {
       senderId,
       message: input,
@@ -61,6 +66,9 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
     client.publish({
       destination: `/app/send/${roomId}`,
       body: JSON.stringify(payload),
+      headers: {
+        Authorization: `${token.accessToken}`,
+      },
     });
 
     setInput("");
@@ -77,16 +85,14 @@ const ChatInput = ({ roomId, senderId, client }: ChatInputProps) => {
     if (!imageFile || !roomId) return;
 
     const formData = new FormData();
-    formData.append("projectId", String(roomId));
-    formData.append("roomId", String(roomId));
-    formData.append("userId", String(senderId));
+    formData.append("senderId", String(senderId));
     formData.append("file", imageFile);
 
     formData.forEach((value, key) => {
       console.log(`${key}:`, value);
     });
 
-    sendImage(formData);
+    sendImage({ data: formData, roomId });
     setIsModalOpen(false);
   };
 

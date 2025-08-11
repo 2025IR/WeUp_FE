@@ -13,9 +13,13 @@ import { BiChat } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { ChatRoom } from "./type";
+import { useState } from "react";
+import ChatCreateModal from "../ChatCreateModal";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 interface ChatListProps {
-  dummyChatRooms: ChatRoom[];
+  chatRooms: ChatRoom[];
   selectedChat: number | null;
   setSelectedChat: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -23,9 +27,11 @@ interface ChatListProps {
 const ChatList = ({
   selectedChat,
   setSelectedChat,
-  dummyChatRooms,
+  chatRooms,
 }: ChatListProps) => {
-  console.log(selectedChat);
+  const projectId = useSelector((state: RootState) => state.project.id);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
   return (
     <Container>
       <Title>
@@ -41,16 +47,16 @@ const ChatList = ({
       </Title>
       <ChatListWrapper>
         {/* 채팅방 리스트 */}
-        {dummyChatRooms.map((room) => (
+        {chatRooms?.map((room) => (
           <ChatListItem
-            key={room.id}
-            selected={selectedChat === room.id}
-            onClick={() => setSelectedChat(room.id)}
+            key={room.chatRoomId}
+            selected={selectedChat === room.chatRoomId}
+            onClick={() => setSelectedChat(room.chatRoomId)}
           >
             <ChatInfo>
               <ChatTextBlock>
-                <h3>{room.title}</h3>
-                <p>{room.preview}</p>
+                <h3>{room.chatRoomName}</h3>
+                <p>더미데이터</p>
               </ChatTextBlock>
 
               <IconLabel
@@ -60,22 +66,28 @@ const ChatList = ({
                 colors="textLight"
                 gap="6px"
               >
-                {room.members.length}
+                {room.chatRoomMemberNames.length}
               </IconLabel>
             </ChatInfo>
-            {room.unreadCount !== 0 && (
-              <UnreadBadge>
-                <p>{room.unreadCount}</p>
-              </UnreadBadge>
-            )}
+
+            <UnreadBadge>
+              <p>3</p>
+            </UnreadBadge>
           </ChatListItem>
         ))}
 
         {/* 채팅방 생성 */}
-        <NewChatArea>
+        <NewChatArea onClick={() => setIsCreateModalOpen(true)}>
           <AiOutlinePlus />
         </NewChatArea>
       </ChatListWrapper>
+
+      {isCreateModalOpen && projectId && (
+        <ChatCreateModal
+          projectId={projectId}
+          onClose={() => setIsCreateModalOpen(false)}
+        />
+      )}
     </Container>
   );
 };

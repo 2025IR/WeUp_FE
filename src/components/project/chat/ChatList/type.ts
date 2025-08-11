@@ -1,7 +1,8 @@
 export interface ChatRoom {
-  id: number;
-  title: string;
-  preview: string;
-  unreadCount: number;
-  members: string[];
+  chatRoomId: number;
+  chatRoomName: string;
+  chatRoomMemberId: number;
+  // preview: string;
+  // unreadCount: number;
+  chatRoomMemberNames: string[];
 }
