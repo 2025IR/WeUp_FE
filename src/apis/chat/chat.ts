@@ -62,13 +62,15 @@ export const getChatHistory = async (
   size: number
 ): Promise<ChatApiResponse> => {
   const res = await instance.post(`/chat/messages/${roomId}`, { page, size });
-  console.log(res.data.data);
   return res.data.data;
 };
 
 // 채팅 이미지 전송
-export const sendImageMessage = async (data: FormData): Promise<void> =>
-  await instance.post(`/send/image`, data, {
+export const sendImageMessage = async (
+  data: FormData,
+  roomId: number
+): Promise<void> =>
+  await instance.post(`/chat/send/image/${roomId}`, data, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 

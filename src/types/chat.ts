@@ -5,8 +5,10 @@ export type ChatMessageProps = {
   message: string;
   sentAt: string;
   isImage: boolean;
-  displayType: "Default" | "SameSender" | "SameTime";
+  displayType: "DEFAULT" | "SAME_SENDER" | "SAME_TIME";
   senderType: "MEMBER" | "AI" | "SYSTEM" | "WITHDRAW";
+  originalSenderName: string;
+  originalMessage: string;
 };
 
 export type ChatSendProps = {
@@ -15,9 +17,9 @@ export type ChatSendProps = {
 };
 
 export type ChatApiResponse = {
-  messageList: ChatMessageProps[];
-  lastPage: boolean;
-  page: number;
+  content: ChatMessageProps[];
+  last: boolean;
+  number: number;
 };
 
 export type AiMessageResponse = {

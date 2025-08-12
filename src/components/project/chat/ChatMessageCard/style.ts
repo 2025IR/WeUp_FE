@@ -45,13 +45,12 @@ export const ContainerCard = styled.div`
 export const ImgWrapper = styled.div`
   width: 50px;
   margin-right: 0.5rem;
-  border-radius: ${({ theme }) => theme.radius.full};
   align-self: flex-start;
-  overflow: hidden;
 
   > img {
     width: 100%;
     height: 100%;
+    border-radius: ${({ theme }) => theme.radius.full};
   }
 `;
 
@@ -87,16 +86,14 @@ export const TextCardWrapper = styled.div`
   }
 `;
 
-export const TextCard = styled.div<{ isAi: boolean }>`
+export const TextCard = styled.div`
   width: 100%;
   padding: 0.5rem 1rem;
   overflow-wrap: break-word;
 
   font-size: 0.875rem;
-  background-color: ${({ theme, isAi }) =>
-    isAi ? theme.colors.primary : theme.colors.background};
-  color: ${({ theme, isAi }) =>
-    isAi ? theme.colors.textWhite : theme.colors.text};
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.text};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radius.md};
 `;
@@ -106,4 +103,48 @@ export const ImageCard = styled.img`
   max-height: 200px;
   object-fit: contain;
   border-radius: ${({ theme }) => theme.radius.lg};
+`;
+
+export const AiTextCard = styled.div`
+  width: 100%;
+  padding: 0.5rem 1rem;
+  overflow-wrap: break-word;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  font-size: 0.875rem;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textWhite};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radius.md};
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    font-size: ${({ theme }) => theme.fontSize.caption};
+  }
+
+  > hr {
+    width: 100%;
+    height: 1px;
+    color: ${({ theme }) => theme.colors.textWhite};
+    opacity: 0.5;
+  }
+
+  > p {
+    white-space: pre-wrap;
+  }
+`;
+
+export const ReplyName = styled.p`
+  font-weight: ${({ theme }) => theme.fontWeight.semibold};
+`;
+export const ReplyMessage = styled.p`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
