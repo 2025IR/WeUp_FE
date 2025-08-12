@@ -1,30 +1,29 @@
-import { ScheduleStatType } from "@/types/schedule";
 import { GridContainer, TimeDiv } from "./style";
-import React from "react";
 
 type Props = {
-  statScheduleData: ScheduleStatType[];
-  updateHovered: (ids: number[]) => void;
+  averageTimeArray: number[];
+  onHoverIndexChange: (index: number | null) => void;
 };
 
-const ViewTimeGrid = ({ statScheduleData, updateHovered }: Props) => {
+const ViewTimeGrid = ({ onHoverIndexChange, averageTimeArray }: Props) => {
   return (
     <GridContainer>
-      {statScheduleData.map((schedule, i) => {
+      {Array.from({ length: 252 }).map((_, i) => {
         const row = Math.floor(i / 7);
         const totalRows = 252 / 7;
         const isBottomHighlight = row % 2 === 1 && row !== totalRows - 1;
-        const opacity = schedule.opacity ?? 0;
+        const opacity = averageTimeArray[i] ?? 0;
+
         return (
           <TimeDiv
             key={i}
             opacity={opacity}
             isBottomHighlight={isBottomHighlight}
             onMouseEnter={() => {
-              updateHovered(schedule.id);
+              onHoverIndexChange(i);
             }}
             onMouseLeave={() => {
-              updateHovered([]);
+              onHoverIndexChange(null);
             }}
           >
             <div />
@@ -35,4 +34,4 @@ const ViewTimeGrid = ({ statScheduleData, updateHovered }: Props) => {
   );
 };
 
-export default React.memo(ViewTimeGrid);
+export default ViewTimeGrid;
