@@ -11,7 +11,6 @@ export const TimeDiv = styled.div<{
   isBottomHighlight?: boolean;
 }>`
   height: 0.75rem;
-  border-left: 1px solid ${({ theme }) => theme.colors.border};
   border-bottom: 1.5px solid
     ${({ theme, isBottomHighlight }) =>
       isBottomHighlight ? theme.colors.textLight : theme.colors.border};
