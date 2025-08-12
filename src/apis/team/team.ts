@@ -8,7 +8,7 @@ export const inviteMember = (projectId: number, email: string) => {
 
 // 팀원 조회
 export const fetchTeamMembers = async (
-  project_id: number | null
+  project_id: number
 ): Promise<MemberType[]> => {
   const res = await instance.post(`/member/list/${project_id}`);
   return res.data.data;
