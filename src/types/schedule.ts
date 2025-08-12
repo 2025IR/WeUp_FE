@@ -1,5 +1,10 @@
 export type ScheduleType = {
   name: string;
   availableTime: string;
-  isMine: boolean;
+  memberId: number;
+};
+
+export type ScheduleStatType = {
+  opacity: number;
+  id: number[];
 };
