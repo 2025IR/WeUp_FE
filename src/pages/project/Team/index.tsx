@@ -21,7 +21,7 @@ import { useEditMember } from "@/query/team/useEditMember";
 import { useGetRole } from "@/query/team/useGetRole";
 import { useDispatch } from "react-redux";
 import { setRoles } from "@/store/role";
-import ScheduleModal from "@/components/project/team/ScheduleModal";
+import ScheduleModal from "@/components/project/schedule/ScheduleModal";
 
 const Team = () => {
   const dispatch = useDispatch();
@@ -159,7 +159,10 @@ const Team = () => {
 
       {/* 스케줄 확인 모달 */}
       {openScheduleModal && (
-        <ScheduleModal onClose={() => setOpenScheduleModal(false)} />
+        <ScheduleModal
+          onClose={() => setOpenScheduleModal(false)}
+          projectId={parsedProjectId}
+        />
       )}
     </Container>
   );
