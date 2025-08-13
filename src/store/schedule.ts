@@ -6,13 +6,11 @@ const INITIAL_SCHEDULE = "0".repeat(252);
 interface ScheduleState {
   schedule: ScheduleType[];
   mySchedule: string;
-  tempMySchedule: string;
 }
 
 const initialState: ScheduleState = {
   schedule: [],
   mySchedule: INITIAL_SCHEDULE,
-  tempMySchedule: INITIAL_SCHEDULE,
 };
 
 const scheduleSlice = createSlice({
@@ -43,12 +41,6 @@ const scheduleSlice = createSlice({
     clearMySchedule: (state) => {
       state.mySchedule = INITIAL_SCHEDULE;
     },
-    setTempMySchedule: (state, action: PayloadAction<string>) => {
-      state.tempMySchedule = action.payload;
-    },
-    clearTempMySchedule: (state) => {
-      state.tempMySchedule = INITIAL_SCHEDULE;
-    },
   },
 });
 
@@ -58,7 +50,5 @@ export const {
   clearSchedule,
   setMySchedule,
   clearMySchedule,
-  setTempMySchedule,
-  clearTempMySchedule,
 } = scheduleSlice.actions;
 export default scheduleSlice.reducer;

@@ -4,11 +4,7 @@ import ViewSchedule from "../ViewSchedule";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useEffect } from "react";
-import {
-  setMySchedule,
-  setSchedule,
-  setTempMySchedule,
-} from "@/store/schedule";
+import { setMySchedule, setSchedule } from "@/store/schedule";
 
 type Type = {
   isEditMode: boolean;
@@ -23,6 +19,7 @@ const ScheduleMain = ({ isEditMode, projectId }: Type) => {
   const scheduleData = useSelector(
     (state: RootState) => state.schedule.schedule
   );
+
   // 프로젝트 일정 전역상태 관리
   useEffect(() => {
     if (initialScheduleData) dispatch(setSchedule(initialScheduleData));
@@ -38,7 +35,6 @@ const ScheduleMain = ({ isEditMode, projectId }: Type) => {
   useEffect(() => {
     if (mySchedule?.availableTime) {
       dispatch(setMySchedule(mySchedule.availableTime));
-      dispatch(setTempMySchedule(mySchedule.availableTime));
     }
   }, [mySchedule, dispatch]);
 

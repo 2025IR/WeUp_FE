@@ -1,7 +1,7 @@
 import { useRef, useState, MouseEvent } from "react";
 import { GridContainer } from "./style";
 import { useDispatch } from "react-redux";
-import { setTempMySchedule } from "@/store/schedule";
+import { setMySchedule } from "@/store/schedule";
 import EditTimeDiv from "../EditTimeDiv";
 
 type Props = { myAvailableTime: string };
@@ -57,7 +57,7 @@ const EditTimeGrid = ({ myAvailableTime }: Props) => {
     isDraggingRef.current = false;
     dragTargetRef.current = null;
 
-    dispatch(setTempMySchedule(editString));
+    dispatch(setMySchedule(editString));
   };
 
   return (
