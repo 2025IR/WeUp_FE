@@ -4,7 +4,11 @@ import ViewSchedule from "../ViewSchedule";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useEffect } from "react";
-import { setSchedule, setTempSchedule } from "@/store/schedule";
+import {
+  setMySchedule,
+  setSchedule,
+  setTempMySchedule,
+} from "@/store/schedule";
 
 type Type = {
   isEditMode: boolean;
@@ -14,7 +18,15 @@ type Type = {
 const ScheduleMain = ({ isEditMode, projectId }: Type) => {
   const dispatch = useDispatch();
   // 프로젝트 일정 데이터 가져오기
-  const { data: scheduleData } = useGetSchedule(projectId);
+  const { data: initialScheduleData } = useGetSchedule(projectId);
+  // 전역 상태에서 가져오기
+  const scheduleData = useSelector(
+    (state: RootState) => state.schedule.schedule
+  );
+  // 프로젝트 일정 전역상태 관리
+  useEffect(() => {
+    if (initialScheduleData) dispatch(setSchedule(initialScheduleData));
+  }, [initialScheduleData, dispatch]);
 
   // 내 멤버 ID 가져오기
   const myMemberId = useSelector((state: RootState) => state.project.memberId);
@@ -25,13 +37,15 @@ const ScheduleMain = ({ isEditMode, projectId }: Type) => {
   // 전역상태에 자신의 스케줄 값 저장.
   useEffect(() => {
     if (mySchedule?.availableTime) {
-      dispatch(setSchedule(mySchedule.availableTime));
-      dispatch(setTempSchedule(mySchedule.availableTime));
+      dispatch(setMySchedule(mySchedule.availableTime));
+      dispatch(setTempMySchedule(mySchedule.availableTime));
     }
   }, [mySchedule, dispatch]);
 
   return isEditMode ? (
-    <EditSchedule myAvailableTime={mySchedule?.availableTime ?? "0"} />
+    <EditSchedule
+      myAvailableTime={mySchedule?.availableTime ?? "0".repeat(252)}
+    />
   ) : (
     <ViewSchedule scheduleData={scheduleData} />
   );

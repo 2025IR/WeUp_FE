@@ -10,10 +10,11 @@ import {
   Main,
   TimeTable,
 } from "./style";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useEditSchedule } from "@/query/schedule/useEditSchedule";
 import ScheduleMain from "../ScheduleMain";
+import { changeScedule } from "@/store/schedule";
 
 type Type = {
   onClose: () => void;
@@ -21,13 +22,23 @@ type Type = {
 };
 
 const ScheduleModal = ({ onClose, projectId }: Type) => {
+  const dispatch = useDispatch();
+
   const [isEditMode, setIsEditMode] = useState(false);
   const { mutate: editScheduleMutate } = useEditSchedule(projectId);
+  const myMemberId = useSelector((state: RootState) => state.project.memberId);
 
   const mySchedule = useSelector(
-    (state: RootState) => state.schedule.tempSchedule
+    (state: RootState) => state.schedule.tempMySchedule
   );
+
   const handleEdit = () => {
+    dispatch(
+      changeScedule({
+        memberId: myMemberId,
+        availableTime: mySchedule,
+      })
+    );
     editScheduleMutate({
       availableTime: mySchedule,
     });
