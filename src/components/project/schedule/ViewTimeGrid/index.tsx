@@ -10,18 +10,18 @@ type Props = {
 const ViewTimeGrid = ({ statScheduleData, updateHovered }: Props) => {
   return (
     <GridContainer>
-      {statScheduleData.map((schedule, i) => {
+      {Array.from({ length: 252 }).map((_, i) => {
         const row = Math.floor(i / 7);
         const totalRows = 252 / 7;
         const isBottomHighlight = row % 2 === 1 && row !== totalRows - 1;
-        const opacity = schedule.opacity ?? 0;
+        const opacity = statScheduleData[i]?.opacity ?? 0;
         return (
           <TimeDiv
             key={i}
             opacity={opacity}
             isBottomHighlight={isBottomHighlight}
             onMouseEnter={() => {
-              updateHovered(schedule.id);
+              updateHovered(statScheduleData[i]?.id ?? []);
             }}
             onMouseLeave={() => {
               updateHovered([]);
