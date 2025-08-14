@@ -18,14 +18,17 @@ import { AiFillFileImage } from "react-icons/ai";
 import { useSendAiMessage } from "@/query/chat/usePostAIMessage";
 import { RootState, store } from "@/store/store";
 import { useSelector } from "react-redux";
+import { useStomp } from "@/contexts/StompContext";
 
-const ChatInput = ({ roomId, client }: ChatInputProps) => {
+const ChatInput = ({ roomId }: ChatInputProps) => {
   const [input, setInput] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAI, setIsAI] = useState(false);
   const senderId = useSelector((state: RootState) => state.project.memberId);
+  // 전역에서 생성된 client 객체 받아옴.
+  const { client } = useStomp();
 
   const { mutate: sendImage } = useSendImage({
     onSuccess: () => {

@@ -7,6 +7,7 @@ import { persistor, store } from "./store/store.ts";
 import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "./query/reactQueryClient.ts";
 import { PersistGate } from "redux-persist/integration/react";
+import StompProvider from "./contexts/StompContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>
@@ -14,7 +15,9 @@ createRoot(document.getElementById("root")!).render(
       <ThemeProvider>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-            <App />
+            <StompProvider>
+              <App />
+            </StompProvider>
           </PersistGate>
         </Provider>
       </ThemeProvider>
