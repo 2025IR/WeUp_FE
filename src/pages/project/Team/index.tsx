@@ -15,20 +15,21 @@ import MemberCard from "@/components/project/team/MemberCard";
 import { useEffect, useRef, useState } from "react";
 import AddMemberModal from "@/components/project/team/AddMemberModal";
 import EditMemberModal from "@/components/project/team/EditMemberModal";
-import { useParams } from "react-router-dom";
 import { useGetMembers } from "@/query/team/useGetMember";
 import { useEditMember } from "@/query/team/useEditMember";
 import { useGetRole } from "@/query/team/useGetRole";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setRoles } from "@/store/role";
 import ScheduleModal from "@/components/project/schedule/ScheduleModal";
+import { RootState } from "@/store/store";
+import { useStomp } from "@/contexts/StompContext";
+import queryClient from "@/query/reactQueryClient";
 
 const Team = () => {
   const dispatch = useDispatch();
-  const { projectId } = useParams();
-  const parsedProjectId = Number(projectId);
-  const { data: teamMembers } = useGetMembers(parsedProjectId);
-  const { data: teamRoles } = useGetRole(parsedProjectId);
+  const projectId = useSelector((state: RootState) => state.project.id);
+  const { data: teamMembers } = useGetMembers(projectId);
+  const { data: teamRoles } = useGetRole(projectId);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -100,6 +101,43 @@ const Team = () => {
     }
   }, [teamRoles, dispatch]);
 
+  // 웹소켓 구독 정보 변경
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const { client, connSeq } = useStomp();
+  useEffect(() => {
+    if (!client || !client.connected) return;
+
+    const subscription = client.subscribe(
+      `/topic/member/${projectId}`,
+      (message) => {
+        const newMessage = JSON.parse(message.body);
+
+        if (newMessage.type === "LIST_CHANGED") {
+          queryClient.invalidateQueries({
+            queryKey: ["memberList", projectId],
+          });
+        }
+
+        if (newMessage.type === "ROLE_CHANGED") {
+          queryClient.invalidateQueries({
+            queryKey: ["roleList", projectId],
+          });
+        }
+
+        console.log("📥 새 메시지 도착:", newMessage);
+      },
+      {
+        Authorization: `${accessToken}`,
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe({
+        Authorization: `${accessToken}`,
+      });
+    };
+  }, [client, projectId, dispatch, accessToken, connSeq]);
+
   return (
     <Container>
       <TeamWrapper>
@@ -158,10 +196,10 @@ const Team = () => {
       )}
 
       {/* 스케줄 확인 모달 */}
-      {openScheduleModal && (
+      {openScheduleModal && projectId && (
         <ScheduleModal
           onClose={() => setOpenScheduleModal(false)}
-          projectId={parsedProjectId}
+          projectId={projectId}
         />
       )}
     </Container>
