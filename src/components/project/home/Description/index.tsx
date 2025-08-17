@@ -71,7 +71,7 @@ const Description = () => {
         Authorization: `${accessToken}`,
       });
     };
-  }, [client, projectId, accessToken, connSeq, memberId, updatedByName]);
+  }, [client?.connected, projectId, connSeq]);
 
   const { data } = useProjectInfo(projectId);
 
