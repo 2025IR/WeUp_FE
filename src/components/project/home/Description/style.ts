@@ -29,15 +29,23 @@ export const StyledTextarea = styled.textarea`
 `;
 
 export const StyledButton = styled.button`
+  position: relative;
   width: 1.5rem;
   height: 1.5rem;
-  cursor: pointer;
   opacity: 0.5;
 
   > svg {
+    cursor: pointer;
     width: 100%;
     height: 100%;
     color: ${({ theme }) => theme.colors.textLight};
+  }
+
+  > p {
+    position: absolute;
+    top: -1.5rem;
+    left: -5rem;
+    white-space: nowrap;
   }
 
   .edit_icon {
