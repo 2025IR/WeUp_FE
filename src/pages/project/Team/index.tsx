@@ -136,7 +136,7 @@ const Team = () => {
         Authorization: `${accessToken}`,
       });
     };
-  }, [client, projectId, dispatch, accessToken, connSeq]);
+  }, [client?.connected, projectId, connSeq]);
 
   return (
     <Container>

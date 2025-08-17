@@ -69,7 +69,7 @@ const ChatMessages = ({ roomId }: ChatMessagesProps) => {
         Authorization: `${accessToken}`,
       });
     };
-  }, [client, roomId, projectId, accessToken, connSeq]);
+  }, [client?.connected, roomId, connSeq]);
 
   // 데이터 받아온 이후
   useEffect(() => {

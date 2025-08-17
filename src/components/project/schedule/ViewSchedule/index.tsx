@@ -45,7 +45,7 @@ const ViewSchedule = ({ scheduleData, projectId }: Type) => {
         Authorization: `${accessToken}`,
       });
     };
-  }, [client, projectId, dispatch, accessToken, connSeq]);
+  }, [client?.connected, projectId, connSeq]);
 
   // 선택 해제한 인원 상태 관리
   const [unselectedMember, setUnselectedMember] = useState<number[]>([]);

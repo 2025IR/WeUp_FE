@@ -109,7 +109,7 @@ const Task = () => {
         Authorization: `${accessToken}`,
       });
     };
-  }, [client, projectId, accessToken, connSeq]);
+  }, [client?.connected, projectId, connSeq]);
 
   return (
     <TaskContainer>
