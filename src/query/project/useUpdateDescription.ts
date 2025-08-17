@@ -4,11 +4,11 @@ import { useMutation } from "@tanstack/react-query";
 export const useUpdateDescription = () => {
   return useMutation({
     mutationFn: ({
-      project_id,
+      projectId,
       description,
     }: {
-      project_id: number;
+      projectId: number | null;
       description: string;
-    }) => updateProjectDescription(project_id, description),
+    }) => updateProjectDescription(projectId!, description),
   });
 };

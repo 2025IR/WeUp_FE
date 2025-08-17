@@ -12,7 +12,6 @@ import {
 } from "./style";
 import { TodoType, TodoUpdateType } from "@/types/todo";
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useGetTodoList } from "@/query/todo/useGetTodoList";
 import { updateTodo, updateTodoStatus } from "@/apis/todo/todo";
 import IconLabel from "@/components/common/IconLabel";
@@ -22,11 +21,14 @@ import AssigneeModal from "@/components/project/task/AssigneeModal";
 import DateModal from "@/components/project/task/DateModal";
 import queryClient from "@/query/reactQueryClient";
 import { useDeleteTodo } from "@/query/todo/useDeleteTodo";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { useStomp } from "@/contexts/StompContext";
 
 const Task = () => {
-  const { projectId } = useParams();
-  const parsedProjectId = Number(projectId);
-  const { data } = useGetTodoList(parsedProjectId);
+  const projectId = useSelector((state: RootState) => state.project.id);
+
+  const { data } = useGetTodoList(projectId);
   const [tasks, setTasks] = useState<TodoType[]>([]);
 
   const { mutate: createTodo } = useCreateTodo();
@@ -36,7 +38,7 @@ const Task = () => {
   const { mutate: deleteTodo } = useDeleteTodo();
 
   const handleAddTodo = () => {
-    createTodo(parsedProjectId);
+    if (projectId) createTodo(projectId);
   };
 
   const handleOpenModal = (
@@ -76,13 +78,38 @@ const Task = () => {
       } else {
         await updateTodo({ todoId, ...updated });
       }
-
-      queryClient.invalidateQueries({
-        queryKey: ["todoList", parsedProjectId],
-      });
     },
     []
   );
+
+  // 웹소켓 구독 정보 변경
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const { client, connSeq } = useStomp();
+  useEffect(() => {
+    if (!client || !client.connected) return;
+
+    const subscription = client.subscribe(
+      `/topic/todo/${projectId}`,
+      (message) => {
+        const newMessage = JSON.parse(message.body);
+
+        queryClient.invalidateQueries({
+          queryKey: ["todoList", projectId],
+        });
+
+        console.log("📥 새 메시지 도착:", newMessage);
+      },
+      {
+        Authorization: `${accessToken}`,
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe({
+        Authorization: `${accessToken}`,
+      });
+    };
+  }, [client, projectId, accessToken, connSeq]);
 
   return (
     <TaskContainer>
@@ -131,7 +158,7 @@ const Task = () => {
         >
           {modalType === "assignee" && (
             <AssigneeModal
-              projectId={parsedProjectId}
+              projectId={projectId}
               task={payload}
               onUpdate={updateTodoHandler}
             />

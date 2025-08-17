@@ -31,7 +31,7 @@ export const assignMemberRole = (
 
 // 역할 리스트 불러오기
 export const fetchRoleList = async (
-  project_id: number
+  project_id: number | null
 ): Promise<RoleType[]> => {
   const res = await instance.post(`member/role/list/${project_id}`);
   return res.data.data;

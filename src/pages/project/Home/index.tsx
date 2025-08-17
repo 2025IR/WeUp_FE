@@ -2,8 +2,7 @@ import Description from "@/components/project/home/Description";
 import { useProjectInfo } from "@/query/project/useProjectInfo";
 import { setProject } from "@/store/project";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import {
@@ -21,15 +20,17 @@ import { useGetTodoList } from "@/query/todo/useGetTodoList";
 import { useTheme } from "@emotion/react";
 import { formatTodoDate } from "@/utils/formatTime";
 import Label from "@/components/common/Label";
+import { RootState } from "@/store/store";
+import { useStomp } from "@/contexts/StompContext";
+import queryClient from "@/query/reactQueryClient";
 
 const Home = () => {
   const theme = useTheme();
-  const { projectId } = useParams();
-  const parsedProjectId = Number(projectId);
+  const projectId = useSelector((state: RootState) => state.project.id);
   const dispatch = useDispatch();
 
-  const { data } = useProjectInfo(parsedProjectId);
-  const { data: getTodoList } = useGetTodoList(parsedProjectId);
+  const { data } = useProjectInfo(projectId);
+  const { data: getTodoList } = useGetTodoList(projectId);
 
   console.log(getTodoList);
 
@@ -37,14 +38,14 @@ const Home = () => {
     if (data) {
       dispatch(
         setProject({
-          id: parsedProjectId,
+          id: projectId,
           ...data,
         })
       );
 
       console.log(data);
     }
-  }, [data, dispatch, parsedProjectId]);
+  }, [data, dispatch, projectId]);
 
   // 달력에 종료 날짜까지 표시하기 위해 종료 날짜를 하루 미루는 로직 추가
   const addOneDay = (date: Date): Date => {
@@ -76,7 +77,34 @@ const Home = () => {
     })
     .sort((a, b) => a.status - b.status);
 
-  console.log(todayTodos);
+  // 웹소켓 구독 정보 변경
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const { client, connSeq } = useStomp();
+  useEffect(() => {
+    if (!client || !client.connected) return;
+
+    const subscription = client.subscribe(
+      `/topic/todo/${projectId}`,
+      (message) => {
+        const newMessage = JSON.parse(message.body);
+
+        queryClient.invalidateQueries({
+          queryKey: ["todoList", projectId],
+        });
+
+        console.log("📥 새 메시지 도착:", newMessage);
+      },
+      {
+        Authorization: `${accessToken}`,
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe({
+        Authorization: `${accessToken}`,
+      });
+    };
+  }, [client, projectId, dispatch, accessToken, connSeq]);
 
   return (
     <Container>

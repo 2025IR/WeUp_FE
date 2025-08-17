@@ -43,7 +43,7 @@ const ScheduleMain = ({ isEditMode, projectId }: Type) => {
       myAvailableTime={mySchedule?.availableTime ?? "0".repeat(252)}
     />
   ) : (
-    <ViewSchedule scheduleData={scheduleData} />
+    <ViewSchedule scheduleData={scheduleData} projectId={projectId} />
   );
 };
 
