@@ -15,11 +15,15 @@ const alertSlice = createSlice({
     setAlertCount: (state, action: PayloadAction<number>) => {
       state.unreadAlertCount = action.payload;
     },
+    incrementAlert: (state) => {
+      state.unreadAlertCount++;
+    },
     clearAlertCount: (state) => {
       state.unreadAlertCount = 0;
     },
   },
 });
 
-export const { setAlertCount, clearAlertCount } = alertSlice.actions;
+export const { setAlertCount, incrementAlert, clearAlertCount } =
+  alertSlice.actions;
 export default alertSlice.reducer;

@@ -11,12 +11,13 @@ import {
 import logo from "@/assets/logo/logo.png";
 import { useUserProfile } from "@/query/auth/useUserProfile";
 import { IoMdSettings } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserEditModal from "../UserEditModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { setAlertCount } from "@/store/alert";
+import { incrementAlert, setAlertCount } from "@/store/alert";
 import AlertModal from "../AlertModal";
+import { useStomp } from "@/contexts/StompContext";
 
 const Header = () => {
   const { data } = useUserProfile();
@@ -41,6 +42,36 @@ const Header = () => {
       setIsAlertOpen(false);
     }
   };
+
+  // 웹소켓 구독 정보 변경
+  const userId = useSelector((state: RootState) => state.auth.userId);
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const { client, connSeq } = useStomp();
+  useEffect(() => {
+    if (!client || !client.connected) return;
+
+    const subscription = client.subscribe(
+      `/topic/user/${userId}`,
+      (message) => {
+        const newMessage = JSON.parse(message.body);
+
+        if (!isAlertOpen) {
+          dispatch(incrementAlert());
+        }
+
+        console.log("📥 새 메시지 도착:", newMessage);
+      },
+      {
+        Authorization: `${accessToken}`,
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe({
+        Authorization: `${accessToken}`,
+      });
+    };
+  }, [client?.connected, connSeq]);
 
   return (
     <Container>
