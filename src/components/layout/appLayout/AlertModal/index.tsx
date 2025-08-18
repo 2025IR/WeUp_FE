@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 import { AlertCard, AlertTime, AlertTitle, Container } from "./style";
+import { useGetAlertsList } from "@/query/alert/useGetAlertsList";
+import { formatTodoDate } from "@/utils/formatTime";
 
 interface PropsType {
   onClose: () => void;
@@ -8,6 +10,7 @@ interface PropsType {
 const AlertModal = ({ onClose }: PropsType) => {
   // 모달 창 바깥 클릭 시 닫기
   const ref = useRef<HTMLDivElement | null>(null);
+  const { data: Alerts } = useGetAlertsList();
 
   useEffect(() => {
     const listener = (e: MouseEvent) => {
@@ -24,18 +27,18 @@ const AlertModal = ({ onClose }: PropsType) => {
     <Container ref={ref}>
       <p>모든 알림</p>
       <div>
-        <AlertCard>
-          <AlertTitle>
-            <div />
-            <p>
-              프로젝트 "안녕하세요 정윤석입니다 안녕하세요 정윤석입니다
-              안녕하세요
-            </p>
-          </AlertTitle>
-          <AlertTime>
-            <p>8월 12일</p>
-          </AlertTime>
-        </AlertCard>
+        {Alerts &&
+          Alerts.map((alert) => (
+            <AlertCard>
+              <AlertTitle isGreen={!alert.read}>
+                <div />
+                <p>{alert.message}</p>
+              </AlertTitle>
+              <AlertTime>
+                <p>{formatTodoDate(new Date(alert.createdAt))}</p>
+              </AlertTime>
+            </AlertCard>
+          ))}
       </div>
     </Container>
   );

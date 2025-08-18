@@ -59,7 +59,7 @@ export const AlertCard = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
-export const AlertTitle = styled.div`
+export const AlertTitle = styled.div<{ isGreen: boolean }>`
   width: 100%;
 
   display: flex;
@@ -73,7 +73,8 @@ export const AlertTitle = styled.div`
 
     flex-shrink: 0;
     border-radius: ${({ theme }) => theme.radius.full};
-    background-color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme, isGreen }) =>
+      isGreen ? theme.colors.primary : theme.colors.secondary};
   }
 
   > p {

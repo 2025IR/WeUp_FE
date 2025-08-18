@@ -18,6 +18,7 @@ import { RootState } from "@/store/store";
 import { incrementAlert, setAlertCount } from "@/store/alert";
 import AlertModal from "../AlertModal";
 import { useStomp } from "@/contexts/StompContext";
+import { useGetUnreadCount } from "@/query/alert/useGetUnreadCount";
 
 const Header = () => {
   const { data } = useUserProfile();
@@ -25,6 +26,13 @@ const Header = () => {
 
   const dispatch = useDispatch();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+
+  const { data: serverUnread } = useGetUnreadCount();
+
+  useEffect(() => {
+    if (serverUnread) dispatch(setAlertCount(serverUnread));
+  }, [serverUnread, dispatch]);
+
   const unreadAlertCount = useSelector(
     (state: RootState) => state.alert.unreadAlertCount
   );
