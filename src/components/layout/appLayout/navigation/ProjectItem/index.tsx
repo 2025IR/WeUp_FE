@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useStomp } from "@/contexts/StompContext";
 import { useEffect } from "react";
-import { incrementAlert } from "@/store/alert";
+import { incrementAlert, setAlertMessage } from "@/store/alert";
 
 type Props = {
   project: ProjectType;
@@ -27,6 +27,7 @@ const ProjectItem = ({ project, active, onClick }: Props) => {
         const newMessage = JSON.parse(message.body);
 
         dispatch(incrementAlert());
+        dispatch(setAlertMessage(newMessage.message));
 
         console.log("📥 새 메시지 도착:", newMessage);
       },

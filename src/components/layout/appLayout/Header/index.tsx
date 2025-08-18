@@ -15,10 +15,11 @@ import { useEffect, useState } from "react";
 import UserEditModal from "../UserEditModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { incrementAlert, setAlertCount } from "@/store/alert";
+import { incrementAlert, setAlertCount, setAlertMessage } from "@/store/alert";
 import AlertModal from "../AlertModal";
 import { useStomp } from "@/contexts/StompContext";
 import { useGetUnreadCount } from "@/query/alert/useGetUnreadCount";
+import queryClient from "@/query/reactQueryClient";
 
 const Header = () => {
   const { data } = useUserProfile();
@@ -63,8 +64,13 @@ const Header = () => {
       (message) => {
         const newMessage = JSON.parse(message.body);
 
-        if (!isAlertOpen) {
+        if (isAlertOpen) {
+          queryClient.invalidateQueries({
+            queryKey: ["alertsList"],
+          });
+        } else {
           dispatch(incrementAlert());
+          dispatch(setAlertMessage(newMessage.message));
         }
 
         console.log("📥 새 메시지 도착:", newMessage);

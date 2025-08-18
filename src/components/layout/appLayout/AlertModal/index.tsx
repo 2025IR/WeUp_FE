@@ -29,7 +29,7 @@ const AlertModal = ({ onClose }: PropsType) => {
       <div>
         {Alerts &&
           Alerts.map((alert) => (
-            <AlertCard>
+            <AlertCard key={alert.notificationId}>
               <AlertTitle isGreen={!alert.read}>
                 <div />
                 <p>{alert.message}</p>
