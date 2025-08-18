@@ -16,6 +16,7 @@ import UserEditModal from "../UserEditModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { setAlertCount } from "@/store/alert";
+import AlertModal from "../AlertModal";
 
 const Header = () => {
   const { data } = useUserProfile();
@@ -30,11 +31,16 @@ const Header = () => {
   const handleClose = () => setIsModalOpen(false);
   const handleOpen = () => setIsModalOpen(true);
 
-  const handleAlertOpen = () => {
-    dispatch(setAlertCount(0));
-    setIsAlertOpen(true);
-  };
   const handleAlertClose = () => setIsAlertOpen(false);
+
+  const toggleAlert = () => {
+    if (isAlertOpen === false) {
+      dispatch(setAlertCount(0));
+      setIsAlertOpen(true);
+    } else {
+      setIsAlertOpen(false);
+    }
+  };
 
   return (
     <Container>
@@ -51,7 +57,7 @@ const Header = () => {
             <Button onClick={handleOpen} variant="secondary" iconOnly>
               <IoMdSettings />
             </Button>
-            <Button onClick={handleAlertOpen} variant="secondary" iconOnly>
+            <Button onClick={toggleAlert} variant="secondary" iconOnly>
               <AiOutlineBell />
             </Button>
             {unreadAlertCount !== 0 && (
@@ -68,6 +74,8 @@ const Header = () => {
       {data && (
         <UserEditModal isOpen={isModalOpen} onClose={handleClose} user={data} />
       )}
+
+      {isAlertOpen && <AlertModal onClose={handleAlertClose} />}
     </Container>
   );
 };

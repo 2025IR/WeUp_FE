@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
+  position: relative;
+
   width: 100%;
   padding: 0.5rem 1rem;
 
