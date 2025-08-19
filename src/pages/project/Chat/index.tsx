@@ -23,7 +23,7 @@ const Chat = () => {
         setSelectedChat(basicRoom.chatRoomId);
       }
     }
-  }, [chatRooms, selectedRoom]);
+  }, [chatRooms]);
 
   return (
     <MeetContainer>
