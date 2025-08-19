@@ -5,6 +5,7 @@ export const StyledLabel = styled.span<LabelStyledProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 
   background-color: ${({ theme, colors }) =>
     theme.colors[colors as keyof typeof theme.colors]};
