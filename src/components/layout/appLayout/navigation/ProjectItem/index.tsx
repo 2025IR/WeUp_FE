@@ -6,6 +6,7 @@ import { RootState } from "@/store/store";
 import { useStomp } from "@/contexts/StompContext";
 import { useEffect } from "react";
 import { incrementAlert, setAlertMessage } from "@/store/alert";
+import queryClient from "@/query/reactQueryClient";
 
 type Props = {
   project: ProjectType;
@@ -25,6 +26,16 @@ const ProjectItem = ({ project, active, onClick }: Props) => {
       `/topic/project/${project.projectId}`,
       (message) => {
         const newMessage = JSON.parse(message.body);
+
+        if (newMessage.type === "FINISH") {
+          queryClient.invalidateQueries({
+            queryKey: ["projectList"],
+          });
+        } else {
+          queryClient.invalidateQueries({
+            queryKey: ["memberList", project.projectId],
+          });
+        }
 
         dispatch(incrementAlert());
         dispatch(setAlertMessage(newMessage.message));

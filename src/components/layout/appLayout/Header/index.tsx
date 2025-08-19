@@ -20,11 +20,14 @@ import AlertModal from "../AlertModal";
 import { useStomp } from "@/contexts/StompContext";
 import { useGetUnreadCount } from "@/query/alert/useGetUnreadCount";
 import queryClient from "@/query/reactQueryClient";
+import { setProject } from "@/store/project";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { data } = useUserProfile();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
@@ -54,6 +57,7 @@ const Header = () => {
 
   // 웹소켓 구독 정보 변경
   const userId = useSelector((state: RootState) => state.auth.userId);
+  const projectId = useSelector((state: RootState) => state.project.id);
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const { client, connSeq } = useStomp();
   useEffect(() => {
@@ -64,13 +68,37 @@ const Header = () => {
       (message) => {
         const newMessage = JSON.parse(message.body);
 
-        if (isAlertOpen) {
-          queryClient.invalidateQueries({
-            queryKey: ["alertsList"],
-          });
-        } else {
-          dispatch(incrementAlert());
-          dispatch(setAlertMessage(newMessage.message));
+        switch (newMessage.type) {
+          case "INVITE":
+            queryClient.invalidateQueries({
+              queryKey: ["projectList"],
+            });
+            dispatch(incrementAlert());
+            dispatch(setAlertMessage(newMessage.message));
+            break;
+          case "DELETE":
+            queryClient.invalidateQueries({
+              queryKey: ["projectList"],
+            });
+
+            if (newMessage.projectId === projectId) {
+              navigate(`/projects`);
+            }
+
+            dispatch(incrementAlert());
+            dispatch(setAlertMessage(newMessage.message));
+            break;
+          case "DELEGATE":
+            if (newMessage.projectId === projectId) {
+              queryClient.invalidateQueries({
+                queryKey: ["memberList", projectId],
+              });
+              dispatch(setProject({ leader: true }));
+            }
+
+            dispatch(incrementAlert());
+            dispatch(setAlertMessage(newMessage.message));
+            break;
         }
 
         console.log("📥 새 메시지 도착:", newMessage);
