@@ -14,7 +14,6 @@ type Props = {
 };
 
 const ChatListCard = ({ room, selected, onClick }: Props) => {
-  console.log("여기", selected, room.chatRoomId);
   // 선택된 방 ref로 상태 등록
   const selectedRef = useRef(selected);
   useEffect(() => {
@@ -22,17 +21,18 @@ const ChatListCard = ({ room, selected, onClick }: Props) => {
   }, [selected]);
 
   // 기본 값 초기화
-  const [unreadMessageCount, setUnreadMessageCount] = useState<number>(
-    () => room.unreadMessageCount ?? 0
-  );
-  const [lastMessage, setLastMessage] = useState<string>(
-    () => room.lastMessage ?? ""
-  );
+  const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
+  const [lastMessage, setLastMessage] = useState<string>("");
 
   // 방을 선택하면 해당 방은 알림 제거
   useEffect(() => {
     if (selected) setUnreadMessageCount(0);
   }, [selected]);
+
+  useEffect(() => {
+    setUnreadMessageCount(room.unreadMessageCount);
+    setLastMessage(room.lastMessage);
+  }, [room.unreadMessageCount, room.lastMessage]);
 
   // 구독, 메세지 창 변경되면 웹소켓 유지한 채로 구독 정보 변경
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
@@ -62,7 +62,7 @@ const ChatListCard = ({ room, selected, onClick }: Props) => {
         destination: `/topic/chat/connect/${room.chatRoomId}`,
       });
     };
-  }, [client?.connected, room.chatRoomId, connSeq]);
+  }, [client, connSeq]);
 
   return (
     <ChatListItem selected={selected} onClick={onClick}>
