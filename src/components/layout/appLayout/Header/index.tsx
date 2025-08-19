@@ -85,8 +85,6 @@ const Header = () => {
               navigate(`/projects`);
             }
 
-            dispatch(incrementAlert());
-            dispatch(setAlertMessage(newMessage.message));
             break;
           case "DELEGATE":
             if (newMessage.projectId === projectId) {
