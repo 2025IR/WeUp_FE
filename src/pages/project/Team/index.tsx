@@ -1,5 +1,6 @@
 import Button from "@/components/common/Button";
 import {
+  ButtonWrapper,
   Container,
   EmailSection,
   GridHeader,
@@ -24,6 +25,8 @@ import ScheduleModal from "@/components/project/schedule/ScheduleModal";
 import { RootState } from "@/store/store";
 import { useStomp } from "@/contexts/StompContext";
 import queryClient from "@/query/reactQueryClient";
+import { BiPhoneCall, BiUserCircle } from "react-icons/bi";
+import { MdAlternateEmail, MdOutlineAssignment } from "react-icons/md";
 
 const Team = () => {
   const dispatch = useDispatch();
@@ -143,15 +146,19 @@ const Team = () => {
       <TeamWrapper>
         <GridHeader>
           <NameSection>
+            <BiUserCircle />
             <p>이름</p>
           </NameSection>
           <EmailSection>
+            <MdAlternateEmail />
             <p>이메일</p>
           </EmailSection>
           <PhoneNumberSection>
+            <BiPhoneCall />
             <p>연락처</p>
           </PhoneNumberSection>
           <RoleSection>
+            <MdOutlineAssignment />
             <p>역할</p>
           </RoleSection>
           <InviteButton>
@@ -173,9 +180,11 @@ const Team = () => {
             />
           ))}
       </TeamWrapper>
-      <Button size="lg" onClick={() => setOpenScheduleModal(true)}>
-        Schedule
-      </Button>
+      <ButtonWrapper>
+        <Button size="lg" onClick={() => setOpenScheduleModal(true)}>
+          Schedule
+        </Button>
+      </ButtonWrapper>
 
       {/* 인원 추가 모달 */}
       {openModal && <AddMemberModal onClose={() => setOpenModal(false)} />}

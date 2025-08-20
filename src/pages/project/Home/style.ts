@@ -18,6 +18,7 @@ export const Container = styled.div`
 
 export const ContentWrapper = styled.div`
   width: 100%;
+  margin-bottom: 2.75rem;
 
   display: flex;
   align-items: flex-start;

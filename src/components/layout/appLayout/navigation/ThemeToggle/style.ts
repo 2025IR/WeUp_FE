@@ -1,6 +1,36 @@
 import styled from "@emotion/styled";
 import { ToggleStyledProps } from "./type";
 
+export const ToggleWrapper = styled.div`
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: ${({ theme }) => theme.radius.md};
+
+  display: flex;
+  align-items: flex-start;
+`;
+
+export const NavItem = styled.div<{ active?: boolean; collapsed: boolean }>`
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: ${({ theme }) => theme.radius.md};
+
+  display: flex;
+  align-items: flex-start;
+
+  background-color: ${({ theme, active }) =>
+    active ? theme.colors.secondary : theme.colors.background};
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${({ theme }) => theme.colors.secondary};
+  }
+
+  > div > div {
+    display: ${({ collapsed }) => (collapsed ? "none" : "block")};
+  }
+`;
+
 export const StyledToggle = styled.div<ToggleStyledProps>`
   width: 1.625rem;
   height: 0.75rem;

@@ -4,6 +4,7 @@ export const Container = styled.div`
   width: 350px;
   height: 100%;
   padding: 0 0.75rem;
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;
@@ -22,6 +23,21 @@ export const ChatListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  overflow-y: scroll;
+  padding-right: 0.5rem;
+
+  ::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.border};
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 `;
 
 export const ChatListItem = styled.div<{ selected?: boolean }>`
@@ -107,7 +123,7 @@ export const NewChatArea = styled.div`
   > svg {
     width: 0.75rem;
     height: 0.75rem;
-    color: ${({ theme }) => theme.colors.textLight};
+    color: ${({ theme }) => theme.colors.text};
   }
 
   &:hover {

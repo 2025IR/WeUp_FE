@@ -1,5 +1,11 @@
 import { useProjectInfo } from "@/query/project/useProjectInfo";
-import { useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { BiCheck, BiEditAlt } from "react-icons/bi";
 import { StyledButton, StyledTextarea, Wrapper } from "./style";
 import { useUpdateDescription } from "@/query/project/useUpdateDescription";
@@ -81,8 +87,7 @@ const Description = () => {
   const mutation = useUpdateDescription();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const lines = e.target.value.split("\n");
-    if (lines.length <= 3) setDescription(e.target.value);
+    setDescription(e.target.value);
 
     client?.publish({
       destination: `/app/project/${projectId}/edit/update`,
@@ -126,13 +131,25 @@ const Description = () => {
     }
   }, [data]);
 
+  useLayoutEffect(() => {
+    handleResizeHeight();
+  }, [description]);
+
+  const textRef = useRef<HTMLTextAreaElement | null>(null);
+  const handleResizeHeight = useCallback((): void => {
+    const el = textRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  }, []);
+
   return (
     <Wrapper isFill={editType === "EDIT_UPDATE"}>
       <StyledTextarea
+        ref={textRef}
         value={description}
         onChange={handleChange}
         readOnly={editType !== "EDIT_UPDATE"}
-        rows={3}
       />
       <StyledButton onClick={handleEdit}>
         {editType === "EDIT_UPDATE" ? (

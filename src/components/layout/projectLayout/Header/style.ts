@@ -12,6 +12,7 @@ export const Container = styled.div`
     width: 5rem;
     height: 5rem;
 
+    cursor: pointer;
     border-radius: ${({ theme }) => theme.radius.lg};
     object-fit: cover;
   }
@@ -32,6 +33,7 @@ export const InfoSection = styled.div`
   gap: 2.5rem;
 
   > h1 {
+    cursor: pointer;
     font-size: ${({ theme }) => theme.fontSize.title};
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     padding: 0.75rem 0;

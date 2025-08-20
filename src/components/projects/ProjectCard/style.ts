@@ -9,8 +9,8 @@ export const Container = styled.div<{ status: boolean }>`
   gap: 1rem;
 
   > img {
-    width: 10rem;
-    height: 10rem;
+    width: 100%;
+    aspect-ratio: 1 / 1;
 
     border-radius: ${({ theme }) => theme.radius.lg};
     object-fit: cover;
@@ -33,22 +33,20 @@ export const Container = styled.div<{ status: boolean }>`
 
 export const InfoWrapper = styled.div`
   width: 100%;
-
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.375rem;
 
   border-radius: ${({ theme }) => theme.radius.md};
+  overflow: hidden;
 
   > h2 {
+    width: 100%;
     font-size: ${({ theme }) => theme.fontSize.body};
     font-weight: ${({ theme }) => theme.fontWeight.semibold};
     color: ${({ theme }) => theme.colors.text};
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   > p {
