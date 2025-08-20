@@ -4,6 +4,7 @@ import { IoMdSettings } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
 import {
   Container,
+  NavButton,
   NavItem,
   NavTitle,
   NavWrapper,
@@ -14,6 +15,7 @@ import ProjectsList from "../ProjectsList";
 import ThemeToggle from "../ThemeToggle";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLogout } from "@/query/auth/useLogout";
+import { CgChevronDoubleLeft } from "react-icons/cg";
 
 const SideNav = () => {
   const location = useLocation();
@@ -37,6 +39,9 @@ const SideNav = () => {
         >
           <IconLabel icon={<MdDashboard />}>Projects</IconLabel>
         </NavItem>
+        <NavButton>
+          <CgChevronDoubleLeft />
+        </NavButton>
       </NavWrapper>
       <ProjectWrapper>
         {/* 프로젝트 리스트 컴포넌트 */}

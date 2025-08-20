@@ -1,6 +1,32 @@
 import styled from "@emotion/styled";
 
+export const NavButton = styled.div`
+  position: absolute;
+  display: none;
+  top: 0.5rem;
+  right: 1rem;
+
+  width: 26px;
+  height: 26px;
+
+  cursor: pointer;
+  /* opacity: 0.5; */
+  border-radius: ${({ theme }) => theme.radius.sm};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.secondary};
+  }
+
+  > svg {
+    width: 100%;
+    height: 100%;
+    color: ${({ theme }) => theme.colors.textLight};
+  }
+`;
+
 export const Container = styled.div`
+  position: relative;
+
   width: 15rem;
   min-width: 15rem;
   height: 100%;
@@ -12,6 +38,12 @@ export const Container = styled.div`
   justify-content: flex-start;
 
   border-right: 1px solid ${({ theme }) => theme.colors.border};
+
+  &:hover {
+    ${NavButton} {
+      display: block;
+    }
+  }
 `;
 
 export const NavWrapper = styled.div`
