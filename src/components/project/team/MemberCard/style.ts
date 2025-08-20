@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 
 export const GridItem = styled.div`
-  height: 3.75rem;
-  padding: 1rem 2rem;
+  min-height: 3.75rem;
+  padding: 0.25rem 1rem 0.25rem 2rem;
 
   display: grid;
-  grid-template-columns: 2fr 3fr 2fr 6fr 1.25rem;
+  grid-template-columns: 2fr 3fr 2fr 6fr 4rem;
   column-gap: 5rem;
   align-items: center;
   justify-items: center;
@@ -21,12 +21,15 @@ export const GridItem = styled.div`
 export const RoleSection = styled.div`
   min-width: 7.5rem;
   justify-self: start;
-  padding-left: 2rem;
+  padding: 0 2rem;
+  overflow: hidden;
 
   cursor: pointer;
 
   > div {
+    width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
     gap: 0.25rem;
@@ -69,6 +72,9 @@ export const MemberEditButton = styled.div`
   > svg {
     cursor: pointer;
     display: none;
+    width: 20px;
+    height: 20px;
+    color: ${({ theme }) => theme.colors.textLight};
   }
 `;
 
@@ -78,7 +84,7 @@ export const ContextMenu = styled.div<{ top: number; left: number }>`
   top: ${({ top }) => top + 10}px;
   left: ${({ left }) => left - 90}px;
   z-index: ${({ theme }) => theme.zIndex.toast};
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.border};
   padding: 0.25rem;
   border-radius: ${({ theme }) => theme.radius.sm};

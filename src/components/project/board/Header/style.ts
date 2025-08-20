@@ -3,14 +3,14 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
   width: 100%;
   height: 50px;
-  padding: 0rem 2rem;
+  padding: 0rem 1rem;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  border-radius: ${({ theme }) => theme.radius.md};
   background-color: ${({ theme }) => theme.colors.secondary};
+  border-radius: ${({ theme }) => theme.radius.sm};
 
   > div {
     width: 100%;
