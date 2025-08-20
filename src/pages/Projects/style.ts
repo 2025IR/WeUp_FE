@@ -29,10 +29,13 @@ export const Header = styled.div`
   }
 `;
 
-export const Main = styled.div`
+export const Main = styled.div<{ isFiveOrLess: boolean }>`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  grid-template-columns: ${({ isFiveOrLess }) =>
+    isFiveOrLess
+      ? "repeat(5, minmax(12rem, 1fr));"
+      : "repeat(auto-fit, minmax(12rem, 1fr));"};
   gap: clamp(4rem, 5vw, 6rem);
   margin-bottom: 2.75rem;
 `;
