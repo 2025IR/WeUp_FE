@@ -77,7 +77,7 @@ const ChatMessages = ({ roomId }: ChatMessagesProps) => {
         destination: `/topic/chat/active/${roomId}`,
       });
     };
-  }, [client, connSeq]);
+  }, [client, connSeq, roomId]);
 
   // 데이터 받아온 이후
   useEffect(() => {
