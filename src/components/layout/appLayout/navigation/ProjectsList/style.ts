@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const NavItem = styled.div<{ active?: boolean }>`
+export const NavItem = styled.div<{ active?: boolean; collapsed: boolean }>`
   width: 100%;
   padding: 0.5rem;
   border-radius: ${({ theme }) => theme.radius.md};
@@ -14,5 +14,10 @@ export const NavItem = styled.div<{ active?: boolean }>`
   &:hover {
     cursor: pointer;
     background-color: ${({ theme }) => theme.colors.secondary};
+    transition: background-color 0.2s ease;
+  }
+
+  > div > div {
+    display: ${({ collapsed }) => (collapsed ? "none" : "block")};
   }
 `;

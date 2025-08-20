@@ -9,13 +9,13 @@ import {
   NavTitle,
   NavWrapper,
   ProjectWrapper,
-  ToggleItem,
 } from "./style";
 import ProjectsList from "../ProjectsList";
 import ThemeToggle from "../ThemeToggle";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLogout } from "@/query/auth/useLogout";
-import { CgChevronDoubleLeft } from "react-icons/cg";
+import { CgChevronDoubleLeft, CgChevronDoubleRight } from "react-icons/cg";
+import { useState } from "react";
 
 const SideNav = () => {
   const location = useLocation();
@@ -23,40 +23,45 @@ const SideNav = () => {
 
   const path = location.pathname;
 
+  const [collapsed, setCollapsed] = useState<boolean>(false);
+
+  console.log(collapsed);
+
   const { mutate: logout } = useLogout();
   const isActive = (keyword: string) => path.includes(keyword);
 
   return (
-    <Container>
+    <Container collapsed={collapsed}>
       <NavWrapper>
-        <NavTitle>General</NavTitle>
-        <NavItem>
+        <NavTitle collapsed={collapsed}>General</NavTitle>
+        <NavItem collapsed={collapsed}>
           <IconLabel icon={<HiHome />}>Home</IconLabel>
         </NavItem>
         <NavItem
           active={isActive("/projects")}
+          collapsed={collapsed}
           onClick={() => navigate("/projects")}
         >
           <IconLabel icon={<MdDashboard />}>Projects</IconLabel>
         </NavItem>
-        <NavButton>
-          <CgChevronDoubleLeft />
+        <NavButton
+          onClick={() => setCollapsed(!collapsed)}
+          collapsed={collapsed}
+        >
+          {collapsed ? <CgChevronDoubleRight /> : <CgChevronDoubleLeft />}
         </NavButton>
       </NavWrapper>
-      <ProjectWrapper>
+      <ProjectWrapper collapsed={collapsed}>
         {/* 프로젝트 리스트 컴포넌트 */}
-        <NavTitle>Projects</NavTitle>
-        <ProjectsList />
+        <NavTitle collapsed={collapsed}>Projects</NavTitle>
+        <ProjectsList collapsed={collapsed} />
       </ProjectWrapper>
       <NavWrapper>
-        <ToggleItem>
-          {/* 테마 토클 컴포넌트 */}
-          <ThemeToggle />
-        </ToggleItem>
-        <NavItem>
+        <ThemeToggle collapsed={collapsed} />
+        <NavItem collapsed={collapsed}>
           <IconLabel icon={<IoMdSettings />}>Setting</IconLabel>
         </NavItem>
-        <NavItem onClick={() => logout()}>
+        <NavItem onClick={() => logout()} collapsed={collapsed}>
           <IconLabel icon={<HiOutlineLogout />}>Logout</IconLabel>
         </NavItem>
       </NavWrapper>
