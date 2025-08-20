@@ -33,11 +33,11 @@ export const GridHeader = styled.div`
   align-items: center;
   justify-items: center;
 
-  font-size: 1rem;
-  font-weight: ${({ theme }) => theme.fontWeight.semibold};
+  font-size: 16px;
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
 
-  background-color: ${({ theme }) => theme.colors.background};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radius.sm};
+  background-color: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.textLight};
 
   position: relative;
