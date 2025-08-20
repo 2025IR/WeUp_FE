@@ -1,5 +1,5 @@
 import IconLabel from "@/components/common/IconLabel";
-import { NavItem } from "./style";
+import { Container, NavItem } from "./style";
 import { useProjectList } from "@/query/project/useProjectList";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -14,7 +14,7 @@ const ProjectsList = ({ collapsed }: Props) => {
 
   const { data: projects } = useProjectList();
   return (
-    <>
+    <Container>
       {projects?.map((project) => (
         <NavItem
           key={project.projectId}
@@ -36,7 +36,7 @@ const ProjectsList = ({ collapsed }: Props) => {
           </IconLabel>
         </NavItem>
       ))}
-    </>
+    </Container>
   );
 };
 

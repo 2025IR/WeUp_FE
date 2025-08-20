@@ -90,6 +90,7 @@ export const NavItem = styled.div<{ active?: boolean; collapsed: boolean }>`
 export const ProjectWrapper = styled.div<{ collapsed: boolean }>`
   flex: 1;
   width: 100%;
+  overflow: hidden;
   padding: 1rem 0;
 
   display: flex;
