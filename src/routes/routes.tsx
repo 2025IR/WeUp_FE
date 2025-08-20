@@ -13,6 +13,7 @@ import Task from "@/pages/project/Task";
 import Auth from "@/pages/Auth";
 import Chat from "@/pages/project/Chat";
 import Meet from "@/pages/project/Meet";
+import Landing from "@/pages/Landing";
 
 const routes: RouteObject[] = [
   {
@@ -22,7 +23,10 @@ const routes: RouteObject[] = [
   {
     path: "/",
     element: <PublicLayout />,
-    children: [{ path: "auth", element: <Auth /> }],
+    children: [
+      { path: "/", element: <Landing /> },
+      { path: "auth", element: <Auth /> },
+    ],
   },
   {
     path: "/",
