@@ -20,6 +20,6 @@ export const Main = styled.div`
 export const OutletWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 2rem 6rem 0 6rem;
+  padding: 0 6rem;
   overflow: hidden;
 `;

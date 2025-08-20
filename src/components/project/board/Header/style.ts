@@ -45,7 +45,7 @@ export const StyledSelect = styled.select`
   padding: 0 1rem;
 
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 1.25rem;
+  border-radius: ${({ theme }) => theme.radius.md};
   font-size: ${({ theme }) => theme.fontSize.caption};
   color: ${({ theme }) => theme.colors.textLight};
   background-color: ${({ theme }) => theme.colors.background};
@@ -64,7 +64,7 @@ export const SearchBox = styled.div`
   display: flex;
   align-items: center;
 
-  border-radius: 1.25rem;
+  border-radius: ${({ theme }) => theme.radius.md};
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.border};
 
