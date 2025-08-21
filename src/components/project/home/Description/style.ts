@@ -21,7 +21,6 @@ export const Wrapper = styled.div<{ isFill: boolean }>`
 export const StyledTextarea = styled.textarea`
   flex: 1;
   resize: none;
-  line-height: 1.5rem;
 
   font-size: ${({ theme }) => theme.fontSize.body};
   font-weight: ${({ theme }) => theme.fontWeight.medium};

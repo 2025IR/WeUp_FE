@@ -26,7 +26,7 @@ const Projects = () => {
           Add
         </Button>
       </Header>
-      <Main>
+      <Main isFiveOrLess={(projects?.length ?? 0) < 5}>
         {isLoading && <p>Loading...</p>}
         {isError && <p>Error loading projects.</p>}
         {projects &&

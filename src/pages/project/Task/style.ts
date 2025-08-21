@@ -1,6 +1,14 @@
 import styled from "@emotion/styled";
 
-export const TaskContainer = styled.div``;
+export const TaskContainer = styled.div`
+  height: 100%;
+  overflow-y: scroll;
+  padding-right: 1rem;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
 export const TaskHeader = styled.div`
   width: 100%;
   display: grid;
@@ -27,6 +35,7 @@ export const HeaderTitle = styled.div`
 export const AddItem = styled.div`
   width: 100%;
   padding: 0.5rem 1.5rem;
+  margin-bottom: 2.75rem;
 
   display: flex;
   justify-content: flex-start;

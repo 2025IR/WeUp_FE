@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 export const MeetContainer = styled.div`
+  padding-bottom: 2rem;
   height: 100%;
   overflow: hidden;
 
