@@ -12,12 +12,25 @@ export const Container = styled.div`
 
 export const MainSection = styled.div`
   width: 100%;
+  overflow-y: scroll;
   flex: 1;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.border};
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 `;
 
 export const InputWrapper = styled.div`
@@ -162,14 +175,14 @@ export const FileCard = styled.div`
 export const TextAreaWrapper = styled.div`
   width: 100%;
   flex: 1;
-  padding: 1rem;
+  padding: 2rem 1rem;
 
   > textarea {
     width: 100%;
     height: 100%;
 
     resize: none;
-    overflow: hidden;
+    overflow: clip;
 
     font-size: ${({ theme }) => theme.fontSize.base};
     color: ${({ theme }) => theme.colors.text};
