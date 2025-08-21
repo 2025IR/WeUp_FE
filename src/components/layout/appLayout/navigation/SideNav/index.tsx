@@ -1,7 +1,5 @@
 import IconLabel from "@/components/common/IconLabel";
 import { HiHome, HiOutlineLogout } from "react-icons/hi";
-import { IoMdSettings } from "react-icons/io";
-import { MdDashboard } from "react-icons/md";
 import {
   Container,
   NavButton,
@@ -34,15 +32,15 @@ const SideNav = () => {
     <Container collapsed={collapsed}>
       <NavWrapper>
         <NavTitle collapsed={collapsed}>General</NavTitle>
-        <NavItem collapsed={collapsed}>
+        {/* <NavItem collapsed={collapsed}>
           <IconLabel icon={<HiHome />}>Home</IconLabel>
-        </NavItem>
+        </NavItem> */}
         <NavItem
           active={isActive("/projects")}
           collapsed={collapsed}
           onClick={() => navigate("/projects")}
         >
-          <IconLabel icon={<MdDashboard />}>Projects</IconLabel>
+          <IconLabel icon={<HiHome />}>Projects</IconLabel>
         </NavItem>
         <NavButton
           onClick={() => setCollapsed(!collapsed)}
@@ -58,9 +56,9 @@ const SideNav = () => {
       </ProjectWrapper>
       <NavWrapper>
         <ThemeToggle collapsed={collapsed} />
-        <NavItem collapsed={collapsed}>
+        {/* <NavItem collapsed={collapsed}>
           <IconLabel icon={<IoMdSettings />}>Setting</IconLabel>
-        </NavItem>
+        </NavItem> */}
         <NavItem onClick={() => logout()} collapsed={collapsed}>
           <IconLabel icon={<HiOutlineLogout />}>Logout</IconLabel>
         </NavItem>
