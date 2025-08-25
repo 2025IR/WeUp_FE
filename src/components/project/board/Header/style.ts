@@ -8,6 +8,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 
   background-color: ${({ theme }) => theme.colors.secondary};
   border-radius: ${({ theme }) => theme.radius.sm};
