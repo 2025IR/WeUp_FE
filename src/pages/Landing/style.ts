@@ -159,16 +159,6 @@ export const FinalSection = styled(motion.div)`
   justify-content: center;
   align-items: center;
   gap: 3rem;
-
-  > button {
-    padding: 0.75rem 1rem;
-    cursor: pointer;
-
-    font-weight: ${({ theme }) => theme.fontWeight.semibold};
-    color: ${({ theme }) => theme.colors.textWhite};
-    background-color: ${({ theme }) => theme.colors.primary};
-    border-radius: ${({ theme }) => theme.radius.sm};
-  }
 `;
 
 export const FinalImage = styled.div`
@@ -192,5 +182,35 @@ export const FinalInfo = styled.div`
     color: ${({ theme }) => theme.colors.text};
     font-size: 1.5rem;
     font-weight: ${({ theme }) => theme.fontWeight.bold};
+  }
+`;
+
+export const FinalButton = styled.div`
+  display: flex;
+  gap: 0.75rem;
+
+  > button:nth-child(1) {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+
+    font-weight: ${({ theme }) => theme.fontWeight.semibold};
+    color: ${({ theme }) => theme.colors.textWhite};
+    background-color: ${({ theme }) => theme.colors.primary};
+    border-radius: ${({ theme }) => theme.radius.sm};
+  }
+
+  > button:nth-child(2) {
+    padding: 0.5rem;
+    cursor: pointer;
+
+    font-weight: ${({ theme }) => theme.fontWeight.semibold};
+    color: ${({ theme }) => theme.colors.text};
+    background-color: ${({ theme }) => theme.colors.secondary};
+    border-radius: ${({ theme }) => theme.radius.sm};
+
+    > svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;

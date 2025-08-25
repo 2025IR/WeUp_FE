@@ -10,6 +10,7 @@ import {
   FeatureImage,
   FeatureInfo,
   FeatureSection,
+  FinalButton,
   FinalImage,
   FinalInfo,
   FinalSection,
@@ -24,6 +25,7 @@ import {
   Title,
 } from "./style";
 import { useNavigate } from "react-router-dom";
+import { BiSolidUpArrowCircle } from "react-icons/bi";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -190,9 +192,16 @@ const Landing = () => {
             <p>지금 바로 사용해보세요</p>
           </FinalInfo>
 
-          <button onClick={() => navigate("auth")}>
-            we:up 무료로 사용하기
-          </button>
+          <FinalButton>
+            <button onClick={() => navigate("auth")}>
+              we:up 무료로 사용하기
+            </button>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            >
+              <BiSolidUpArrowCircle />
+            </button>
+          </FinalButton>
         </FinalSection>
       </Section>
     </Container>
