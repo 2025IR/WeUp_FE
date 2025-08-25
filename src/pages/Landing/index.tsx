@@ -1,7 +1,18 @@
-import landingImage from "@/assets/image/landingImage1.png";
-import landingImage2 from "@/assets/image/landingImage2.png";
+import projectsPage from "@/assets/image/projects-page.png";
+import teamPage from "@/assets/image/team-page.png";
+import todoPage from "@/assets/image/todo-page.png";
+import boardPage from "@/assets/image/board-page.png";
+import chatPage from "@/assets/image/chat-page.png";
+import sadIcon from "@/assets/image/sad-icon.png";
+import weupIcon from "@/assets/image/weup-icon.png";
 import {
   Container,
+  FeatureImage,
+  FeatureInfo,
+  FeatureSection,
+  FinalImage,
+  FinalInfo,
+  FinalSection,
   HeroImage,
   HeroInfo,
   HeroSection,
@@ -41,10 +52,11 @@ const Landing = () => {
           </HeroInfo>
 
           <HeroImage>
-            <img src={landingImage} alt="weup projects page" />
+            <img src={projectsPage} alt="weup projects page" />
           </HeroImage>
         </HeroSection>
       </Section>
+
       <Section>
         <ProblemSection
           initial={{ opacity: 0, y: 40 }}
@@ -53,7 +65,7 @@ const Landing = () => {
           viewport={{ once: true, amount: 0.5 }}
         >
           <ProblemImage>
-            <img src={landingImage2} alt="weup logo" />
+            <img src={sadIcon} alt="weup logo" />
           </ProblemImage>
 
           <ProblemInfo>
@@ -67,6 +79,121 @@ const Landing = () => {
             <Strong>we:up으로 간편하게 관리하고 시작하세요</Strong>
           </ProblemInfo>
         </ProblemSection>
+      </Section>
+
+      <Section>
+        <FeatureSection
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.5 }}
+          isReverse={false}
+        >
+          <FeatureInfo>
+            <p>인원 관리 & 스케줄</p>
+            <div>
+              <p>프로젝트 내 팀원들을 관리하고</p>
+              <p>역할을 생성해 자유롭게 설정할 수 있습니다.</p>
+              <p>모두의 일정을 한눈에 조율하세요</p>
+            </div>
+          </FeatureInfo>
+
+          <FeatureImage>
+            <img src={teamPage} alt="weup team page" />
+          </FeatureImage>
+        </FeatureSection>
+      </Section>
+
+      <Section>
+        <FeatureSection
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.5 }}
+          isReverse={true}
+        >
+          <FeatureInfo>
+            <p>투두 & 달력</p>
+            <div>
+              <p>팀원들과 공동으로 관리하는 투두를 작성하고</p>
+              <p>진행도, 담당자, 기간을 한 눈에 확인하세요</p>
+              <p>홈 화면의 달력에서 전체 일정을 확인하세요</p>
+            </div>
+          </FeatureInfo>
+
+          <FeatureImage>
+            <img src={todoPage} alt="weup todo page" />
+          </FeatureImage>
+        </FeatureSection>
+      </Section>
+
+      <Section>
+        <FeatureSection
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.5 }}
+          isReverse={false}
+        >
+          <FeatureInfo>
+            <p>게시판 & 게시글</p>
+            <div>
+              <p>프로젝트 별로 게시판을 이용할 수 있습니다</p>
+              <p>파일과 공지들을 팀원들과 공유하고,</p>
+              <p>회의록을 작성하여 중요한 내용을 기록하세요</p>
+            </div>
+          </FeatureInfo>
+
+          <FeatureImage>
+            <img src={boardPage} alt="weup board page" />
+          </FeatureImage>
+        </FeatureSection>
+      </Section>
+
+      <Section>
+        <FeatureSection
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.5 }}
+          isReverse={true}
+        >
+          <FeatureInfo>
+            <p>채팅 & AI</p>
+            <div>
+              <p>팀원들과 채팅방에서 자유롭게 의논하세요</p>
+              <p>채팅방 내 AI를 이용해 보다 편리하게 협업하세요</p>
+              <p>일정, 게시판, 팀원 관리 페이지에서 AI를 이용해</p>
+              <p>항목들을 추가하고 관리할 수 있습니다</p>
+            </div>
+          </FeatureInfo>
+
+          <FeatureImage>
+            <img src={chatPage} alt="weup chat page" />
+          </FeatureImage>
+        </FeatureSection>
+      </Section>
+
+      <Section>
+        <FinalSection
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.5 }}
+        >
+          <FinalImage>
+            <img src={weupIcon} alt="weup logo" />
+          </FinalImage>
+
+          <FinalInfo>
+            <strong>"팀플 흩어지지 말고 한 곳에서, we:up"</strong>
+            <p>지금 바로 사용해보세요</p>
+          </FinalInfo>
+
+          <button onClick={() => navigate("auth")}>
+            we:up 무료로 사용하기
+          </button>
+        </FinalSection>
       </Section>
     </Container>
   );
