@@ -3,6 +3,11 @@ import styled from "@emotion/styled";
 export const BoardContainer = styled.div`
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
   display: flex;
   flex-direction: column;

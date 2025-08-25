@@ -8,6 +8,7 @@ import {
   validatePassword,
   validateName,
   validatePhoneNumber,
+  validateCode,
 } from "./validate";
 import Button from "../Button";
 
@@ -79,6 +80,16 @@ const Input = ({
         } else {
           setInputStatus("error");
           setInnerMessage("올바른 전화번호를 입력해주세요");
+        }
+        break;
+
+      case "code":
+        if (validateCode(internalValue)) {
+          setInputStatus("success");
+          setInnerMessage("");
+        } else {
+          setInputStatus("error");
+          setInnerMessage("6자리 숫자를 입력해주세요");
         }
         break;
 

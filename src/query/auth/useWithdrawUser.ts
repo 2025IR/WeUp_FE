@@ -1,15 +1,23 @@
 import { withdrawUser } from "@/apis/auth/auth";
+import { setApiMessage } from "@/store/alert";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { useDispatch } from "react-redux";
 
 export const useWithdrawUser = () => {
+  const dispatch = useDispatch();
   return useMutation({
     mutationFn: withdrawUser,
     onSuccess: () => {
-      alert("회원 탈퇴가 완료되었습니다.");
-      console.log("회원 탈퇴가 완료되었습니다.");
+      dispatch(setApiMessage({ message: "회원 탈퇴 성공", type: "success" }));
     },
-    onError: () => {
-      console.log("회원 탈퇴에 실패했습니다.");
+    onError: (err: AxiosError<{ message: string }>) => {
+      dispatch(
+        setApiMessage({
+          message: err.response?.data.message ?? "회원 탈퇴 실패",
+          type: "error",
+        })
+      );
     },
   });
 };

@@ -3,10 +3,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const tabs = [
-  { label: "Home", path: "home" },
-  { label: "Task", path: "task" },
   { label: "Team", path: "team" },
   { label: "Board", path: "board" },
+  { label: "Task", path: "task" },
   { label: "Chat", path: "chat" },
   { label: "Meet", path: "meet" },
 ];
@@ -22,6 +21,8 @@ const ProjectNav = () => {
     const matchedTab = tabs.find((tab) => tab.path === currentPath);
     if (matchedTab) {
       setActiveTab(matchedTab.path);
+    } else {
+      setActiveTab("");
     }
   }, [location.pathname]);
 

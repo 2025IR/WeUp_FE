@@ -6,6 +6,8 @@ import { useSignUp } from "@/query/auth/useSignUp";
 import { useRequestEmailCode } from "@/query/auth/useRequestEmail";
 import { useCheckEmailCode } from "@/query/auth/useCheckEmail";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setApiMessage } from "@/store/alert";
 
 const SignUpForm = () => {
   const [name, setName] = useState("");
@@ -16,6 +18,7 @@ const SignUpForm = () => {
   const [isEmailRequested, setEmailRequested] = useState(false);
   const [isCodeVerified, setCodeVerified] = useState(false);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const requestEmailMutation = useRequestEmailCode();
@@ -23,6 +26,18 @@ const SignUpForm = () => {
   const signUpMutation = useSignUp();
 
   const handleRequestEmail = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      dispatch(
+        setApiMessage({
+          message: "올바른 이메일을 입력해주세요.",
+          type: "error",
+        })
+      );
+      return;
+    }
+
     requestEmailMutation.mutate(email, {
       onSuccess: () => {
         setEmailRequested(true);
@@ -74,7 +89,7 @@ const SignUpForm = () => {
 
         {isEmailRequested && (
           <Input
-            type="text"
+            type="code"
             label="Code"
             value={code}
             onChange={setCode}

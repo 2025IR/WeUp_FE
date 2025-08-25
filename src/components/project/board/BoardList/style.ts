@@ -1,12 +1,18 @@
 import styled from "@emotion/styled";
-import { BoardLabelProps } from "./type";
-import { tagColorMap } from "@/utils/postTagColor";
 
-export const ListContainer = styled.div``;
+export const ListContainer = styled.div`
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+`;
 
 export const CardWrapper = styled.div`
   width: 100%;
-  padding: 1.25rem 2rem;
+  min-height: 45px;
+  max-height: 65px;
+  padding: 0 2rem;
+  flex: 1;
 
   display: flex;
   justify-content: space-between;
@@ -21,46 +27,27 @@ export const CardInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 3.125rem;
+
+  > p {
+    color: ${({ theme }) => theme.colors.textLight};
+    font-size: 14px;
+  }
 `;
 
 export const BoardMain = styled.div`
+  flex: 1;
+
   display: flex;
-  gap: 1.2rem;
+  align-items: center;
+  gap: 1.5rem;
   > p {
     font-size: 0.875rem;
     color: ${({ theme }) => theme.colors.text};
   }
 
   > svg {
-    width: ${({ theme }) => theme.icon.lg};
-    height: ${({ theme }) => theme.icon.lg};
+    width: ${({ theme }) => theme.icon.md};
+    height: ${({ theme }) => theme.icon.md};
     color: ${({ theme }) => theme.colors.textPrimary};
   }
-`;
-
-export const BoardLabel = styled.div<BoardLabelProps>`
-  width: 5.75rem;
-  height: 1.5rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 20px;
-  background-color: ${({ tag, theme }) => theme.colors[tagColorMap[tag]]};
-
-  > p {
-    font-size: ${({ theme }) => theme.fontSize.caption};
-    color: ${({ theme }) => theme.colors.textWhite};
-  }
-`;
-
-export const UserInfo = styled.div`
-  width: 15rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  font-size: ${({ theme }) => theme.fontSize.caption};
-  color: ${({ theme }) => theme.colors.textLight};
 `;

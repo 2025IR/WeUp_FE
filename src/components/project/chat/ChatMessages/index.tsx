@@ -4,11 +4,12 @@ import { MessagesContainer } from "./style";
 import { ChatMessagesProps } from "./type";
 import { useEffect, useRef, useState } from "react";
 import { ChatMessageProps } from "@/types/chat";
-import { RootState, store } from "@/store/store";
+import { RootState } from "@/store/store";
 import queryClient from "@/query/reactQueryClient";
 import { useSelector } from "react-redux";
+import { useStomp } from "@/contexts/StompContext";
 
-const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
+const ChatMessages = ({ roomId }: ChatMessagesProps) => {
   const projectId = useSelector((state: RootState) => state.project.id);
 
   // 데이터 내역 받아오는 함수
@@ -38,13 +39,13 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
   }, [data]);
 
   // 구독, 메세지 창 변경되면 웹소켓 유지한 채로 구독 정보 변경
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const { client, connSeq } = useStomp();
   useEffect(() => {
     if (!client || !client.connected) return;
 
-    const token = store.getState().auth;
-
     const subscription = client.subscribe(
-      `/topic/chat/${roomId}`,
+      `/topic/chat/active/${roomId}`,
       (message) => {
         const newMessage = JSON.parse(message.body);
 
@@ -55,20 +56,28 @@ const ChatMessages = ({ roomId, client }: ChatMessagesProps) => {
           });
         }
 
+        if (newMessage.message) {
+          setNewMessages((prev) => [...prev, newMessage]);
+        } else {
+          queryClient.invalidateQueries({
+            queryKey: ["chatMessages", roomId],
+          });
+        }
+
         console.log("📥 새 메시지 도착:", newMessage);
-        setNewMessages((prev) => [...prev, newMessage]);
       },
       {
-        Authorization: `${token.accessToken}`,
+        Authorization: `${accessToken}`,
       }
     );
 
     return () => {
       subscription.unsubscribe({
-        Authorization: `${token.accessToken}`,
+        Authorization: `${accessToken}`,
+        destination: `/topic/chat/active/${roomId}`,
       });
     };
-  }, [client, roomId, projectId]);
+  }, [client, connSeq, roomId]);
 
   // 데이터 받아온 이후
   useEffect(() => {

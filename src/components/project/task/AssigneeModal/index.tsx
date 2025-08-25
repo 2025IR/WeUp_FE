@@ -6,7 +6,7 @@ import { BiCheck } from "react-icons/bi";
 import { useEffect, useState } from "react";
 
 type Props = {
-  projectId: number;
+  projectId: number | null;
   task: TodoType;
   onUpdate: (todoId: number, updated: Partial<TodoUpdateType>) => void;
 };

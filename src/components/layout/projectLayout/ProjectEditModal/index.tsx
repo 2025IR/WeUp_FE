@@ -20,7 +20,6 @@ import { useUpdateProject } from "@/query/project/useUpdateProject";
 import { useParams } from "react-router-dom";
 import { useDeleteProject } from "@/query/project/useDeleteProject";
 import { setProject } from "@/store/project";
-import { useDeleteProjectTest } from "@/query/project/useDeleteProjectTest";
 
 const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
   const { projectId } = useParams();
@@ -52,12 +51,8 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
     },
   });
 
-  const { mutate: deleteProjectTestMutation } = useDeleteProjectTest();
-
   const { mutate: deleteProjectMutate } = useDeleteProject({
-    onSuccess: () => {
-      deleteProjectTestMutation();
-    },
+    onSuccess: () => {},
     onError: () => {},
   });
 

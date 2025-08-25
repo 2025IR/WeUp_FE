@@ -9,6 +9,7 @@ export type ChatMessageProps = {
   senderType: "MEMBER" | "AI" | "SYSTEM" | "WITHDRAW";
   originalSenderName: string;
   originalMessage: string;
+  unreadCount: number;
 };
 
 export type ChatSendProps = {
@@ -45,6 +46,9 @@ export type ChatRoomItem = {
   chatRoomName: string;
   chatRoomMemberNames: string[];
   isBasic: boolean;
+  unreadMessageCount: number;
+  lastMessage: string;
+  lastMessageTime: string;
 };
 
 export type InvitableMember = {

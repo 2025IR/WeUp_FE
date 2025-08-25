@@ -7,8 +7,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useState } from "react";
 import ProjectEditModal from "../ProjectEditModal";
+import { useNavigate } from "react-router-dom";
 
 const ProjectHeader = () => {
+  const projectId = useSelector((state: RootState) => state.project.id);
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { projectName, projectImage } = useSelector(
     (state: RootState) => state.project
@@ -17,12 +20,16 @@ const ProjectHeader = () => {
   const handleClose = () => setIsModalOpen(false);
   const handleOpen = () => setIsModalOpen(true);
 
+  const handleClickHome = () => {
+    navigate(`/project/${projectId}/home`);
+  };
+
   return (
     <Container>
-      <img src={projectImage} alt="project image" />
+      <img src={projectImage} alt="project image" onClick={handleClickHome} />
       <TabSection>
         <InfoSection>
-          <h1>{projectName}</h1>
+          <h1 onClick={handleClickHome}>{projectName}</h1>
           <LabelSection>
             <Label>진행중</Label>
             <Label colors="secondary">

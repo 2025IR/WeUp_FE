@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import useStompClient from "@/hooks/useStompClient";
 import ChatSection from "@/components/project/chat/ChatSection";
 import { ChatMain, MeetContainer } from "./style";
 import ChatList from "@/components/project/chat/ChatList";
@@ -10,7 +9,6 @@ import { useChatRoomList } from "@/query/chat/useGetChatRoomList";
 const Chat = () => {
   const { projectId } = useParams();
   const parsedProjectId = Number(projectId);
-  const client = useStompClient();
 
   const [selectedChat, setSelectedChat] = useState(1);
   const { data: chatRooms = [] } = useChatRoomList(parsedProjectId);
@@ -25,7 +23,7 @@ const Chat = () => {
         setSelectedChat(basicRoom.chatRoomId);
       }
     }
-  }, [chatRooms, selectedRoom]);
+  }, [chatRooms]);
 
   return (
     <MeetContainer>
@@ -47,7 +45,7 @@ const Chat = () => {
             }}
             projectId={parsedProjectId}
           />
-          <ChatSection roomId={selectedRoom.chatRoomId} client={client} />
+          <ChatSection roomId={selectedRoom.chatRoomId} />
         </ChatMain>
       ) : (
         <ChatMain></ChatMain>

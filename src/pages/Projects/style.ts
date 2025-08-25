@@ -1,12 +1,18 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
+  padding: 2rem;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   align-items: flex-start;
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Header = styled.div`
@@ -23,9 +29,13 @@ export const Header = styled.div`
   }
 `;
 
-export const Main = styled.div`
+export const Main = styled.div<{ isFiveOrLess: boolean }>`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 10rem);
-  gap: 5rem;
+  grid-template-columns: ${({ isFiveOrLess }) =>
+    isFiveOrLess
+      ? "repeat(5, minmax(12rem, 1fr));"
+      : "repeat(auto-fit, minmax(12rem, 1fr));"};
+  gap: clamp(4rem, 5vw, 6rem);
+  margin-bottom: 2.75rem;
 `;

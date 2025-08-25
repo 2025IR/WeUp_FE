@@ -5,31 +5,40 @@ export const Container = styled.div`
 
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   gap: 1rem;
 `;
 
 export const TeamWrapper = styled.div`
   width: 100%;
-
-  border-radius: ${({ theme }) => theme.radius.lg};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-
   overflow: hidden;
 `;
 
+export const ButtonWrapper = styled.div`
+  width: 100%;
+  min-width: 960px;
+  padding: 0 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: end;
+`;
+
 export const GridHeader = styled.div`
-  height: 3.125rem;
-  padding: 0 2rem;
+  height: 50px;
+  padding: 0 1rem 0 2rem;
 
   display: grid;
-  grid-template-columns: 2fr 3fr 2fr 6fr 1.25rem;
+  grid-template-columns: 2fr 3fr 2fr 6fr 4rem;
   column-gap: 5rem;
   align-items: center;
   justify-items: center;
 
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
+
+  border-radius: ${({ theme }) => theme.radius.sm};
   background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.textLight};
 
   position: relative;
 `;
@@ -37,7 +46,12 @@ export const GridHeader = styled.div`
 export const RoleSection = styled.div`
   min-width: 7.5rem;
   justify-self: start;
-  padding-left: 3rem;
+  padding-left: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 0.5rem;
 `;
 
 export const RoleModalContainer = styled.div<{ top: number; left: number }>`
@@ -60,7 +74,12 @@ export const NameSection = styled.div`
   min-width: 6rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+  gap: 0.5rem;
+
+  > svg {
+    margin: 0 0.25rem;
+  }
 `;
 
 export const EmailSection = styled.div`
@@ -68,6 +87,7 @@ export const EmailSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
 `;
 
 export const PhoneNumberSection = styled.div`
@@ -75,9 +95,7 @@ export const PhoneNumberSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
 `;
 
-export const InviteButton = styled.div`
-  position: absolute;
-  right: 1rem;
-`;
+export const InviteButton = styled.div``;

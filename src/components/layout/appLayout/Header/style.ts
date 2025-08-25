@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
+  position: relative;
+
   width: 100%;
   padding: 0.5rem 1rem;
 
@@ -44,6 +46,8 @@ export const UserSection = styled.div`
 `;
 
 export const UserInfo = styled.div`
+  position: relative;
+
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -56,4 +60,22 @@ export const UserInfo = styled.div`
   > button:nth-child(4) {
     cursor: pointer;
   }
+`;
+
+export const AlertCountWrapper = styled.div`
+  position: absolute;
+  right: -8px;
+  top: -4px;
+
+  width: 1.25rem;
+  height: 1.25rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: ${({ theme }) => theme.fontSize.caption};
+  border-radius: ${({ theme }) => theme.radius.full};
+  background-color: ${({ theme }) => theme.colors.danger};
+  color: ${({ theme }) => theme.colors.textWhite};
 `;

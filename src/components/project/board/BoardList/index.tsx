@@ -1,15 +1,10 @@
-import {
-  BoardLabel,
-  BoardMain,
-  CardInfo,
-  CardWrapper,
-  ListContainer,
-  UserInfo,
-} from "./style";
+import { BoardMain, CardInfo, CardWrapper, ListContainer } from "./style";
 import IconLabel from "@/components/common/IconLabel";
 import { BoardListProps } from "./type";
 import { AiOutlinePaperClip } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
+import Label from "@/components/common/Label";
+import { tagColorMap } from "@/utils/postTagColor";
 
 const formatDate = (datetime: string | null) => {
   if (!datetime) return "날짜 없음";
@@ -35,20 +30,16 @@ const BoardList = ({ posts, isLoading }: BoardListProps) => {
           onClick={() => navigate(`/project/${projectId}/post/${post.boardId}`)}
         >
           <CardInfo>
-            <BoardLabel tag={post.tag}>
-              <p>{post.tag}</p>
-            </BoardLabel>
+            <Label colors={tagColorMap[post.tag]}>{post.tag}</Label>
             <BoardMain>
               <p>{post.title}</p>
               {post.hasFile && <AiOutlinePaperClip />}
             </BoardMain>
-          </CardInfo>
-          <UserInfo>
             <IconLabel type="image" size="lg" full icon={post.profileImage}>
               {post.name}
             </IconLabel>
             <p>{formatDate(post.boardCreatedTime)}</p>
-          </UserInfo>
+          </CardInfo>
         </CardWrapper>
       ))}
     </ListContainer>
