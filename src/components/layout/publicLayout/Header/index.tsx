@@ -8,7 +8,7 @@ const PublicHeader = () => {
   return (
     <Container>
       <Content>
-        <Logo>
+        <Logo onClick={() => navigate("/")}>
           <img src={logo} alt="logo" />
           <p>we:up</p>
         </Logo>
