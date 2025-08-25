@@ -5,6 +5,9 @@ import { refreshAndRetry } from "./refreshAndRetry";
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
+  headers: {
+    "ngrok-skip-browser-warning": "any",
+  },
 });
 
 instance.interceptors.request.use((config) => {
