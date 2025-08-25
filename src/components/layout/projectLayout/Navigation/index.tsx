@@ -21,6 +21,8 @@ const ProjectNav = () => {
     const matchedTab = tabs.find((tab) => tab.path === currentPath);
     if (matchedTab) {
       setActiveTab(matchedTab.path);
+    } else {
+      setActiveTab("");
     }
   }, [location.pathname]);
 
