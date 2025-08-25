@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { clearAuth } from "@/store/auth";
 import { logout } from "@/apis/auth/auth";
 import { useNavigate } from "react-router-dom";
+import { setApiMessage } from "@/store/alert";
+import { AxiosError } from "axios";
 
 export const useLogout = () => {
   const dispatch = useDispatch();
@@ -12,11 +14,16 @@ export const useLogout = () => {
     mutationFn: logout,
     onSuccess: () => {
       dispatch(clearAuth());
-      console.log("로그아웃 성공");
+      dispatch(setApiMessage({ message: "로그아웃 성공", type: "success" }));
       navigate("/auth");
     },
-    onError: (err) => {
-      console.error("로그아웃 실패", err);
+    onError: (err: AxiosError<{ message: string }>) => {
+      dispatch(
+        setApiMessage({
+          message: err.response?.data.message ?? "로그아웃 실패",
+          type: "error",
+        })
+      );
     },
   });
 };
