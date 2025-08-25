@@ -54,6 +54,24 @@ export const ImgWrapper = styled.div`
   }
 `;
 
+export const MyMessageInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+`;
+
+export const MessageInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+`;
+
+export const MessageUnreadCount = styled.p`
+  color: ${({ theme }) => theme.colors.textPrimary};
+  font-size: ${({ theme }) => theme.fontSize.caption};
+  font-weight: ${({ theme }) => theme.fontWeight.semibold};
+`;
+
 export const MessageTime = styled.p`
   color: ${({ theme }) => theme.colors.textLight};
   font-size: ${({ theme }) => theme.fontSize.caption};

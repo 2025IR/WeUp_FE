@@ -45,7 +45,7 @@ const ChatMessages = ({ roomId }: ChatMessagesProps) => {
     if (!client || !client.connected) return;
 
     const subscription = client.subscribe(
-      `/topic/chat/${roomId}`,
+      `/topic/chat/active/${roomId}`,
       (message) => {
         const newMessage = JSON.parse(message.body);
 
@@ -56,8 +56,15 @@ const ChatMessages = ({ roomId }: ChatMessagesProps) => {
           });
         }
 
+        if (newMessage.message) {
+          setNewMessages((prev) => [...prev, newMessage]);
+        } else {
+          queryClient.invalidateQueries({
+            queryKey: ["chatMessages", roomId],
+          });
+        }
+
         console.log("📥 새 메시지 도착:", newMessage);
-        setNewMessages((prev) => [...prev, newMessage]);
       },
       {
         Authorization: `${accessToken}`,
@@ -67,9 +74,10 @@ const ChatMessages = ({ roomId }: ChatMessagesProps) => {
     return () => {
       subscription.unsubscribe({
         Authorization: `${accessToken}`,
+        destination: `/topic/chat/active/${roomId}`,
       });
     };
-  }, [client?.connected, roomId, connSeq]);
+  }, [client, connSeq, roomId]);
 
   // 데이터 받아온 이후
   useEffect(() => {

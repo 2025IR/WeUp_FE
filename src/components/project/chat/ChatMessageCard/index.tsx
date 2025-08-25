@@ -4,8 +4,11 @@ import {
   ContainerCard,
   ImageCard,
   ImgWrapper,
+  MessageInfo,
   MessageTime,
+  MessageUnreadCount,
   MyCardContainer,
+  MyMessageInfo,
   MyTextCard,
   ReplyMessage,
   ReplyName,
@@ -32,6 +35,7 @@ const ChatMessageCard = React.memo(
     senderType,
     originalMessage,
     originalSenderName,
+    unreadCount,
   }: ChatCardProps) => {
     const userId = useSelector((state: RootState) => state.project.memberId);
     const isRight = senderId === userId;
@@ -49,7 +53,10 @@ const ChatMessageCard = React.memo(
     if (isRight) {
       return (
         <MyCardContainer>
-          {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
+          <MyMessageInfo>
+            <MessageUnreadCount>{unreadCount}</MessageUnreadCount>
+            {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
+          </MyMessageInfo>
           {isImage ? (
             <ImageCard src={message} alt="" />
           ) : (
@@ -84,7 +91,10 @@ const ChatMessageCard = React.memo(
               </AiTextCard>
             )}
           </TextCardWrapper>
-          {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
+          <MessageInfo>
+            <MessageUnreadCount>{unreadCount}</MessageUnreadCount>
+            {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
+          </MessageInfo>
         </ContainerCard>
       );
     }
@@ -106,7 +116,11 @@ const ChatMessageCard = React.memo(
             </TextCard>
           )}
         </TextCardWrapper>
-        {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
+
+        <MessageInfo>
+          <MessageUnreadCount>{unreadCount}</MessageUnreadCount>
+          {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
+        </MessageInfo>
       </ContainerCard>
     );
   }
