@@ -6,7 +6,6 @@ import { ModalContainer, PreviewSection, Section, UploadButton } from "./style";
 import { AiOutlineUpload } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { useEditUserProfile } from "@/query/auth/useEditUserProfile";
-import queryClient from "@/query/reactQueryClient";
 import { useWithdrawUser } from "@/query/auth/useWithdrawUser";
 import { useNavigate } from "react-router-dom";
 
@@ -42,12 +41,7 @@ const UserEditModal = ({ isOpen, onClose, user }: UserEditModalProps) => {
 
   const { mutate: editUserMutate } = useEditUserProfile({
     onSuccess: () => {
-      console.log("회원 정보 수정 성공");
-      queryClient.invalidateQueries({ queryKey: ["userProfile"] });
       onClose();
-    },
-    onError: (err) => {
-      console.log("회원 정보 수정 실패", err);
     },
   });
 

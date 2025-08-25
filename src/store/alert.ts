@@ -1,13 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TypeOptions } from "react-toastify";
 
 interface AlertState {
   unreadAlertCount: number;
   alertMessage: string;
+
+  apiMessage: string;
+  apiMessageType: TypeOptions | null;
 }
 
 const initialState: AlertState = {
   unreadAlertCount: 0,
   alertMessage: "",
+  apiMessage: "",
+  apiMessageType: null,
 };
 
 const alertSlice = createSlice({
@@ -29,6 +35,21 @@ const alertSlice = createSlice({
     clearAlertMessage: (state) => {
       state.alertMessage = "";
     },
+
+    setApiMessage: (
+      state,
+      action: PayloadAction<{
+        message: string;
+        type: "success" | "error";
+      }>
+    ) => {
+      state.apiMessage = action.payload.message;
+      state.apiMessageType = action.payload.type;
+    },
+    clearApiMessage: (state) => {
+      state.apiMessage = "";
+      state.apiMessageType = null;
+    },
   },
 });
 
@@ -38,5 +59,8 @@ export const {
   clearAlertCount,
   setAlertMessage,
   clearAlertMessage,
+
+  setApiMessage,
+  clearApiMessage,
 } = alertSlice.actions;
 export default alertSlice.reducer;

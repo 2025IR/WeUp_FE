@@ -31,3 +31,7 @@ export const validatePhoneNumber = (phone: string) => {
   const regex = /^010\d{8}$/;
   return regex.test(onlyNums);
 };
+
+export const validateCode = (code: string) => {
+  return /^\d{6}$/.test(code);
+};

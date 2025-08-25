@@ -1,10 +1,18 @@
 import styled from "@emotion/styled";
 
-export const ListContainer = styled.div``;
+export const ListContainer = styled.div`
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+`;
 
 export const CardWrapper = styled.div`
   width: 100%;
-  padding: 1rem 2rem;
+  min-height: 45px;
+  max-height: 65px;
+  padding: 0 2rem;
+  flex: 1;
 
   display: flex;
   justify-content: space-between;
