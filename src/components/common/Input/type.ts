@@ -1,6 +1,6 @@
 export interface InputProps {
   value?: string;
-  type?: "text" | "email" | "password" | "number" | "tel";
+  type?: "text" | "email" | "password" | "number" | "tel" | "code";
   rightType?: "icon" | "button";
   status?: "normal" | "success" | "error";
   message?: string;

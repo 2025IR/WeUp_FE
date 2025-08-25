@@ -1,19 +1,29 @@
 import { checkEmailCode } from "@/apis/auth/auth";
+import { setApiMessage } from "@/store/alert";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { useDispatch } from "react-redux";
 
 export const useCheckEmailCode = () => {
+  const dispatch = useDispatch();
+
   return useMutation({
     mutationFn: checkEmailCode,
-    onSuccess: (res) => {
-      if (res.data.responseCode === 200) {
-        console.log("이메일 인증 완료!");
-      } else {
-        console.log(res.data.message || "인증 실패");
-      }
+    onSuccess: () => {
+      dispatch(
+        setApiMessage({
+          message: "이메일 인증 성공",
+          type: "success",
+        })
+      );
     },
-    onError: (err) => {
-      console.log("서버 오류로 인증 실패");
-      console.error(err);
+    onError: (err: AxiosError<{ message: string }>) => {
+      dispatch(
+        setApiMessage({
+          message: err.response?.data.message ?? "",
+          type: "error",
+        })
+      );
     },
   });
 };

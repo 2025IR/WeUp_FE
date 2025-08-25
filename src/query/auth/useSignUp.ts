@@ -1,14 +1,17 @@
 import { signUp } from "@/apis/auth/auth";
+import { setApiMessage } from "@/store/alert";
 import { useMutation } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
 
 export const useSignUp = () => {
+  const dispatch = useDispatch();
   return useMutation({
     mutationFn: signUp,
     onSuccess: () => {
-      console.log("회원가입 성공");
+      dispatch(setApiMessage({ message: "회원가입 성공", type: "success" }));
     },
-    onError: (err) => {
-      console.error("회원가입 실패", err);
+    onError: () => {
+      dispatch(setApiMessage({ message: "회원가입 실패", type: "error" }));
     },
   });
 };
