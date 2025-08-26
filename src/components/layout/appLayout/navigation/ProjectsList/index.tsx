@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setProject } from "@/store/project";
 import { ProjectType } from "@/types/project";
-import ProjectItem from "../ProjectItem";
 
 type Props = { collapsed: boolean };
 const ProjectsList = ({ collapsed }: Props) => {
@@ -32,16 +31,7 @@ const ProjectsList = ({ collapsed }: Props) => {
       {projects?.map((project) => (
         <NavItem
           key={project.projectId}
-          onClick={() => {
-            dispatch(
-              setProject({
-                id: project.projectId,
-                projectName: project.projectName,
-                projectImage: project.projectImage,
-              })
-            );
-            navigate(`/project/${project.projectId}/home`);
-          }}
+          onClick={() => handleItemClick(project)}
           active={currentProjectId === String(project.projectId)}
           collapsed={collapsed}
         >
