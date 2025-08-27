@@ -54,7 +54,9 @@ const ChatMessageCard = React.memo(
       return (
         <MyCardContainer>
           <MyMessageInfo>
-            <MessageUnreadCount>{unreadCount}</MessageUnreadCount>
+            {unreadCount !== 0 && (
+              <MessageUnreadCount>{unreadCount}</MessageUnreadCount>
+            )}
             {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
           </MyMessageInfo>
           {isImage ? (
@@ -92,7 +94,9 @@ const ChatMessageCard = React.memo(
             )}
           </TextCardWrapper>
           <MessageInfo>
-            <MessageUnreadCount>{unreadCount}</MessageUnreadCount>
+            {unreadCount !== 0 && (
+              <MessageUnreadCount>{unreadCount}</MessageUnreadCount>
+            )}
             {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
           </MessageInfo>
         </ContainerCard>
@@ -118,7 +122,9 @@ const ChatMessageCard = React.memo(
         </TextCardWrapper>
 
         <MessageInfo>
-          <MessageUnreadCount>{unreadCount}</MessageUnreadCount>
+          {unreadCount !== 0 && (
+            <MessageUnreadCount>{unreadCount}</MessageUnreadCount>
+          )}
           {isShowTime && <MessageTime>{formatChatTime(sentAt)}</MessageTime>}
         </MessageInfo>
       </ContainerCard>
