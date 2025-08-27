@@ -26,7 +26,7 @@ export type ChatApiResponse = {
 export type AiMessageResponse = {
   senderId: number;
   userInput: string;
-  projectId: number;
+  projectId: number | null;
 };
 
 export type ChatCardProps = ChatMessageProps & {

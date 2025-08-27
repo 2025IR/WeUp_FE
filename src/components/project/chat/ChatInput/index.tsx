@@ -27,6 +27,7 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAI, setIsAI] = useState(false);
   const senderId = useSelector((state: RootState) => state.project.memberId);
+  const projectId = useSelector((state: RootState) => state.project.id);
   // 전역에서 생성된 client 객체 받아옴.
   const { client } = useStomp();
 
@@ -40,7 +41,7 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
     },
   });
 
-  const { mutate: sendAiMessage } = useSendAiMessage();
+  const { mutate: sendAiMessage } = useSendAiMessage(roomId);
 
   const handleSend = () => {
     if (!input.trim() || !client || !client.connected) {
@@ -52,7 +53,7 @@ const ChatInput = ({ roomId }: ChatInputProps) => {
       sendAiMessage({
         senderId,
         userInput: input,
-        projectId: roomId,
+        projectId: projectId,
       });
       setInput("");
       setIsAI(false);

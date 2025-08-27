@@ -75,8 +75,10 @@ export const sendImageMessage = async (
   });
 
 // AI 채팅 전송
-export const sendAiMessage = async (payload: AiMessageResponse) => {
-  const { projectId } = payload;
-  const res = await instance.post(`/ai/chat/${projectId}`, payload);
+export const sendAiMessage = async (
+  roomId: number,
+  body: AiMessageResponse
+) => {
+  const res = await instance.post(`/ai/chat/${roomId}`, body);
   return res.data;
 };
