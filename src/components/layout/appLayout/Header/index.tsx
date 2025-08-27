@@ -87,6 +87,7 @@ const Header = () => {
 
             break;
           case "DELEGATE":
+            console.log("왜", newMessage.projectId, projectId);
             if (newMessage.projectId === projectId) {
               queryClient.invalidateQueries({
                 queryKey: ["memberList", projectId],
@@ -111,7 +112,7 @@ const Header = () => {
         Authorization: `${accessToken}`,
       });
     };
-  }, [client?.connected, connSeq]);
+  }, [client?.connected, connSeq, projectId]);
 
   return (
     <Container>
