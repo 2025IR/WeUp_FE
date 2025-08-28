@@ -26,8 +26,6 @@ const Description = () => {
   >("EDIT_UNLOCK");
   const [updatedByName, setUpdatedByName] = useState<string>("");
 
-  console.log(editType);
-
   const [description, setDescription] = useState("");
   useEffect(() => {
     if (!client || !client.connected) return;
@@ -57,7 +55,10 @@ const Description = () => {
           setEditType("EDIT_LOCK");
         }
 
-        if (newMessage.type === "EDIT_UNLOCK") {
+        if (
+          newMessage.type === "EDIT_UNLOCK" &&
+          memberId !== newMessage.memberId
+        ) {
           setUpdatedByName("");
           queryClient.invalidateQueries({
             queryKey: ["projectInfo", projectId],
@@ -99,6 +100,7 @@ const Description = () => {
   };
 
   const handleEdit = () => {
+    console.log("클릭", editType, description);
     if (editType === "EDIT_LOCK") return;
     if (editType === "EDIT_UNLOCK") {
       client?.publish({
@@ -127,6 +129,7 @@ const Description = () => {
 
   useEffect(() => {
     if (data?.description) {
+      console.log("설명", data.description);
       setDescription(data.description);
     }
   }, [data]);
