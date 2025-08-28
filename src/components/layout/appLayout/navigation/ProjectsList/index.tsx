@@ -1,10 +1,10 @@
-import IconLabel from "@/components/common/IconLabel";
-import { Container, NavItem } from "./style";
+import { Container } from "./style";
 import { useProjectList } from "@/query/project/useProjectList";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setProject } from "@/store/project";
 import { ProjectType } from "@/types/project";
+import ProjectItem from "../ProjectItem";
 
 type Props = { collapsed: boolean };
 const ProjectsList = ({ collapsed }: Props) => {
@@ -29,16 +29,13 @@ const ProjectsList = ({ collapsed }: Props) => {
   return (
     <Container>
       {projects?.map((project) => (
-        <NavItem
+        <ProjectItem
           key={project.projectId}
           onClick={() => handleItemClick(project)}
           active={currentProjectId === String(project.projectId)}
           collapsed={collapsed}
-        >
-          <IconLabel type="image" icon={project.projectImage}>
-            {project.projectName}
-          </IconLabel>
-        </NavItem>
+          project={project}
+        />
       ))}
     </Container>
   );
