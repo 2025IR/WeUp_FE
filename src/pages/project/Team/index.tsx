@@ -106,6 +106,7 @@ const Team = () => {
 
   // 웹소켓 구독 정보 변경
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const memberId = useSelector((state: RootState) => state.project.memberId);
   const { client, connSeq } = useStomp();
   useEffect(() => {
     if (!client || !client.connected) return;
@@ -115,13 +116,19 @@ const Team = () => {
       (message) => {
         const newMessage = JSON.parse(message.body);
 
-        if (newMessage.type === "LIST_CHANGED") {
+        if (
+          newMessage.type === "LIST_CHANGED" &&
+          memberId !== newMessage.memberId
+        ) {
           queryClient.invalidateQueries({
             queryKey: ["memberList", projectId],
           });
         }
 
-        if (newMessage.type === "ROLE_CHANGED") {
+        if (
+          newMessage.type === "ROLE_CHANGED" &&
+          memberId !== newMessage.memberId
+        ) {
           queryClient.invalidateQueries({
             queryKey: ["roleList", projectId],
           });
@@ -139,7 +146,7 @@ const Team = () => {
         Authorization: `${accessToken}`,
       });
     };
-  }, [client?.connected, projectId, connSeq]);
+  }, [client?.connected, projectId, connSeq, memberId]);
 
   return (
     <Container>

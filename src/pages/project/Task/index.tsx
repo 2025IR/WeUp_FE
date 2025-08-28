@@ -84,6 +84,7 @@ const Task = () => {
 
   // 웹소켓 구독 정보 변경
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const memberId = useSelector((state: RootState) => state.project.memberId);
   const { client, connSeq } = useStomp();
   useEffect(() => {
     if (!client || !client.connected) return;
@@ -93,9 +94,11 @@ const Task = () => {
       (message) => {
         const newMessage = JSON.parse(message.body);
 
-        queryClient.invalidateQueries({
-          queryKey: ["todoList", projectId],
-        });
+        if (newMessage.memberId !== memberId) {
+          queryClient.invalidateQueries({
+            queryKey: ["todoList", projectId],
+          });
+        }
 
         console.log("📥 새 메시지 도착:", newMessage);
       },
@@ -109,7 +112,7 @@ const Task = () => {
         Authorization: `${accessToken}`,
       });
     };
-  }, [client?.connected, projectId, connSeq]);
+  }, [client?.connected, projectId, connSeq, memberId]);
 
   return (
     <TaskContainer>
