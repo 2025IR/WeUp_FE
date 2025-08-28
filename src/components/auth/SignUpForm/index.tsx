@@ -87,7 +87,7 @@ const SignUpForm = () => {
           onButtonClick={handleRequestEmail}
         />
 
-        {isEmailRequested && (
+        {isEmailRequested && !isCodeVerified && (
           <Input
             type="code"
             label="Code"
