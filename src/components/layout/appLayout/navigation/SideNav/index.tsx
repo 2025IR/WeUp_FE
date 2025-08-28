@@ -23,10 +23,12 @@ const SideNav = () => {
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
 
-  console.log(collapsed);
-
   const { mutate: logout } = useLogout();
   const isActive = (keyword: string) => path.includes(keyword);
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <Container collapsed={collapsed}>
@@ -59,7 +61,7 @@ const SideNav = () => {
         {/* <NavItem collapsed={collapsed}>
           <IconLabel icon={<IoMdSettings />}>Setting</IconLabel>
         </NavItem> */}
-        <NavItem onClick={() => logout()} collapsed={collapsed}>
+        <NavItem onClick={handleLogout} collapsed={collapsed}>
           <IconLabel icon={<HiOutlineLogout />}>Logout</IconLabel>
         </NavItem>
       </NavWrapper>
