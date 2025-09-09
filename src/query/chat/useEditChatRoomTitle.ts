@@ -1,6 +1,8 @@
 // @/hooks/chat/useInviteMembers.ts
 import { editChatRoomTitle } from "@/apis/chat/chat";
+import { setApiMessage } from "@/store/alert";
 import { useMutation } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
 
 interface Params {
   chatRoomId: number;
@@ -8,16 +10,16 @@ interface Params {
 }
 
 export const useEditChatRoomTitle = () => {
+  const dispatch = useDispatch();
   return useMutation({
     mutationFn: ({ chatRoomId, chatRoomName }: Params) =>
       editChatRoomTitle(chatRoomId, chatRoomName),
 
     onSuccess: () => {
-      console.log("변경 성공!");
+      dispatch(setApiMessage({ message: "채팅방 수정 성공", type: "success" }));
     },
-
-    onError: (error) => {
-      console.error("변경 실패:", error);
+    onError: () => {
+      dispatch(setApiMessage({ message: "채팅방 수정 실패", type: "error" }));
     },
   });
 };
