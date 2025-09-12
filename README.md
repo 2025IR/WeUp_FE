@@ -1,54 +1,76 @@
-# React + TypeScript + Vite
+# 프로젝트명 – 한줄 소개
+AI를 활용한 대학생 팀 프로젝트 관리 플랫폼
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 데모
 
-Currently, two official plugins are available:
+https://github.com/user-attachments/assets/2de4370c-d9ab-4511-b730-17b5d8a1ef03
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📆 기간 & 인원
+- 제작 기간: 2025.03 ~ 2025.09
+- 참여 인원: FE 1, BE 2, AI 1
 
-## Expanding the ESLint configuration
+## 🛠 기술 스택
+- React, Vite, TypeScript
+- 상태 관리: Redux Toolkit / React Query / Context API
+- 스타일: Emotion
+- 품질관리: ESLint, Prettier
+- CI/CD: Github Actions
+- Axios, WebSocket, STOMP, LiveKit(화상회의)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📂 폴더 구조
+```
+src/
+├── apis/ # 서버 통신 관련 API 모듈
+├── assets/ # 이미지, 로 등 정적 리소스
+├── components/ # UI 컴포넌트
+├── contexts/ # React Context API 관련 전역 상태 관리
+├── hooks/ # 커스텀 훅
+├── pages/ # 라우팅되는 주요 페이지 컴포넌트
+├── query/ # React Query 관련 로직 (쿼리/뮤테이션)
+├── routes/ # 라우터 설정
+├── store/ # Redux/Zustand 등 상태 관리
+├── styles/ # 전역 스타일 및 테마
+├── types/ # TypeScript 타입 정의
+└── utils/ # 유틸 함수 모음
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ✨ 주요 기능
+- 반응형 UI
+- 실시간 다대다 프로젝트명 – 한줄 소개
+AI를 활용한 대학생 팀 프로젝트 관리 플랫폼
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🚀 데모
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+https://github.com/user-attachments/assets/2de4370c-d9ab-4511-b730-17b5d8a1ef03
+
+## 📆 기간 & 인원
+- 제작 기간: 2025.03 ~ 2025.09
+- 참여 인원: FE 1, BE 2, AI 1
+
+## 🛠 기술 스택
+- React, Vite, TypeScript
+- 상태 관리: Redux Toolkit / React Query / Context API
+- 스타일: Emotion
+- 품질관리: ESLint, Prettier
+- CI/CD: Github Actions
+- Axios, WebSocket, STOMP, LiveKit(화상회의)
+
+## 📂 폴더 구조
 ```
+src/
+├── apis/ # 서버 통신 관련 API 모듈
+├── assets/ # 이미지, 로 등 정적 리소스
+├── components/ # UI 컴포넌트
+├── contexts/ # React Context API 관련 전역 상태 관리
+├── hooks/ # 커스텀 훅
+├── pages/ # 라우팅되는 주요 페이지 컴포넌트
+├── query/ # React Query 관련 로직 (쿼리/뮤테이션)
+├── routes/ # 라우터 설정
+├── store/ # Redux/Zustand 등 상태 관리
+├── styles/ # 전역 스타일 및 테마
+├── types/ # TypeScript 타입 정의
+└── utils/ # 유틸 함수 모음
+```
+
+## 🐛 트러블슈팅
+https://sulfuric-slice-77d.notion.site/Error-237943dba80c8086ab45d0df99567189?source=copy_link
