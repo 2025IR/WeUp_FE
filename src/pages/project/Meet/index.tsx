@@ -17,7 +17,6 @@ import {
 import Button from "@/components/common/Button";
 import { useState } from "react";
 import { useMediaStream } from "@/hooks/useMediaStream";
-import { useParams } from "react-router-dom";
 import { useMeetingCount } from "@/query/meeting/useMeetingCount";
 import { useTheme } from "@/contexts/ThemeContext";
 import IconLabel from "@/components/common/IconLabel";
