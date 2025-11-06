@@ -8,6 +8,12 @@ import { useEffect, useState } from "react";
 import { useEditUserProfile } from "@/query/auth/useEditUserProfile";
 import { useWithdrawUser } from "@/query/auth/useWithdrawUser";
 import { useNavigate } from "react-router-dom";
+import {
+  validateName,
+  validatePhoneNumber,
+} from "@/components/common/Input/validate";
+import { useDispatch } from "react-redux";
+import { setApiMessage } from "@/store/alert";
 
 export interface UserEditModalProps {
   isOpen: boolean;
@@ -22,6 +28,7 @@ export interface UserEditModalProps {
 
 const UserEditModal = ({ isOpen, onClose, user }: UserEditModalProps) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [name, setName] = useState("");
   const [image, setImage] = useState<File | null>(null);
@@ -57,6 +64,26 @@ const UserEditModal = ({ isOpen, onClose, user }: UserEditModalProps) => {
   };
 
   const handleUpdate = () => {
+    if (!validateName(name)) {
+      dispatch(
+        setApiMessage({
+          message: "올바른 이름을 입력해주세요.",
+          type: "error",
+        })
+      );
+      return;
+    }
+
+    if (!validatePhoneNumber(phoneNumber)) {
+      dispatch(
+        setApiMessage({
+          message: "올바른 전화번호를 입력해주세요.",
+          type: "error",
+        })
+      );
+      return;
+    }
+
     const formData = new FormData();
     formData.append("name", name);
     if (image) {

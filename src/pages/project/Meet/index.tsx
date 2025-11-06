@@ -22,10 +22,14 @@ import { useMeetingCount } from "@/query/meeting/useMeetingCount";
 import { useTheme } from "@/contexts/ThemeContext";
 import IconLabel from "@/components/common/IconLabel";
 import { BsHeadphones } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Meet = () => {
   // const navigate = useNavigate();
-  const { projectId } = useParams();
+  const { id: projectId, memberId } = useSelector(
+    (state: RootState) => state.project
+  );
   const project_id = Number(projectId);
 
   const { data: count } = useMeetingCount(project_id);
@@ -46,7 +50,7 @@ const Meet = () => {
   const handleJoinMeeting = () => {
     // navigate(`/meeting/${projectId}`);
     window.open(
-      `/meeting/${projectId}?isMicOn=${isMicOn}&isCamOn=${isCamOn}&theme=${theme}`,
+      `/meeting/${projectId}?memberId=${memberId}&isMicOn=${isMicOn}&isCamOn=${isCamOn}&theme=${theme}`,
       "_blank",
       "width=932,height=808,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,noopener,noreferrer"
     );
