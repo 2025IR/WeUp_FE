@@ -48,6 +48,7 @@ const Meet = () => {
 
   const handleJoinMeeting = () => {
     // navigate(`/meeting/${projectId}`);
+    console.log("열기 전 memberId", memberId);
     window.open(
       `/meeting/${projectId}?memberId=${memberId}&isMicOn=${isMicOn}&isCamOn=${isCamOn}&theme=${theme}`,
       "_blank",
