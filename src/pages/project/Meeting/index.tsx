@@ -16,6 +16,7 @@ const apiSecret = import.meta.env.VITE_API_SECRET;
 const Meeting = () => {
   const { projectId } = useParams();
   const [searchParams] = useSearchParams();
+  const memberId = searchParams.get("memberId");
   const isMicOn = searchParams.get("isMicOn") === "true";
   const isCamOn = searchParams.get("isCamOn") === "true";
   const themeFromUrl = searchParams.get("theme");
@@ -25,12 +26,13 @@ const Meeting = () => {
   useEffect(() => {
     const fetchToken = async () => {
       const at = new AccessToken(apiKey, apiSecret, {
-        identity: "yoon", // 닉네임 등으로 교체 가능
+        identity: String(memberId),
       });
       at.addGrant({ roomJoin: true, room: projectId });
 
       const jwt = await at.toJwt();
       setToken(jwt);
+      console.log(jwt);
     };
 
     fetchToken();

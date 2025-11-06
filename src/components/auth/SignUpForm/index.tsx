@@ -8,6 +8,11 @@ import { useCheckEmailCode } from "@/query/auth/useCheckEmail";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setApiMessage } from "@/store/alert";
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+} from "@/components/common/Input/validate";
 
 const SignUpForm = () => {
   const [name, setName] = useState("");
@@ -26,9 +31,7 @@ const SignUpForm = () => {
   const signUpMutation = useSignUp();
 
   const handleRequestEmail = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(email)) {
+    if (!validateEmail(email)) {
       dispatch(
         setApiMessage({
           message: "올바른 이메일을 입력해주세요.",
@@ -57,6 +60,36 @@ const SignUpForm = () => {
   };
 
   const handleSignUp = () => {
+    if (!validateEmail(email)) {
+      dispatch(
+        setApiMessage({
+          message: "올바른 이메일을 입력해주세요.",
+          type: "error",
+        })
+      );
+      return;
+    }
+
+    if (!validateName(name)) {
+      dispatch(
+        setApiMessage({
+          message: "올바른 이름을 입력해주세요.",
+          type: "error",
+        })
+      );
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      dispatch(
+        setApiMessage({
+          message: "올바른 비밀번호를 입력해주세요.",
+          type: "error",
+        })
+      );
+      return;
+    }
+
     signUpMutation.mutate(
       { email, password, name },
       {
@@ -87,7 +120,7 @@ const SignUpForm = () => {
           onButtonClick={handleRequestEmail}
         />
 
-        {isEmailRequested && (
+        {isEmailRequested && !isCodeVerified && (
           <Input
             type="code"
             label="Code"
