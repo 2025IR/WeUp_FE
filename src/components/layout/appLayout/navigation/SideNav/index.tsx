@@ -33,7 +33,7 @@ const SideNav = () => {
   return (
     <Container collapsed={collapsed}>
       <NavWrapper>
-        <NavTitle collapsed={collapsed}>General</NavTitle>
+        <NavTitle collapsed={collapsed}>메뉴</NavTitle>
         {/* <NavItem collapsed={collapsed}>
           <IconLabel icon={<HiHome />}>Home</IconLabel>
         </NavItem> */}
@@ -42,7 +42,7 @@ const SideNav = () => {
           collapsed={collapsed}
           onClick={() => navigate("/projects")}
         >
-          <IconLabel icon={<HiHome />}>Projects</IconLabel>
+          <IconLabel icon={<HiHome />}>홈</IconLabel>
         </NavItem>
         <NavButton
           onClick={() => setCollapsed(!collapsed)}
@@ -53,7 +53,7 @@ const SideNav = () => {
       </NavWrapper>
       <ProjectWrapper collapsed={collapsed}>
         {/* 프로젝트 리스트 컴포넌트 */}
-        <NavTitle collapsed={collapsed}>Projects</NavTitle>
+        <NavTitle collapsed={collapsed}>프로젝트</NavTitle>
         <ProjectsList collapsed={collapsed} />
       </ProjectWrapper>
       <NavWrapper>
@@ -62,7 +62,7 @@ const SideNav = () => {
           <IconLabel icon={<IoMdSettings />}>Setting</IconLabel>
         </NavItem> */}
         <NavItem onClick={handleLogout} collapsed={collapsed}>
-          <IconLabel icon={<HiOutlineLogout />}>Logout</IconLabel>
+          <IconLabel icon={<HiOutlineLogout />}>로그아웃</IconLabel>
         </NavItem>
       </NavWrapper>
     </Container>

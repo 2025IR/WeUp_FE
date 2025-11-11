@@ -33,7 +33,7 @@ const ChatList = ({
           fontWeight="semibold"
           colors="textLight"
         >
-          Chat
+          채팅
         </IconLabel>
       </Title>
       <ChatListWrapper>

@@ -106,9 +106,9 @@ const UserEditModal = ({ isOpen, onClose, user }: UserEditModalProps) => {
       type="form"
       onClick={handleUpdate}
       onClose={onClose}
-      buttonText="Edit Profile"
+      buttonText="프로필 수정하기"
       icon={<BiUserCircle />}
-      title="Edit Profile"
+      title="프로필 설정"
     >
       <ModalContainer>
         <PreviewSection>
@@ -120,7 +120,7 @@ const UserEditModal = ({ isOpen, onClose, user }: UserEditModalProps) => {
             alt="user profile preview"
           />
           <div>
-            <Input label="User Name:" value={name} onChange={setName} />
+            <Input label="이름:" value={name} onChange={setName} />
             <UploadButton as="label">
               <input
                 type="file"
@@ -133,16 +133,16 @@ const UserEditModal = ({ isOpen, onClose, user }: UserEditModalProps) => {
                 gap="0.375rem"
                 colors="textLight"
               >
-                Upload Image
+                이미지 업로드
               </IconLabel>
             </UploadButton>
           </div>
         </PreviewSection>
 
-        <Input type="email" label="E-mail:" value={email} readOnly />
+        <Input type="email" label="이메일:" value={email} readOnly />
         <Input
           type="tel"
-          label="Phone Number:"
+          label="연락처:"
           value={phoneNumber}
           onChange={setPhoneNumber}
         />

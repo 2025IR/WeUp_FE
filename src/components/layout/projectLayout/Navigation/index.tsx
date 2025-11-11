@@ -3,11 +3,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const tabs = [
-  { label: "Team", path: "team" },
-  { label: "Board", path: "board" },
-  { label: "Task", path: "task" },
-  { label: "Chat", path: "chat" },
-  { label: "Meet", path: "meet" },
+  { label: "인원", path: "team" },
+  { label: "게시판", path: "board" },
+  { label: "일정", path: "task" },
+  { label: "채팅", path: "chat" },
+  { label: "회의", path: "meet" },
 ];
 
 const ProjectNav = () => {

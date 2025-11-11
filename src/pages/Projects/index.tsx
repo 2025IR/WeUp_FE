@@ -21,9 +21,9 @@ const Projects = () => {
   return (
     <Container>
       <Header>
-        <h1>Project</h1>
+        <h1>프로젝트</h1>
         <Button variant="secondary" onClick={handleOpen}>
-          Add
+          생성
         </Button>
       </Header>
       <Main isFiveOrLess={(projects?.length ?? 0) < 5}>

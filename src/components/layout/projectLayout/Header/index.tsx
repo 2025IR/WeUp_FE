@@ -40,7 +40,7 @@ const ProjectHeader = () => {
                 fontSize="caption"
                 onClick={handleOpen}
               >
-                Setting
+                설정
               </IconLabel>
             </Label>
           </LabelSection>
