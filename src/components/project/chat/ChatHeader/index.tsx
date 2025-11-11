@@ -23,6 +23,8 @@ import queryClient from "@/query/reactQueryClient";
 import { useInviteMembers } from "@/query/chat/useInviteMembers";
 import { useLeaveChatRoom } from "@/query/chat/useLeaveChatRoom";
 import { useGetInvitableMembers } from "@/query/chat/useGetInvitableMemers";
+import { useDispatch } from "react-redux";
+import { setApiMessage } from "@/store/alert";
 
 interface ChatHeaderInfo {
   id: number;
@@ -37,6 +39,8 @@ const ChatHeader = ({
   chatRoom: ChatHeaderInfo;
   projectId: number;
 }) => {
+  const dispatch = useDispatch();
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
@@ -55,7 +59,10 @@ const ChatHeader = ({
   }, [chatRoom]);
 
   const handleEdit = () => {
-    if (!chatRoomName.trim()) return alert("채팅방 이름을 입력해주세요!");
+    if (!chatRoomName.trim())
+      return dispatch(
+        setApiMessage({ message: "채팅방 제목을 입력해주세요", type: "error" })
+      );
 
     editTitle(
       {
@@ -75,7 +82,9 @@ const ChatHeader = ({
 
   const handleAddMember = () => {
     if (selectedUserIds.length === 0) {
-      return alert("초대할 팀원을 선택해주세요!");
+      return dispatch(
+        setApiMessage({ message: "초대할 팀원을 선택해주세요", type: "error" })
+      );
     }
 
     inviteMembersMutate(
@@ -88,13 +97,11 @@ const ChatHeader = ({
           queryClient.invalidateQueries({
             queryKey: ["chatRoomList", projectId],
           });
-          alert("초대가 완료되었습니다.");
+          queryClient.invalidateQueries({
+            queryKey: ["invitableMembers", chatRoom.id],
+          });
           setIsAddMemberOpen(false);
           setSelectedUserIds([]);
-        },
-        onError: (error) => {
-          alert("초대에 실패했습니다.");
-          console.error(error);
         },
       }
     );
@@ -103,15 +110,10 @@ const ChatHeader = ({
   const handleExit = () => {
     leaveChatRoomMutate(chatRoom.id, {
       onSuccess: () => {
-        alert("채팅방에서 나갔습니다.");
         queryClient.invalidateQueries({
           queryKey: ["chatRoomList", projectId],
         });
         setIsExitModalOpen(false);
-      },
-      onError: (error) => {
-        alert("채팅방 나가기 중 오류가 발생했습니다.");
-        console.error(error);
       },
     });
   };

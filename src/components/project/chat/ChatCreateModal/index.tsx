@@ -9,8 +9,9 @@ import {
 } from "react-icons/bi";
 import { MemberItem, MemberItemWrapper, MemberSection } from "./style";
 import { useCreateChat } from "@/query/chat/useCreatChatRoom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { setApiMessage } from "@/store/alert";
 
 interface Props {
   projectId: number;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const ChatCreateModal = ({ onClose, projectId }: Props) => {
+  const dispatch = useDispatch();
   const [chatTitle, setChatTitle] = useState("");
   const [selectedUserIds, setSelectedUserIds] = useState<number[]>([]);
   console.log(selectedUserIds, chatTitle);
@@ -31,7 +33,9 @@ const ChatCreateModal = ({ onClose, projectId }: Props) => {
 
   const handleCreateChat = () => {
     if (!chatTitle.trim()) {
-      alert("채팅방 제목을 입력해주세요!");
+      dispatch(
+        setApiMessage({ message: "채팅방 제목을 입력해주세요", type: "error" })
+      );
       return;
     }
 
