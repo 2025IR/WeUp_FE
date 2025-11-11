@@ -77,6 +77,9 @@ const Task = () => {
         await updateTodoStatus({ todoId, status: updated.status });
       } else {
         await updateTodo({ todoId, ...updated });
+        queryClient.invalidateQueries({
+          queryKey: ["todoList", projectId],
+        });
       }
     },
     []
