@@ -5,6 +5,7 @@ export type ChatMessageProps = {
   message: string;
   sentAt: string;
   isImage: boolean;
+  isPrompt: boolean;
   displayType: "DEFAULT" | "SAME_SENDER" | "SAME_TIME";
   senderType: "MEMBER" | "AI" | "SYSTEM" | "WITHDRAW";
   originalSenderName: string;

@@ -78,6 +78,9 @@ export const MessageTime = styled.p`
 `;
 
 export const MyTextCard = styled.div`
+  display: flex;
+  gap: 0.25rem;
+
   width: fit-content;
   max-width: 60%;
   padding: 0.5rem 1rem;
@@ -165,4 +168,8 @@ export const ReplyMessage = styled.p`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+`;
+export const StyledTag = styled.p`
+  color: ${({ theme }) => theme.colors.primary};
+  text-decoration: underline;
 `;
