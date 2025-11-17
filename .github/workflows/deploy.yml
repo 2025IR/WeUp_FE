@@ -38,3 +38,24 @@ jobs:
           docker stop weup-fe || true
           docker rm weup-fe || true
           docker run -d -p 80:80 --name weup-fe ${{ secrets.DOCKER_USERNAME }}/weup-fe:latest
+
+      # ========================
+      #   클라우드 서버 배포 추가
+      # ========================
+
+      - name: Node 20 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 프론트엔드 빌드 (dist 생성)
+        run: |
+          npm install
+          npm run build
+
+      - name: 클라우드 서버로 dist 업로드
+        run: |
+          echo "${{ secrets.CLOUD_SSH_KEY }}" > cloud_key.pem
+          chmod 600 cloud_key.pem
+          scp -o StrictHostKeyChecking=no -i cloud_key.pem -r dist/* \
+            ${{ secrets.CLOUD_USER }}@${{ secrets.CLOUD_HOST }}:/var/www/weup-fe
