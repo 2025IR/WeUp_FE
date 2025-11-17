@@ -63,7 +63,7 @@ jobs:
 
       - name: 프론트엔드 빌드 (dist 생성)
         run: |
-          npm ci
+          npm install
           npm run build
 
       - name: 클라우드 서버로 dist 업로드
