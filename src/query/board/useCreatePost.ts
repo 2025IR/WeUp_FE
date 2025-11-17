@@ -22,6 +22,7 @@ export const useCreatePost = () => {
     },
 
     onSuccess: (res, { projectId }) => {
+      console.log("createPost success:", res);
       queryClient.invalidateQueries({ queryKey: ["boardList", projectId] });
       dispatch(setApiMessage({ message: "게시글 등록 성공", type: "success" }));
       navigate(`/project/${projectId}/board`);
