@@ -9,6 +9,14 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Debug runner host
+        run: |
+          echo "=== HOST INFO ==="
+          hostname
+          whoami
+          ip addr show
+
+    steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
