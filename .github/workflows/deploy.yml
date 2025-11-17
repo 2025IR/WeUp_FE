@@ -5,17 +5,11 @@ on:
     branches: [main]
 
 jobs:
-  deploy:
-    runs-on: self-hosted
+  # 1) 149 서버(연구실) 도커 배포
+  deploy_lab_docker:
+    runs-on: [self-hosted, lab-docker]
 
     steps:
-      - name: Debug runner host
-        run: |
-          echo "=== HOST INFO ==="
-          hostname
-          whoami
-          ip addr show
-
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -46,9 +40,21 @@ jobs:
           docker rm weup-fe || true
           docker run -d -p 80:80 --name weup-fe ${{ secrets.DOCKER_USERNAME }}/weup-fe:latest
 
-      # ========================
-      #   클라우드 서버 배포 추가
-      # ========================
+  # 2) 148 서버에서 dist 빌드 + 클라우드 정적 배포
+  deploy_cloud_static:
+    runs-on: [self-hosted, cloud-static]
+    needs: deploy_lab_docker # 먼저 lab 배포하고 그 다음에 클라우드 하고 싶으면 유지, 아니면 제거
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: .env 파일 생성
+        run: |
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
+          echo "VITE_LIVEKIT_URL=${{ secrets.VITE_LIVEKIT_URL }}" >> .env
+          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
+          echo "VITE_API_SECRET=${{ secrets.VITE_API_SECRET }}" >> .env
 
       - name: Node 20 설정
         uses: actions/setup-node@v4
@@ -57,7 +63,7 @@ jobs:
 
       - name: 프론트엔드 빌드 (dist 생성)
         run: |
-          npm install
+          npm ci
           npm run build
 
       - name: 클라우드 서버로 dist 업로드
