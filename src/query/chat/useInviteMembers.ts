@@ -1,6 +1,9 @@
 // @/hooks/chat/useInviteMembers.ts
 import { inviteMembers } from "@/apis/chat/chat";
+import { setApiMessage } from "@/store/alert";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { useDispatch } from "react-redux";
 
 interface Params {
   chatRoomId: number;
@@ -8,16 +11,27 @@ interface Params {
 }
 
 export const useInviteMembers = () => {
+  const dispatch = useDispatch();
   return useMutation({
     mutationFn: ({ chatRoomId, inviteMemberIds }: Params) =>
       inviteMembers(chatRoomId, inviteMemberIds),
 
     onSuccess: () => {
-      console.log("초대 성공!");
+      dispatch(
+        setApiMessage({
+          message: "팀원 초대 성공",
+          type: "success",
+        })
+      );
     },
 
-    onError: (error) => {
-      console.error("초대 실패:", error);
+    onError: (err: AxiosError<{ message: string }>) => {
+      dispatch(
+        setApiMessage({
+          message: err.response?.data.message ?? "팀원 초대 실패",
+          type: "error",
+        })
+      );
     },
   });
 };

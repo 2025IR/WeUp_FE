@@ -56,9 +56,9 @@ const ProjectCreateModal = ({ isOpen, onClose }: ProjectCreateModalProps) => {
       type="form"
       onClick={handleSubmit}
       onClose={onClose}
-      buttonText="Create project"
+      buttonText="프로젝트 생성하기"
       icon={<AiFillFolderAdd />}
-      title="New Project"
+      title="새로운 프로젝트"
     >
       <ModalContainer>
         <img
@@ -69,7 +69,7 @@ const ProjectCreateModal = ({ isOpen, onClose }: ProjectCreateModalProps) => {
           alt="project profile preview"
         />
         <div>
-          <Input label="Project Name:" onChange={setProjectName} />
+          <Input label="프로젝트 이름:" onChange={setProjectName} />
           <UploadButton as="label">
             <input type="file" accept="image/*" onChange={handleImageChange} />
             <IconLabel
@@ -77,7 +77,7 @@ const ProjectCreateModal = ({ isOpen, onClose }: ProjectCreateModalProps) => {
               gap="0.375rem"
               colors="textLight"
             >
-              Upload Image
+              이미지 업로드
             </IconLabel>
           </UploadButton>
         </div>

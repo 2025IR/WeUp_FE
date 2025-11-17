@@ -189,7 +189,7 @@ const Team = () => {
       </TeamWrapper>
       <ButtonWrapper>
         <Button size="lg" onClick={() => setOpenScheduleModal(true)}>
-          Schedule
+          시간표 확인
         </Button>
       </ButtonWrapper>
 

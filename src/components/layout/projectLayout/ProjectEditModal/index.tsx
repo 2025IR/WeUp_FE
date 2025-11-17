@@ -99,9 +99,9 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
       type="form"
       onClick={handleUpdate}
       onClose={onClose}
-      buttonText="Edit project"
+      buttonText="프로젝트 수정하기"
       icon={<AiFillFolder />}
-      title="Edit Project"
+      title="프로젝트 설정"
     >
       <ModalContainer>
         <PreviewSection>
@@ -113,7 +113,7 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
             alt="project profile preview"
           />
           <div>
-            <Input label="Project Name:" value={title} onChange={setTitle} />
+            <Input label="프로젝트 이름:" value={title} onChange={setTitle} />
             <UploadButton as="label">
               <input
                 type="file"
@@ -125,7 +125,7 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
                 gap="0.375rem"
                 colors="textLight"
               >
-                Upload Image
+                이미지 업로드
               </IconLabel>
             </UploadButton>
           </div>

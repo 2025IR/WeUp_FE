@@ -77,6 +77,9 @@ const Task = () => {
         await updateTodoStatus({ todoId, status: updated.status });
       } else {
         await updateTodo({ todoId, ...updated });
+        queryClient.invalidateQueries({
+          queryKey: ["todoList", projectId],
+        });
       }
     },
     []
@@ -120,19 +123,19 @@ const Task = () => {
         <div />
         <HeaderTitle>
           <LuListMinus />
-          <p>Summary</p>
+          <p>내용</p>
         </HeaderTitle>
         <HeaderTitle>
           <BiRightArrowCircle />
-          <p>Status </p>
+          <p>상태 </p>
         </HeaderTitle>
         <HeaderTitle>
           <HiHashtag />
-          <p>Assignee</p>
+          <p>담당자</p>
         </HeaderTitle>
         <HeaderTitle>
           <AiOutlineCalendar />
-          <p>Date</p>
+          <p>일정</p>
         </HeaderTitle>
         <div />
       </TaskHeader>

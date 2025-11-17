@@ -12,6 +12,7 @@ import {
   MyTextCard,
   ReplyMessage,
   ReplyName,
+  StyledTag,
   SystemCard,
   SystemCardContainer,
   TextCard,
@@ -30,6 +31,7 @@ const ChatMessageCard = React.memo(
     message,
     sentAt,
     isImage,
+    isPrompt,
     isShowTime,
     isShowUserInfo,
     senderType,
@@ -63,6 +65,7 @@ const ChatMessageCard = React.memo(
             <ImageCard src={message} alt="" />
           ) : (
             <MyTextCard>
+              {isPrompt && <StyledTag>@AI 비서</StyledTag>}
               <p>{message}</p>
             </MyTextCard>
           )}
@@ -116,6 +119,7 @@ const ChatMessageCard = React.memo(
             <ImageCard src={message} />
           ) : (
             <TextCard>
+              {isPrompt && <StyledTag>@AI 비서</StyledTag>}
               <p>{message}</p>
             </TextCard>
           )}
