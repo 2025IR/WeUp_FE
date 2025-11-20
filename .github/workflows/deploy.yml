@@ -16,6 +16,7 @@ jobs:
       - name: .env 파일 생성
         run: |
           echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
+          echo "VITE_WS_URL=${{secrets.VITE_WS_URL}}" >> .env
           echo "VITE_LIVEKIT_URL=${{ secrets.VITE_LIVEKIT_URL }}" >> .env
           echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
           echo "VITE_API_SECRET=${{ secrets.VITE_API_SECRET }}" >> .env
@@ -52,6 +53,7 @@ jobs:
       - name: .env 파일 생성
         run: |
           echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
+          echo "VITE_WS_URL=${{secrets.VITE_WS_URL}}" >> .env
           echo "VITE_LIVEKIT_URL=${{ secrets.VITE_LIVEKIT_URL }}" >> .env
           echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
           echo "VITE_API_SECRET=${{ secrets.VITE_API_SECRET }}" >> .env

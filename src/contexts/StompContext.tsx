@@ -33,7 +33,7 @@ const StompProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
     const stompClient = new Client({
-      brokerURL: `${import.meta.env.VITE_API_URL}/ws`,
+      brokerURL: `${import.meta.env.VITE_WS_URL}`,
       reconnectDelay: 5000,
       debug: (msg) => console.log("[STOMP]", msg),
       onConnect: () => {
