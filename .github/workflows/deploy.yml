@@ -68,9 +68,15 @@ jobs:
           npm install
           npm run build
 
-      - name: 클라우드 서버로 dist 업로드
+      - name: 클라우드 서버 기존 파일 삭제
         run: |
           echo "${{ secrets.CLOUD_SSH_KEY }}" > cloud_key.pem
           chmod 600 cloud_key.pem
+          ssh -o StrictHostKeyChecking=no -i cloud_key.pem \
+           ${{ secrets.CLOUD_USER }}@${{ secrets.CLOUD_HOST }} \
+           'rm -rf /var/www/weup-fe/*'
+
+      - name: 클라우드 서버로 dist 업로드
+        run: |
           scp -o StrictHostKeyChecking=no -i cloud_key.pem -r dist/* \
             ${{ secrets.CLOUD_USER }}@${{ secrets.CLOUD_HOST }}:/var/www/weup-fe

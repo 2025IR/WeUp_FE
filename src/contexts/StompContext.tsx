@@ -28,8 +28,6 @@ const StompProvider = ({ children }: { children: ReactNode }) => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
 
   useEffect(() => {
-    console.log("VITE_WS_URL", import.meta.env.VITE_WS_URL);
-
     if (!accessToken) {
       setClient(null);
       return;
