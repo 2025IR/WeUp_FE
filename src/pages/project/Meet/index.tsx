@@ -15,7 +15,7 @@ import {
   VideoPreview,
 } from "./style";
 import Button from "@/components/common/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaStream } from "@/hooks/useMediaStream";
 import { useMeetingCount } from "@/query/meeting/useMeetingCount";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -23,6 +23,7 @@ import IconLabel from "@/components/common/IconLabel";
 import { BsHeadphones } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { useEnterMeeting } from "@/query/meeting/useEnterMeeting";
 
 const Meet = () => {
   // const navigate = useNavigate();
@@ -46,17 +47,44 @@ const Meet = () => {
     setIsCamOn((prev) => !prev);
   };
 
+  const { mutate, data: token } = useEnterMeeting();
+
+  useEffect(() => {
+    if (project_id) mutate(project_id);
+  }, [project_id]);
+
   const handleJoinMeeting = () => {
-    // navigate(`/meeting/${projectId}`);
-    console.log("열기 전 memberId", memberId);
+    if (!token) return;
+
+    const meetingConfig = {
+      token,
+      memberId,
+      isMicOn,
+      isCamOn,
+      theme,
+      projectId,
+      savedAt: Date.now(),
+    };
+
+    localStorage.setItem(
+      `weup:meeting:${projectId}`,
+      JSON.stringify(meetingConfig)
+    );
+
     window.open(
-      `/meeting/${projectId}?memberId=${memberId}&isMicOn=${isMicOn}&isCamOn=${isCamOn}&theme=${theme}`,
+      `/meeting/${projectId}`,
       "_blank",
       "width=932,height=808,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,noopener,noreferrer"
     );
   };
 
-  const { videoRef, stream } = useMediaStream(isMicOn, isCamOn);
+  const { videoRef, stream, stopStream } = useMediaStream(isMicOn, isCamOn);
+
+  useEffect(() => {
+    return () => {
+      stopStream();
+    };
+  }, []);
 
   return (
     <Container>
