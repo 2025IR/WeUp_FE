@@ -1,60 +1,64 @@
 import MeetingHeader from "@/components/project/meeting/Header";
 import { Container, Main } from "./style";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { LiveKitRoom, VideoConference } from "@livekit/components-react";
 import "@livekit/components-styles/index.css";
-// import { useEnterMeeting } from "@/query/meeting/useEnterMeeting";
-import { AccessToken } from "livekit-server-sdk";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const serverUrl = import.meta.env.VITE_LIVEKIT_URL;
-// 임시 토큰
-const apiKey = import.meta.env.VITE_API_KEY;
-const apiSecret = import.meta.env.VITE_API_SECRET;
 
 const Meeting = () => {
-  const { projectId } = useParams();
-  const [searchParams] = useSearchParams();
-  const memberId = searchParams.get("memberId");
-  const isMicOn = searchParams.get("isMicOn") === "true";
-  const isCamOn = searchParams.get("isCamOn") === "true";
-  const themeFromUrl = searchParams.get("theme");
-  // const project_id = Number(projectId);
-  // 임시 토큰
-  const [token, setToken] = useState<string | null>(null);
-  useEffect(() => {
-    const fetchToken = async () => {
-      const at = new AccessToken(apiKey, apiSecret, {
-        identity: String(memberId),
-      });
-      at.addGrant({ roomJoin: true, room: projectId });
-
-      const jwt = await at.toJwt();
-      setToken(jwt);
-      console.log(jwt);
-    };
-
-    fetchToken();
-  }, [projectId]);
+  const { projectId } = useParams<{ projectId: string }>();
+  const [meetingConfig, setMeetingConfig] = useState<null | {
+    token: string;
+    memberId: number;
+    isMicOn: boolean;
+    isCamOn: boolean;
+    theme: string;
+  }>(null);
 
   const { theme, toggleTheme } = useTheme();
 
+  /* localStorage 에서 회의 정보 가져오기 */
   useEffect(() => {
-    if (themeFromUrl && themeFromUrl !== theme) {
+    if (!projectId) return;
+
+    const raw = localStorage.getItem(`weup:meeting:${projectId}`);
+    if (!raw) {
+      alert("회의 정보가 없습니다. 대기실에서 다시 입장해주세요.");
+      window.close();
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(raw);
+      setMeetingConfig(parsed);
+    } catch (error) {
+      console.error("회의 정보 파싱 실패", error);
+      window.close();
+    }
+  }, [projectId]);
+
+  /* 테마 적용 (localStorage 에 저장된 값으로) */
+  useEffect(() => {
+    if (meetingConfig?.theme && meetingConfig.theme !== theme) {
       toggleTheme();
     }
-  }, [themeFromUrl]);
+  }, [meetingConfig?.theme]);
 
-  // const { mutate, data: token, isPending } = useEnterMeeting();
+  /* 회의 종료 시 localStorage 정리 */
+  useEffect(() => {
+    return () => {
+      if (projectId) {
+        localStorage.removeItem(`weup:meeting:${projectId}`);
+      }
+    };
+  }, [projectId]);
 
-  // useEffect(() => {
-  //   if (project_id) mutate(project_id);
-  // }, [project_id]);
+  if (!meetingConfig) return <div>회의 준비중입니다...</div>;
 
-  // if (isPending || !token) return <div>화상회의 준비 중...</div>;
-
-  if (!token) return <div>화상회의 준비 중...</div>;
+  const { token, isMicOn, isCamOn } = meetingConfig;
 
   return (
     <Container>

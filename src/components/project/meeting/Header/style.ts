@@ -30,21 +30,3 @@ export const Logo = styled.div`
     height: 20px;
   }
 `;
-
-export const UserSection = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-
-  > img {
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: ${({ theme }) => theme.radius.full};
-  }
-`;
-
-export const UserInfo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
