@@ -17,7 +17,7 @@ import Input from "@/components/common/Input";
 import Label from "@/components/common/Label";
 import { BiCheckbox, BiSolidCheckboxChecked } from "react-icons/bi";
 import { useUpdateProject } from "@/query/project/useUpdateProject";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDeleteProject } from "@/query/project/useDeleteProject";
 import { setProject } from "@/store/project";
 
@@ -31,6 +31,7 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
   const [status, setStatus] = useState<"active" | "completed">("active");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const projectState = useSelector((state: RootState) => state.project);
 
   const { mutate } = useUpdateProject({
@@ -46,14 +47,12 @@ const ProjectEditModal = ({ isOpen, onClose }: ProjectEditModalProps) => {
       );
       onClose();
     },
-    onError: (err) => {
-      console.error(err);
-    },
   });
 
   const { mutate: deleteProjectMutate } = useDeleteProject({
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: () => {
+      navigate("/projects");
+    },
   });
 
   useEffect(() => {

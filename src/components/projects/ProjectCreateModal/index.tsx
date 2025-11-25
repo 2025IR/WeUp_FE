@@ -5,7 +5,6 @@ import Input from "@/components/common/Input";
 import IconLabel from "@/components/common/IconLabel";
 import { ProjectCreateModalProps } from "./type";
 import { useEffect, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useCreateProject } from "@/query/project/useCteateProject";
 
 const ProjectCreateModal = ({ isOpen, onClose }: ProjectCreateModalProps) => {
@@ -14,11 +13,8 @@ const ProjectCreateModal = ({ isOpen, onClose }: ProjectCreateModalProps) => {
 
   const [previewUrl, setPreviewUrl] = useState<string>("");
 
-  // 프로젝트 생성 이후 데이터 다시 받아오기 위해 이용
-  const queryClient = useQueryClient();
   const { mutate } = useCreateProject({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projectList"] });
       onClose();
     },
   });
@@ -31,7 +27,6 @@ const ProjectCreateModal = ({ isOpen, onClose }: ProjectCreateModalProps) => {
   };
 
   const handleSubmit = () => {
-    if (!projectName) return alert("프로젝트 이름을 입력해주세요.");
     const formData = new FormData();
     formData.append("projectName", projectName);
     if (imageFile) formData.append("projectImage", imageFile);
