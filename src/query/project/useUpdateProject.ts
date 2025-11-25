@@ -4,12 +4,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 
+type UpdateVariables = {
+  projectId: number;
+  data: FormData;
+};
+
 export const useUpdateProject = ({ onSuccess }: { onSuccess?: () => void }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: ({ projectId, data }: { projectId: number; data: FormData }) =>
+  return useMutation<void, AxiosError<{ message: string }>, UpdateVariables>({
+    mutationFn: ({ projectId, data }: UpdateVariables) =>
       updateProject(projectId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projectList"] });
@@ -23,7 +28,7 @@ export const useUpdateProject = ({ onSuccess }: { onSuccess?: () => void }) => {
 
       onSuccess?.();
     },
-    onError: (err: AxiosError<{ message: string }>) => {
+    onError: (err) => {
       dispatch(
         setApiMessage({
           message: err.response?.data.message ?? "프로젝트 수정 실패",

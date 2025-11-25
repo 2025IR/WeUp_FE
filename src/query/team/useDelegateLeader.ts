@@ -1,6 +1,7 @@
 import { delegateLeader } from "@/apis/team/team";
 import { setApiMessage } from "@/store/alert";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 
 type DelegateParams = {
@@ -23,9 +24,11 @@ export const useDelegateLeader = () => {
       );
     },
     onError: (err) => {
+      const axiosError = err as AxiosError<{ message: string }>;
+
       dispatch(
         setApiMessage({
-          message: err.response?.data.message ?? "팀장 위임 실패",
+          message: axiosError.response?.data.message ?? "팀장 위임 실패",
           type: "error",
         })
       );
