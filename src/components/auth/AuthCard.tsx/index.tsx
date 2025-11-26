@@ -1,6 +1,6 @@
 import LoginForm from "../LoginForm";
 import SignUpForm from "../SignUpForm";
-import SocialForm from "../SocialForm";
+// import SocialForm from "../SocialForm";
 import { Container, FormSection, NavSection, SideSection } from "./style";
 
 interface AuthCardProps {
@@ -17,7 +17,7 @@ const AuthCard = ({ mode, onChangeMode }: AuthCardProps) => {
           <>
             <h1>Login</h1>
             <LoginForm />
-            <SocialForm />
+            {/* <SocialForm /> */}
             <NavSection>
               <p>New user?</p>
               <button onClick={onChangeMode}>Sign up</button>

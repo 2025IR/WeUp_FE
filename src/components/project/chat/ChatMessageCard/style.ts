@@ -108,6 +108,9 @@ export const TextCardWrapper = styled.div`
 `;
 
 export const TextCard = styled.div`
+  display: flex;
+  gap: 0.25rem;
+
   width: 100%;
   padding: 0.5rem 1rem;
   overflow-wrap: break-word;
