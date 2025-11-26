@@ -5,7 +5,6 @@ import { logout } from "@/apis/auth/auth";
 import { useNavigate } from "react-router-dom";
 import { setApiMessage } from "@/store/alert";
 import { AxiosError } from "axios";
-import queryClient from "../reactQueryClient";
 
 export const useLogout = () => {
   const dispatch = useDispatch();
@@ -15,7 +14,6 @@ export const useLogout = () => {
     mutationFn: logout,
     onSuccess: () => {
       dispatch(clearAuth());
-      queryClient.removeQueries({ queryKey: ["userProfile"], exact: true });
       dispatch(setApiMessage({ message: "로그아웃 성공", type: "success" }));
       navigate("/auth");
     },
